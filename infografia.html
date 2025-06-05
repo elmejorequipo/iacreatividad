@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: IA y Creatividad Humana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B132B;
+            color: #E0E1DD;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #6FFFE9, #5BC0BE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .flowchart-node {
+            border: 2px solid #3A506B;
+            background-color: #1C2541;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .flowchart-node:hover {
+            transform: translateY(-5px);
+            border-color: #6FFFE9;
+        }
+        .flowchart-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 4rem;
+            color: #3A506B;
+        }
+        .flowchart-connector::after {
+            content: '↓';
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .card-glow {
+            box-shadow: 0 0 15px rgba(111, 255, 233, 0.2);
+        }
+        .gemini-btn {
+            background-color: #5BC0BE;
+            color: #0B132B;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            margin-top: 0.75rem;
+        }
+        .gemini-btn:hover {
+            background-color: #6FFFE9;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal-content {
+            background-color: #1C2541;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #3A506B;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6FFFE9;
+            margin-bottom: 1rem;
+        }
+        .modal-body {
+            color: #E0E1DD;
+            margin-bottom: 1.5rem;
+            min-height: 50px;
+            white-space: pre-wrap;
+        }
+        .modal-close-btn {
+            background-color: #3A506B;
+            color: #E0E1DD;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .modal-close-btn:hover {
+            background-color: #5BC0BE;
+        }
+        .loader {
+            border: 4px solid #3A506B;
+            border-top: 4px solid #6FFFE9;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center py-12">
+            <h1 class="text-4xl md:text-6xl font-black mb-4"><span class="gradient-text">IA y Creatividad Humana</span></h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">Una nueva era de colaboración y sinergia que redefine la innovación.</p>
+            <div class="mt-8 bg-[#1C2541] rounded-xl p-6 max-w-2xl mx-auto card-glow">
+                <p class="text-gray-300 text-lg">Se crearon más de</p>
+                <p class="text-5xl md:text-7xl font-extrabold gradient-text my-2">15 Mil Millones</p>
+                <p class="text-gray-300 text-lg">de imágenes mediante IA solo entre 2022 y 2023, evidenciando una adopción tecnológica sin precedentes.</p>
+            </div>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="human-creativity">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Desentrañando la Creatividad Humana</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La creatividad es un fenómeno multidimensional que va más allá del arte. Es la capacidad de generar ideas novedosas y valiosas. La investigación psicológica la descompone en cuatro pilares fundamentales.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg text-center card-glow">
+                        <div class="text-4xl mb-4">✨</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Originalidad</h3>
+                        <p class="text-gray-400">Habilidad para producir respuestas únicas, apartándose de lo convencional y lo obvio.</p>
+                        <button id="geminiOriginalityBtn" class="gemini-btn">✨ Generar Ejemplo</button>
+                    </div>
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg text-center card-glow">
+                        <div class="text-4xl mb-4">🌊</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Fluidez</h3>
+                        <p class="text-gray-400">Facilidad para generar un gran número de ideas o soluciones ante un problema en un tiempo limitado.</p>
+                        <button id="geminiFluencyBtn" class="gemini-btn">✨ Generar Ejemplo</button>
+                    </div>
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg text-center card-glow">
+                        <div class="text-4xl mb-4">↔️</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Flexibilidad</h3>
+                        <p class="text-gray-400">Capacidad para generar ideas desde diferentes perspectivas y cambiar de enfoque con facilidad.</p>
+                        <button id="geminiFlexibilityBtn" class="gemini-btn">✨ Generar Ejemplo</button>
+                    </div>
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg text-center card-glow">
+                        <div class="text-4xl mb-4">🛠️</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Elaboración</h3>
+                        <p class="text-gray-400">Nivel de detalle, desarrollo y complejidad de las ideas creativas para que sean pertinentes y útiles.</p>
+                        <button id="geminiElaborationBtn" class="gemini-btn">✨ Generar Ejemplo</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-partner">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">La IA como Socio Creativo</h2>
+                 <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La IA generativa no reemplaza, sino que actúa como un potente catalizador en múltiples dominios. Su principal fortaleza radica en la capacidad para automatizar tareas y explorar un vasto universo de posibilidades a una velocidad sobrehumana.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg space-y-4 card-glow">
+                         <h3 class="text-xl font-bold text-white mb-2">Aplicaciones en Industrias Creativas</h3>
+                        <div class="flex items-start space-x-4">
+                            <span class="text-2xl mt-1">🎨</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Arte Visual</h4>
+                                <p class="text-gray-400">Generación de imágenes a partir de texto (Midjourney, DALL-E) y transformación de bocetos en obras realistas.</p>
+                                <button class="gemini-btn" data-apptype="arte visual">✨ Explorar Ideas con IA</button>
+                            </div>
+                        </div>
+                         <div class="flex items-start space-x-4 mt-4">
+                            <span class="text-2xl mt-1">🎵</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Música y Sonido</h4>
+                                <p class="text-gray-400">Composición de melodías, bandas sonoras (Amper, AIVA) y masterización de audio automatizada.</p>
+                                <button class="gemini-btn" data-apptype="música y sonido">✨ Explorar Ideas con IA</button>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 mt-4">
+                            <span class="text-2xl mt-1">💻</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Diseño y Arquitectura</h4>
+                                <p class="text-gray-400">Optimización de miles de opciones de diseño de productos basadas en restricciones (Autodesk).</p>
+                                 <button class="gemini-btn" data-apptype="diseño y arquitectura">✨ Explorar Ideas con IA</button>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 mt-4">
+                            <span class="text-2xl mt-1">✍️</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Escritura y Contenido</h4>
+                                <p class="text-gray-400">Generación de borradores, resúmenes y contenido de marketing (ChatGPT, Jasper).</p>
+                                <button class="gemini-btn" data-apptype="escritura y contenido">✨ Explorar Ideas con IA</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg card-glow">
+                        <h3 class="text-xl font-bold text-white text-center mb-4">Fortalezas Clave de la IA</h3>
+                        <div class="chart-container">
+                            <canvas id="strengthsChart"></canvas>
+                        </div>
+                        <p class="text-center text-gray-400 mt-4">La IA sobresale en eficiencia y exploración de posibilidades, liberando a los humanos para tareas más estratégicas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="synergy">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Creatividad Aumentada: La Sinergia Humano-IA</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La evidencia científica muestra que la colaboración entre humanos e IA produce resultados creativos superiores a los de los humanos trabajando solos. Sin embargo, esta sinergia presenta un matiz importante: un aumento en la novedad a costa de una menor diversidad de ideas.</p>
+                <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg card-glow">
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Rendimiento Creativo: Humano vs. Humano+IA</h3>
+                    <div class="chart-container h-[400px] md:h-[450px]">
+                        <canvas id="synergyChart"></canvas>
+                    </div>
+                     <p class="text-center text-gray-400 mt-4">Los estudios (meta-análisis, Hedges' g) demuestran un aumento significativo del rendimiento creativo general en la colaboración, pero también una tendencia a la homogeneización de las ideas.</p>
+                </div>
+            </section>
+
+            <section id="human-role">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">El Rol Humano en Evolución</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La IA no sustituye al creador, sino que transforma su función. El profesional humano evoluciona de ser el único generador a convertirse en el director estratégico del proceso creativo, aportando el juicio, la intención y el contexto que la máquina no posee.</p>
+                <div class="flex flex-col items-center">
+                    <div class="flowchart-node w-full md:w-1/2">
+                        <span class="text-2xl">🎯</span>
+                        <h3 class="text-lg font-bold mt-2">Director y Estratega</h3>
+                        <p class="text-sm text-gray-400">Define la visión, los objetivos y el marco conceptual del proyecto.</p>
+                    </div>
+                    <div class="flowchart-connector"></div>
+                    <div class="flowchart-node w-full md:w-1/2">
+                        <span class="text-2xl">💡</span>
+                        <h3 class="text-lg font-bold mt-2">Ingeniero de Prompts</h3>
+                        <p class="text-sm text-gray-400">Formula instrucciones precisas para guiar a la IA hacia los resultados deseados.</p>
+                    </div>
+                    <div class="flowchart-connector"></div>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                        <div class="flowchart-node">
+                            <span class="text-2xl">큐</span>
+                            <h3 class="text-lg font-bold mt-2">Curador y Editor</h3>
+                            <p class="text-sm text-gray-400">Selecciona, refina y adapta las propuestas más valiosas generadas por la IA.</p>
+                        </div>
+                         <div class="flowchart-node">
+                            <span class="text-2xl">🤔</span>
+                            <h3 class="text-lg font-bold mt-2">Validador Crítico y Ético</h3>
+                            <p class="text-sm text-gray-400">Evalúa la relevancia, coherencia, veracidad y adecuación ética de los resultados.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <section id="education-implications">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Implicaciones Educativas</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La integración de la IA en la educación exige un rediseño pedagógico para capitalizar sus beneficios mientras se mitigan los riesgos. El objetivo es fomentar una nueva generación de creadores críticos y adaptables.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg card-glow">
+                        <h3 class="text-xl font-bold text-green-400 mb-4">✅ Oportunidades</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-green-400">▶</span><div><strong>Aprendizaje Personalizado:</strong> Adaptar contenidos y ritmo a las necesidades de cada estudiante.</div></li>
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-green-400">▶</span><div><strong>Catalizador de Ideas:</strong> Ayudar a los estudiantes a superar el "miedo a la página en blanco". <button id="geminiChallengeBtn" class="gemini-btn ml-2">✨ Generar Desafío</button></div></li>
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-green-400">▶</span><div><strong>Nuevas Competencias:</strong> Fomentar el pensamiento crítico, la alfabetización en IA y la ingeniería de prompts.</div></li>
+                        </ul>
+                    </div>
+                     <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg card-glow">
+                        <h3 class="text-xl font-bold text-red-400 mb-4">⚠️ Riesgos</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-red-400">▶</span><div><strong>Sobredependencia:</strong> Posible atrofia de habilidades creativas fundamentales si se delega el esfuerzo. <button id="geminiStrategyBtn" class="gemini-btn ml-2">✨ Sugerir Estrategia</button></div></li>
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-red-400">▶</span><div><strong>Homogeneización:</strong> Tendencia a producir trabajos estudiantiles menos diversos y más uniformes.</div></li>
+                            <li class="flex items-start"><span class="mr-3 mt-1 text-red-400">▶</span><div><strong>Brecha Digital:</strong> Exacerbar las desigualdades en acceso a tecnología y competencias digitales.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ethics">
+                <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Consideraciones Éticas Críticas</h2>
+                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-12">La simbiosis creativo-tecnológica plantea profundos dilemas sobre autoría, equidad y responsabilidad que deben ser abordados con urgencia para asegurar un desarrollo alineado con los valores humanos.</p>
+                 <div class="bg-[#1C2541] p-6 rounded-lg shadow-lg card-glow">
+                    <h3 class="text-xl font-bold text-white text-center mb-4">Principales Desafíos Éticos</h3>
+                    <div class="chart-container">
+                        <canvas id="ethicsChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-400 mt-4">La autoría y los sesgos algorítmicos son percibidos como los desafíos más inmediatos, seguidos de cerca por la transparencia y el impacto en el empleo creativo.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center text-gray-500 py-12 mt-16 border-t border-gray-700">
+             <p>Esta infografía visualiza los datos y conceptos del informe de investigación profunda sobre "Inteligencia Artificial y Creatividad Humana".</p>
+             <p>&copy; 2025. Creado como un ejemplo de visualización de datos SPA.</p>
+        </footer>
+
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="geminiModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="geminiModalTitle" class="modal-title"></h3>
+            <div id="geminiModalBody" class="modal-body">
+                <!-- Content will be injected here -->
+            </div>
+            <button id="geminiModalCloseBtn" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const wrapLabel = (label, maxLength) => {
+                if (label.length <= maxLength) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+            
+            const commonTooltipOptions = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: '#0B132B',
+                        titleColor: '#6FFFE9',
+                        bodyColor: '#E0E1DD',
+                        borderColor: '#3A506B',
+                        borderWidth: 1,
+                        padding: 10,
+                        titleFont: { weight: 'bold' },
+                        bodyFont: { size: 12 },
+                    }
+                }
+            };
+
+            const commonChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                ...commonTooltipOptions
+            };
+
+            const textColor = '#E0E1DD';
+            const gridColor = '#3A506B';
+
+            const strengthsCtx = document.getElementById('strengthsChart')?.getContext('2d');
+            if (strengthsCtx) {
+                new Chart(strengthsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Eficiencia y Velocidad', 'Exploración de Posibilidades', 'Automatización de Tareas Repetitivas'],
+                        datasets: [{
+                            label: 'Nivel de Fortaleza',
+                            data: [95, 90, 85],
+                            backgroundColor: ['#6FFFE9', '#5BC0BE', '#E0E1DD'], // Changed third color for visibility
+                            borderColor: '#1C2541',
+                            borderWidth: 2,
+                            hoverBackgroundColor: ['#A7FFF6', '#8CDDD8', '#FFFFFF'], // Adjusted hover for third color
+                            hoverBorderColor: '#FFFFFF'
+                        }]
+                    },
+                    options: {
+                        ...commonChartOptions,
+                        indexAxis: 'y',
+                        animation: {
+                            duration: 1500,
+                            easing: 'easeInOutQuart',
+                            delay: (context) => {
+                                let delay = 0;
+                                if (context.type === 'data' && context.mode === 'default') {
+                                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                                }
+                                return delay;
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                grid: { color: gridColor },
+                                ticks: { color: textColor }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { color: textColor, font: {size: 14} }
+                            }
+                        },
+                        plugins: {
+                             ...commonChartOptions.plugins,
+                             legend: { display: false }
+                        },
+                        onHover: (event, chartElement) => {
+                            event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                        }
+                    }
+                });
+            }
+
+            const synergyCtx = document.getElementById('synergyChart')?.getContext('2d');
+            if (synergyCtx) {
+                new Chart(synergyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Rendimiento Creativo General', 'Novedad de Ideas', 'Diversidad de Ideas'],
+                        datasets: [
+                            {
+                                label: 'Humano Solo (Base)',
+                                data: [100, 100, 100],
+                                backgroundColor: '#3A506B',
+                            },
+                            {
+                                label: 'Humano + IA (Cambio Relativo)',
+                                data: [127, 115, 14],
+                                backgroundColor: (context) => context.dataIndex === 2 ? '#F94144' : '#6FFFE9',
+                            }
+                        ]
+                    },
+                    options: {
+                       ...commonChartOptions,
+                       plugins: {
+                            ...commonChartOptions.plugins,
+                            legend: {
+                                labels: { color: textColor }
+                            },
+                            tooltip: {
+                                ...commonChartOptions.plugins.tooltip,
+                                callbacks: {
+                                     ...commonChartOptions.plugins.tooltip.callbacks,
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.datasetIndex === 1) {
+                                            const baseValue = context.chart.data.datasets[0].data[context.dataIndex];
+                                            const change = context.parsed.y - baseValue;
+                                            label += `${change > 0 ? '+' : ''}${change}%`;
+                                        } else {
+                                            label += `${context.parsed.y}% (Línea Base)`;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                       },
+                       scales: {
+                           x: {
+                               grid: { display: false },
+                               ticks: { color: textColor, font: {size: 14} }
+                           },
+                           y: {
+                               beginAtZero: true,
+                               grid: { color: gridColor },
+                               ticks: { color: textColor, callback: (value) => value + '%' }
+                           }
+                       }
+                    }
+                });
+            }
+
+            const ethicsCtx = document.getElementById('ethicsChart')?.getContext('2d');
+            if (ethicsCtx) {
+                new Chart(ethicsCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            wrapLabel('Autoría y Propiedad Intelectual', 16),
+                            wrapLabel('Sesgos Algorítmicos y Equidad', 16),
+                            wrapLabel('Transparencia y Explicabilidad', 16),
+                            wrapLabel('Impacto Socioeconómico y Empleo', 16),
+                            wrapLabel('Privacidad y Uso de Datos', 16)
+                        ],
+                        datasets: [{
+                            label: 'Nivel de Preocupación Ética',
+                            data: [9, 8.5, 7.5, 8, 7],
+                            backgroundColor: 'rgba(111, 255, 233, 0.2)',
+                            borderColor: '#6FFFE9',
+                            pointBackgroundColor: '#6FFFE9',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#6FFFE9'
+                        }]
+                    },
+                    options: {
+                        ...commonChartOptions,
+                        scales: {
+                            r: {
+                                angleLines: { color: gridColor },
+                                grid: { color: gridColor },
+                                pointLabels: { color: textColor, font: {size: 12} },
+                                ticks: {
+                                    backdropColor: 'rgba(0,0,0,0)',
+                                    color: textColor
+                                }
+                            }
+                        },
+                        plugins: {
+                            ...commonChartOptions.plugins,
+                             legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            // Gemini API Integration
+            const geminiModal = document.getElementById('geminiModal');
+            const geminiModalTitle = document.getElementById('geminiModalTitle');
+            const geminiModalBody = document.getElementById('geminiModalBody');
+            const geminiModalCloseBtn = document.getElementById('geminiModalCloseBtn');
+
+            function showModal(title, content) {
+                geminiModalTitle.textContent = title;
+                geminiModalBody.innerHTML = content; // Use innerHTML to allow basic formatting or loader
+                geminiModal.classList.remove('hidden');
+            }
+
+            function hideModal() {
+                geminiModal.classList.add('hidden');
+            }
+
+            function showLoadingInModal() {
+                geminiModalBody.innerHTML = '<div class="loader"></div> <p class="text-center text-gray-400">Generando ideas...</p>';
+            }
+
+            geminiModalCloseBtn.addEventListener('click', hideModal);
+
+            async function callGeminiApi(prompt, modalTitle) {
+                showModal(modalTitle, ''); // Show modal with title, body will be filled by loader
+                showLoadingInModal();
+
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // API Key will be injected by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("API Error Response:", errorData);
+                        throw new Error(`Error de API: ${response.status} ${response.statusText}. ${errorData?.error?.message || ''}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        geminiModalBody.textContent = text;
+                    } else {
+                        console.error("API Error or no content:", result);
+                        geminiModalBody.textContent = "No se pudo generar contenido o la respuesta está vacía.";
+                    }
+                } catch (error) {
+                    console.error("Fetch error:", error);
+                    geminiModalBody.textContent = `Error al contactar el servicio de IA: ${error.message}`;
+                }
+            }
+            
+            // Event Listeners for Human Creativity Section
+            document.getElementById('geminiOriginalityBtn')?.addEventListener('click', () => {
+                const prompt = "Genera un ejemplo conciso (máximo 3 frases y en español) de una idea o solución que demuestre originalidad en un contexto cotidiano o profesional.";
+                callGeminiApi(prompt, "✨ Ejemplo de Originalidad");
+            });
+
+            document.getElementById('geminiFluencyBtn')?.addEventListener('click', () => {
+                const prompt = "Genera un ejemplo conciso (máximo 3 frases y en español) de cómo se manifiesta la fluidez creativa al abordar un problema simple, listando varias ideas rápidamente.";
+                callGeminiApi(prompt, "✨ Ejemplo de Fluidez");
+            });
+
+            document.getElementById('geminiFlexibilityBtn')?.addEventListener('click', () => {
+                const prompt = "Genera un ejemplo conciso (máximo 3 frases y en español) de cómo la flexibilidad creativa permite ver un problema desde múltiples ángulos para encontrar una solución.";
+                callGeminiApi(prompt, "✨ Ejemplo de Flexibilidad");
+            });
+
+            document.getElementById('geminiElaborationBtn')?.addEventListener('click', () => {
+                const prompt = "Genera un ejemplo conciso (máximo 3 frases y en español) de cómo la elaboración transforma una idea simple en un concepto detallado y aplicable.";
+                callGeminiApi(prompt, "✨ Ejemplo de Elaboración");
+            });
+
+            // Event Listeners for AI Partner Section (Applications)
+            const appIdeaButtons = document.querySelectorAll('#ai-partner .gemini-btn');
+            appIdeaButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const appType = button.dataset.apptype;
+                    const prompt = `Genera una idea concisa (máximo 2 frases y en español) para un proyecto creativo utilizando IA en el campo de '${appType}'. Incluye un ejemplo de prompt que se podría usar.`;
+                    callGeminiApi(prompt, `✨ Ideas con IA para ${appType}`);
+                });
+            });
+
+
+            // Event Listeners for Education Implications Section
+            document.getElementById('geminiChallengeBtn')?.addEventListener('click', () => {
+                const prompt = "Genera un breve desafío creativo (máximo 3 frases y en español) para estudiantes de secundaria que combine dos asignaturas escolares de forma inesperada. El desafío debe ser inspirador y factible.";
+                callGeminiApi(prompt, "✨ Desafío Creativo Escolar");
+            });
+
+            document.getElementById('geminiStrategyBtn')?.addEventListener('click', () => {
+                const prompt = "Sugiere una estrategia educativa práctica y concisa (máximo 3 frases y en español) para que los docentes ayuden a los estudiantes a usar la IA como herramienta sin volverse sobredependientes de ella para la creatividad.";
+                callGeminiApi(prompt, "✨ Estrategia Educativa (Sobredependencia)");
+            });
+
+        });
+    </script>
+</body>
+</html>
