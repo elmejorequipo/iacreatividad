@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>IA: Creatividad Aumentada o Amenazada</title>
+    <meta name="description" content="Cápsula educativa sobre el impacto de la Inteligencia Artificial en la creatividad humana, diseñada para docentes de educación superior.">
+    <meta name="keywords" content="Inteligencia Artificial, Creatividad, Educación, EdTech, Diseño Instruccional, Creatividad Aumentada, UAGRM">
+    <meta name="author" content="Equipo de Desarrollo Creativo">
+
+    <!-- Google Fonts & Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- ======================================================= -->
+    <!-- ===================== CSS STYLES ====================== -->
+    <!-- ======================================================= -->
+    <style>
+        /* CSS Reset and Variables */
+        :root {
+            --dark-navy: #0A192F;
+            --light-navy: #112240;
+            --lightest-navy: #233554;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --green: #64ffda;
+            --green-tint: rgba(100, 255, 218, 0.1);
+            --font-sans: 'Poppins', sans-serif;
+            --font-mono: 'Roboto Slab', serif;
+            --fz-xxl: 28px;
+            --fz-xl: 24px;
+            --fz-lg: 20px;
+            --fz-md: 18px;
+            --fz-sm: 14px;
+            --fz-xs: 12px;
+            --border-radius: 4px;
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        
+        .sensory-reduced, .sensory-reduced * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-navy);
+            color: var(--light-slate);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        main {
+            padding: 2rem 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* General Section Styling */
+        .capsule-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 4rem 1rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+            border-top: 1px solid var(--lightest-navy);
+        }
+
+        .capsule-section.active {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-mono);
+            color: var(--lightest-slate);
+            margin-bottom: 1rem;
+        }
+        
+        h1 { font-size: 2.5rem; color: var(--green); }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p, li {
+            font-size: var(--fz-md);
+            text-align: justify;
+            max-width: 700px;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--green);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--white);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background-color: transparent;
+            border: 1px solid var(--green);
+            color: var(--green);
+            padding: 0.75rem 1.5rem;
+            font-size: var(--fz-md);
+            font-family: var(--font-mono);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--green-tint);
+        }
+
+        .btn:disabled {
+            border-color: var(--slate);
+            color: var(--slate);
+            cursor: not-allowed;
+            background-color: transparent;
+        }
+        
+        .btn-nav-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 700px;
+            margin-top: 2.5rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light-slate);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--light-navy);
+            border: 1px solid var(--lightest-navy);
+            border-radius: var(--border-radius);
+            color: var(--white);
+            font-size: var(--fz-md);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        input:invalid:not(:placeholder-shown) {
+            border-color: #e57373;
+        }
+        
+        input:valid:not(:placeholder-shown) {
+            border-color: #81c784;
+        }
+        .error-message {
+            color: #e57373;
+            font-size: var(--fz-sm);
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        /* Glassmorphism card style */
+        .glass-card {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 700px;
+            text-align: left;
+            margin: 1rem 0;
+        }
+
+        /* SVG styles */
+        .svg-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .svg-icon-large {
+            width: 150px;
+            height: 150px;
+            margin: 1.5rem auto;
+            display: block;
+        }
+        
+        .animated-brain-svg {
+            width: 250px;
+            height: 250px;
+        }
+        .animated-brain-svg .brain-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 5s ease-in-out forwards infinite;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--light-navy);
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid var(--green);
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            animation: slideIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        @keyframes slideIn {
+          from { transform: translateY(-50px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-options button {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        /* Quiz Styling */
+        .quiz-option {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem;
+            margin: 0.5rem auto;
+            text-align: left;
+            border: 1px solid var(--lightest-navy);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .quiz-option:hover {
+            border-color: var(--green);
+            background-color: var(--green-tint);
+        }
+        .quiz-option.selected {
+            border-color: var(--green);
+            background-color: var(--green-tint);
+        }
+        .quiz-option.correct {
+            border-color: #81c784;
+            background-color: rgba(129, 199, 132, 0.1);
+        }
+        .quiz-option.incorrect {
+            border-color: #e57373;
+            background-color: rgba(229, 115, 115, 0.1);
+        }
+
+        /* iFrame styling */
+        .iframe-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem 0;
+            border: 1px solid var(--lightest-navy);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Fixed elements */
+        #floating-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        #menu-toggle {
+            background: var(--green);
+            color: var(--dark-navy);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #menu-nav {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            background-color: var(--light-navy);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            list-style: none;
+            margin: 0;
+            width: 200px;
+        }
+        
+        #menu-nav a {
+            display: block;
+            padding: 0.5rem;
+            color: var(--light-slate);
+        }
+        
+        #menu-nav a:hover {
+            color: var(--green);
+        }
+        
+        #floating-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 998;
+        }
+        
+        #chatbot-btn {
+            background-color: var(--green);
+            color: var(--dark-navy);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        #chatbot-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--light-navy);
+            z-index: 1001;
+        }
+        
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--green-tint));
+            transition: width 0.5s ease-out;
+        }
+        
+        /* Utility Classes */
+        .text-green { color: var(--green); }
+        .text-center { text-align: center; }
+        
+        /* Cierre section - Metacognition */
+        .metacognition-box {
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        .metacognition-box label {
+            display: block;
+            text-align: left;
+            font-size: var(--fz-lg);
+            color: var(--light-slate);
+            margin-bottom: 0.5rem;
+        }
+        .metacognition-box textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            background-color: var(--light-navy);
+            border: 1px solid var(--lightest-navy);
+            border-radius: var(--border-radius);
+            color: var(--white);
+            font-size: var(--fz-md);
+            font-family: var(--font-sans);
+            resize: vertical;
+        }
+        
+        /* Rubric Table */
+        .rubric-table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem 0;
+            font-size: var(--fz-sm);
+        }
+        .rubric-table th, .rubric-table td {
+            border: 1px solid var(--lightest-navy);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .rubric-table th {
+            background-color: var(--lightest-navy);
+            color: var(--dark-navy);
+            font-family: var(--font-mono);
+        }
+        .rubric-table td {
+            vertical-align: top;
+        }
+        
+        /* Badges */
+        .badge-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+        .badge.earned {
+            opacity: 1;
+        }
+        .badge svg {
+            width: 80px;
+            height: 80px;
+        }
+        .badge span {
+            margin-top: 0.5rem;
+            font-size: var(--fz-sm);
+        }
+        
+        /* Certificate & Report (Hidden until generated) */
+        #certificate-wrapper, #report-wrapper {
+            display: none; /* Only used for PDF generation */
+        }
+        .printable-page {
+            width: 8.5in;
+            height: 11in;
+            padding: 0.8in;
+            background-color: #fff;
+            color: #333;
+            font-family: 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            p, li { font-size: var(--fz-md); }
+            main { padding: 1rem 0.5rem; }
+            .capsule-section { padding: 2rem 0.5rem; }
+            .btn-nav-group { flex-direction: column; gap: 1rem; align-items: center;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ======================================================= -->
+    <!-- ============== FLOATING/GLOBAL ELEMENTS =============== -->
+    <!-- ======================================================= -->
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    
+    <div id="floating-menu">
+        <button id="menu-toggle" aria-label="Abrir menú de navegación">☰</button>
+        <ul id="menu-nav">
+            <li><a href="#" class="nav-link" data-section="portada">Inicio</a></li>
+            <li><a href="#" class="nav-link" data-section="introduccion">Introducción</a></li>
+            <li><a href="#" class="nav-link" data-section="activacion">Activación</a></li>
+            <li><a href="#" class="nav-link" data-section="desarrollo-practico">Desarrollo Práctico</a></li>
+            <li><a href="#" class="nav-link" data-section="desarrollo-teorico">Desarrollo Teórico</a></li>
+            <li><a href="#" class="nav-link" data-section="evaluacion-formativa">Evaluación Formativa</a></li>
+            <li><a href="#" class="nav-link" data-section="evaluacion">Evaluación Final</a></li>
+            <li><a href="#" class="nav-link" data-section="sintesis">Síntesis</a></li>
+            <li><a href="#" class="nav-link" data-section="cierre">Cierre</a></li>
+            <li><a href="#" class="nav-link" data-section="reporte-final">Mi Reporte</a></li>
+            <li><hr style="border-color: var(--lightest-navy);"></li>
+            <li><button id="toggle-motion-btn" class="btn" style="width: 100%; margin:0.5rem 0;">Reducir Movimiento</button></li>
+            <li><button id="clear-data-btn" class="btn" style="width: 100%; margin:0.5rem 0;">Borrar Mis Datos</button></li>
+        </ul>
+    </div>
+
+    <div id="floating-chatbot">
+        <a id="chatbot-btn" href="https://poe.com/Prof_Luis_Andia" target="_blank" rel="noopener noreferrer" aria-label="Abrir chatbot de ayuda">
+            <!-- Embedded SVG for Chatbot Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </a>
+    </div>
+
+    <main id="app-container">
+        <!-- ======================================================= -->
+        <!-- ============== SECTION 1: INGRESO FORMULARIO =========== -->
+        <!-- ======================================================= -->
+        <section id="ingreso" class="capsule-section active">
+            <div class="glass-card text-center">
+                <h2>¡Bienvenida/o a la Cápsula Educativa!</h2>
+                <p>Estás a punto de iniciar un viaje fascinante por el mundo de la <strong class="text-green">Inteligencia Artificial y la Creatividad</strong>. Esta experiencia está diseñada para desafiar tus percepciones y potenciar tu práctica docente.</p>
+                <p style="font-size: var(--fz-sm); margin-top: 2rem;">Para poder generar tu certificado de participación al finalizar, por favor, completa los siguientes datos. ¡Son el pasaporte a tu reconocimiento!</p>
+                <form id="user-form" style="margin-top: 2rem;">
+                    <div class="form-group">
+                        <label for="fullName">Nombre completo</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Ej: Dra. Elena Vargas" required>
+                        <span class="error-message">Por favor, introduce tu nombre completo.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="Ej: elena.vargas@uagrm.edu.bo" required>
+                        <span class="error-message">Introduce un correo electrónico válido.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono (Opcional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Ej: 71234567">
+                    </div>
+                    <button type="submit" class="btn">¡Comenzar la Aventura!</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ================ SECTION 2: PORTADA =================== -->
+        <!-- ======================================================= -->
+        <section id="portada" class="capsule-section">
+            <h1 style="font-size: 3rem;">IA: Creatividad Aumentada o Amenaza</h1>
+             <!-- Embedded animated SVG -->
+             <svg class="animated-brain-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path class="brain-path" fill="none" stroke="var(--green)" stroke-width="2" d="M100 20 C 50 20, 20 50, 20 100 C 20 150, 50 180, 100 180 C 150 180, 180 150, 180 100 C 180 50, 150 20, 100 20 Z" />
+                <path class="brain-path" stroke="var(--light-slate)" stroke-width="1.5" stroke-linecap="round" fill="none" d="
+                    M 100, 180
+                    C 80, 160, 70, 130, 80, 100
+                    C 90, 70, 110, 60, 125, 80
+                    C 140, 100, 120, 140, 100, 150
+                    M 80, 100
+                    C 70, 80, 50, 90, 55, 110
+                    C 60, 130, 80, 140, 90, 130
+                    M 125, 80
+                    C 140, 70, 150, 80, 155, 100
+                    C 160, 120, 140, 130, 130, 120
+                    M 100, 20
+                    C 90, 40, 85, 60, 90, 80
+                    M 100, 20
+                    C 110, 40, 115, 60, 110, 80
+                "/>
+            </svg>
+            <h2 id="welcome-user" style="margin-top:2rem;">¡Hola, aventurero/a del conocimiento!</h2>
+            <p>Prepárate para explorar la frontera donde la mente humana y la máquina convergen.</p>
+            <button class="btn btn-next" data-next="introduccion">Estoy Lista/o</button>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ================ SECTION 3: INTRODUCCIÓN =================== -->
+        <!-- ======================================================= -->
+        <section id="introduccion" class="capsule-section">
+            <h2 class="text-green">Embarquémonos en el viaje</h2>
+            <div class="glass-card">
+                <h3>Objetivos de Aprendizaje</h3>
+                <p>Al finalizar esta cápsula, serás capaz de:</p>
+                <ul>
+                    <li><strong>Analizar</strong> las interacciones sinérgicas entre la creatividad humana y la inteligencia artificial para potenciar las estrategias pedagógicas en la educación superior.</li>
+                    <li><strong>Evaluar críticamente</strong> las implicaciones éticas y pedagógicas del uso de IA generativa en trabajos académicos y creativos, fomentando un uso responsable.</li>
+                    <li><strong>Diseñar</strong> nuevas metodologías de evaluación y consignas que integren herramientas de IA, moviendo el enfoque del producto al proceso.</li>
+                    <li><strong>Aplicar</strong> conceptos de "creatividad aumentada" para transformar la práctica docente, usando la IA como un colaborador en la investigación y creación de contenidos.</li>
+                </ul>
+                 <h3>Público Objetivo</h3>
+                <p>Esta cápsula ha sido diseñada especialmente para <strong class="text-green">profesores de educación superior</strong>, como tú, que buscan innovar y adaptarse a los nuevos paradigmas tecnológicos en el aula.</p>
+            </div>
+            
+            <div class="glass-card" style="margin-top: 2rem;">
+                <h3>Punto de Partida: Un Dilema Cruceño</h3>
+                <p>Para encender los motores, te invito a leer esta historia. Se desarrolla en un lugar que quizás te resulte familiar: los pasillos de la U.A.G.R.M., y aborda un problema muy nuestro: los cortes de agua de SAGUAPAC. A través de este diálogo, nos sumergiremos en el corazón del debate.</p>
+                
+                <details>
+                    <summary style="cursor:pointer; color: var(--green); font-family:var(--font-mono);">Leer "El Informe Perfecto" ▶</summary>
+                    <div style="border-left: 2px solid var(--green); padding-left: 1rem; margin-top: 1rem; text-align:justify;">
+                        <h4>INT. OFICINA DE LA DRA. VARGAS - TARDE</h4>
+                        <p><i>La oficina de Elena está llena de libros sobre teoría social y mapas de Santa Cruz. Sobre su escritorio, una pila de informes. Sostiene uno con desconcierto. El DR. MATEO RÍOS asoma por la puerta.</i></p>
+                        <p><strong>MATEO:</strong> Doctora, ¿buen día? Vengo en mi peregrinaje habitual por un poco de ese café suyo. Le juro que es lo único verdaderamente análogo y funcional que nos queda en esta ala del campus.</p>
+                        <p><strong>ELENA:</strong> (Sin apartar la vista del informe) Sírvasle con confianza, Doctor. Pero le advierto que mi paciencia está más intermitente que el servicio de agua en la ciudad.</p>
+                        <p><strong>MATEO:</strong> (Ríe) No me diga más. A estas alturas, creerle a SAGUAPAC es como creerle a mi ex. Dice que cortaremos y al final no corta nada, y me deja con los baldes llenos.</p>
+                        <p><strong>ELENA:</strong> (Esboza una media sonrisa) Ojalá fuera tan sencillo. Esto es peor. Mire. (Señala un informe: "Análisis del Impacto Socioeconómico de los Cortes Programados de SAGUAPAC en la Zona Sur"). Es de Javier. Primer año. Se supone que debía hacer un análisis cualitativo... y el informe es perfecto.</p>
+                        <p><strong>MATEO:</strong> ¿Perfecto es malo ahora? Pensé que eso era lo que buscábamos.</p>
+                        <p><strong>ELENA:</strong> Es una perfección imposible. La redacción es impecable. Cruza datos que requerirían semanas de trabajo. Y los testimonios... ¡son arquetipos, no personas! Cita a una "madre de familia" que habla como un libro de economía. Esto no es trabajo de campo. Esto es una simulación. Es una IA.</p>
+                        <p><strong>MATEO:</strong> (Asiente lentamente) Ya veo. El fantasma en la máquina.</p>
+                        <p><strong>ELENA:</strong> ¡Exacto! ¡El estudiante no ha pisado la calle! La sociología se hace con los pies en el barro. Mi primer impulso es anularlo por fraude.</p>
+                        <p><strong>MATEO:</strong> (Pensativo) Entiendo su dilema. Pero, ¿me permite ver la consigna que les dio?</p>
+                        <p><i>Elena le entrega la hoja. Mateo la lee.</i></p>
+                        <p><strong>MATEO:</strong> "Realizar un informe de impacto socioeconómico... incluyendo análisis de datos y testimonios...". Doctora, con todo respeto... la consigna describe perfectamente una tarea en la que una IA es experta.</p>
+                        <p><strong>ELENA:</strong> ¿Me está diciendo que la culpa es mía? ¡El alumno debía salir a investigar!</p>
+                        <p><strong>MATEO:</strong> No, la responsabilidad es compartida. El paradigma cambió. Quizás el estudiante no fue al campo, pero... ¿y si pasó diez horas enseñándole a la IA qué es un "vecino del D-8" o cómo se queja un "comerciante de mercado"? Quizás su trabajo no fue recoger testimonios, sino construir los modelos para generarlos. Es una especie de... etnografía digital.</p>
+                        <p><i>Elena lo mira, sus defensas intelectuales se tambalean.</i></p>
+                         <p><strong>MATEO:</strong> En vez de anularlo, ¿por qué no lo cita y le pide que le defienda su metodología? Que le muestre sus prompts. Que le argumente por qué su simulación es una representación válida. Quizás nos sorprenda.</p>
+                        <p><strong>ELENA:</strong> Entonces... si la forma de investigar la realidad está cambiando... nosotros tenemos que cambiar la forma en que la enseñamos.</p>
+                        <p><strong>MATEO:</strong> Ese es el meollo del asunto. La pregunta real no es si el alumno hizo la tarea. Es... frente a un estudiante que puede simular la realidad con IA, nuestra capacidad como docentes... <strong class="text-green">¿está aumentada o está amenazada?</strong></p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="portada">Anterior</button>
+                <button class="btn btn-next" data-next="activacion">Siguiente</button>
+            </div>
+        </section>
+
+        
+        <!-- ======================================================= -->
+        <!-- ============== SECTION 4: ACTIVACIÓN =============== -->
+        <!-- ======================================================= -->
+        <section id="activacion" class="capsule-section">
+            <h2 class="text-green">Activando Conocimientos Previos</h2>
+            <p>Antes de sumergirnos en nuevo contenido, vamos a despertar lo que ya sabes. Relaciona los conceptos de la columna izquierda con sus definiciones en la derecha. ¡A jugar!</p>
+            <div class="glass-card" style="padding:1rem;">
+                <p class="text-center"><strong>Instrucciones:</strong> Haz clic en un término y luego en su definición correspondiente para formar una pareja. </p>
+                <div class="iframe-container" style="aspect-ratio: 795/690; max-width:795px;">
+                     <iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="100%" height="100%" frameborder="0" src="https://es.educaplay.com/juego/24152723-juego_de_parejas_ia_y_creatividad.html"></iframe>
+                </div>
+            </div>
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="introduccion">Anterior</button>
+                <button class="btn btn-next" data-next="desarrollo-practico">Siguiente</button>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ========== SECTION 5: DESARROLLO PRÁCTICO =========== -->
+        <!-- ======================================================= -->
+        <section id="desarrollo-practico" class="capsule-section">
+            <h2 class="text-green">Conectando con la Realidad</h2>
+            <div class="glass-card">
+                 <h3>Reflexionemos un Momento...</h3>
+                 <p>La historia de la Dra. Vargas y el Dr. Mateo no es ficción lejana. ¿Te has enfrentado a un trabajo estudiantil sospechosamente "perfecto"? ¿Has sentido esa mezcla de asombro y alarma al pensar en el origen de un texto?</p>
+                 <p>La IA no es una tecnología del futuro; está en los bolsillos y en las pantallas de nuestros estudiantes, aquí y ahora. Esto nos obliga a preguntarnos:
+                 ¿Cómo distinguimos el esfuerzo genuino del fraude sofisticado? Más importante aún, ¿cómo transformamos esta "amenaza" en una oportunidad para un aprendizaje más profundo y relevante?</p>
+                 <p>Con estas preguntas en mente, te invito a ver la siguiente charla de Julián Larrauri. Él nos dará un marco para empezar a construir las respuestas.</p>
+            </div>
+
+            <h3>Video-Quiz Interactivo</h3>
+            <p>El video se pausará en 4 momentos clave para que respondas a una pregunta. <strong class="text-green">No podrás continuar si no respondes correctamente</strong>. ¡Mucha atención!</p>
+            
+            <div id="video-quiz-container" class="iframe-container" style="max-width: 800px;">
+                <div id="player"></div>
+            </div>
+
+            <!-- Modal for video quiz questions -->
+            <div id="video-quiz-modal" class="modal">
+                <div class="modal-content glass-card">
+                    <h3 id="video-quiz-question"></h3>
+                    <div id="video-quiz-options" class="modal-options"></div>
+                    <p id="video-quiz-feedback" class="error-message"></p>
+                </div>
+            </div>
+
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="activacion">Anterior</button>
+                <button class="btn btn-next" data-next="desarrollo-teorico">Siguiente</button>
+            </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- ========= SECTION 6: DESARROLLO TEÓRICO ========= -->
+        <!-- ======================================================= -->
+        <section id="desarrollo-teorico" class="capsule-section">
+            <h2 class="text-green">Profundizando el Conocimiento</h2>
+            <p>Ahora que hemos visto una perspectiva inspiradora, es hora de construir sobre ella con un marco teórico sólido. Explora los siguientes temas para dominar el nexo entre IA y creatividad.</p>
+
+            <div class="glass-card">
+                <details>
+                    <summary>1. La Convergencia de IA y Creatividad Humana</summary>
+                    <p>La intersección entre la inteligencia artificial (IA) y la creatividad humana no es un concepto futurista, sino una realidad presente que está redefiniendo los límites de la innovación. Históricamente, la creatividad se consideraba un dominio exclusivamente humano, asociado a la inspiración, la emoción y la intuición. Sin embargo, con el advenimiento de la IA generativa (modelos como GPT, DALL-E, Midjourney), las máquinas ahora pueden producir textos, imágenes, música y códigos que son novedosos, coherentes y, en ocasiones, indistinguibles de las creaciones humanas. Esta convergencia no implica un reemplazo, sino una <strong>colaboración sinérgica</strong>. La IA actúa como una prótesis cognitiva, un "exocerebro" que puede procesar vastas cantidades de información, identificar patrones ocultos y generar miles de variaciones en segundos. El humano, a su vez, aporta el juicio crítico, la visión, la intención y el contexto cultural, guiando a la IA y curando sus resultados.</p>
+                    <blockquote><p>"Los ordenadores son inútiles. Solo pueden darte respuestas", dijo Picasso. En esta nueva era, la habilidad humana no está en encontrar la respuesta, sino en formular la pregunta perfecta y tener el criterio para elegir la mejor respuesta que la IA ofrece.</p></blockquote>
+                    <p><strong>Preguntas de Comprensión:</strong><br>1. ¿Por qué la convergencia IA-humano se describe como una "colaboración sinérgica" y no como un reemplazo?<br>2. ¿Cuál es el rol del humano en la colaboración creativa con la IA?<br>3. ¿Qué habilidad, según Picasso, se vuelve primordial en la era de la IA?<br><strong>Pregunta de Aplicación:</strong><br>Describe un escenario en tu disciplina donde un estudiante podría usar IA para potenciar su creatividad en un proyecto, en lugar de simplemente "copiar" una respuesta.</p>
+                    <hr style="margin:1rem 0; border-color:var(--lightest-navy)">
+                    <footer>
+                    <p style="font-size:var(--fz-xs);">Boden, M. A. (2018). <em>Artificial intelligence: A very short introduction.</em> Oxford University Press. <a href="https://global.oup.com/academic/product/artificial-intelligence-a-very-short-introduction-9780198801931" target="_blank">[Enlace]</a></p>
+                    </footer>
+                </details>
+            </div>
+            
+            <div class="glass-card">
+                <details>
+                    <summary>2. Desentrañando la Creatividad Humana</summary>
+                    <p>La creatividad humana no es un rayo místico de inspiración, sino un proceso cognitivo complejo. La Dra. Margaret Boden, una autoridad en la materia, la clasifica en tres tipos: <strong>combinacional, exploratoria y transformacional.</strong></p>
+                    <ul>
+                        <li><strong>Creatividad Combinacional:</strong> Consiste en generar ideas nuevas al combinar de manera inusual conceptos familiares (p.ej., el "cronut" - croissant + donut).</li>
+                        <li><strong>Creatividad Exploratoria:</strong> Implica explorar los límites de un espacio conceptual existente, siguiendo sus reglas para generar artefactos nuevos dentro de ese estilo (p.ej., un nuevo soneto de Shakespeare que sigue sus reglas métricas y temáticas).</li>
+                        <li><strong>Creatividad Transformacional:</strong> Es la forma más rara y profunda. Implica alterar una o más dimensiones del espacio conceptual, rompiendo las reglas para crear algo radicalmente nuevo (p.ej., el paso de la pintura representacional al cubismo).</li>
+                    </ul>
+                     <p>La IA generativa actual es excepcionalmente buena en la creatividad combinacional y exploratoria. Puede mezclar estilos, explorar variaciones y producir resultados dentro de marcos definidos a una velocidad sobrehumana. Sin embargo, la creatividad transformacional, que requiere una comprensión profunda del contexto, la cultura y el "porqué" de las reglas, sigue siendo un bastión humano.</p>
+                     <p><strong>Preguntas de Comprensión:</strong><br>1. Describe con tus palabras los tres tipos de creatividad según Boden.<br>2. ¿En qué tipos de creatividad sobresale actualmente la IA generativa?<br>3. ¿Por qué la creatividad transformacional es más difícil para una IA?<br><strong>Pregunta de Aplicación:</strong><br>Piensa en un avance importante en tu campo. ¿Lo clasificarías como creatividad combinacional, exploratoria o transformacional? Justifica tu respuesta.</p>
+                    <hr style="margin:1rem 0; border-color:var(--lightest-navy)">
+                    <footer>
+                    <p style="font-size:var(--fz-xs);">Boden, M. A. (2004). <em>The Creative Mind: Myths and Mechanisms.</em> Routledge. <a href="https://www.routledge.com/The-Creative-Mind-Myths-and-Mechanisms/Boden/p/book/9780415314534" target="_blank">[Enlace]</a></p>
+                    </footer>
+                </details>
+            </div>
+
+            <div class="glass-card">
+                 <details>
+                    <summary>3. La IA como Herramienta y Colaborador</summary>
+                     <p>En el proceso creativo, podemos visualizar a la IA desempeñando múltiples roles:</p>
+                     <ul>
+                        <li><strong>El Muso Infinito:</strong> Proporciona inspiración ilimitada (brainstorming, borradores iniciales, imágenes conceptuales).</li>
+                        <li><strong>El Investigador Incansable:</strong> Sintetiza grandes volúmenes de información, encuentra conexiones y presenta datos de formas novedosas.</li>
+                        <li><strong>El Asistente Técnico:</strong> Se encarga de tareas tediosas y técnicas (limpiar código, corregir gramática, generar variaciones de diseño), liberando al humano para que se concentre en la estrategia y la visión.</li>
+                        <li><strong>El Sparring Partner Crítico:</strong> Permite probar hipótesis y escenarios de forma rápida, ofreciendo "contra-argumentos" o perspectivas alternativas basadas en sus datos de entrenamiento.</li>
+                    </ul>
+                    <p>Como vimos en el caso del "Informe Perfecto", el estudiante Javier pudo haber utilizado la IA en todos estos roles. La clave pedagógica, como sugiere el Dr. Ríos, no es prohibir estas herramientas, sino enseñar a los estudiantes a documentar y justificar su uso, convirtiendo el "prompt engineering" y la curación de resultados en una habilidad académica evaluable. Se pasa de evaluar solo el producto final a evaluar también <strong class="text-green">el proceso de colaboración humano-IA</strong>.</p>
+                     <p><strong>Preguntas de Comprensión:</strong><br>1. Nombra y describe dos de los cuatro roles que la IA puede desempeñar en el proceso creativo.<br>2. ¿Cómo cambia el enfoque de la evaluación si aceptamos el uso de la IA como colaborador?<br>3. ¿Qué nueva habilidad se vuelve crucial para los estudiantes en este nuevo paradigma?<br><strong>Pregunta de Aplicación:</strong><br>Para un proyecto de investigación final en tu materia, ¿cómo podrías rediseñar la consigna para que los estudiantes usen la IA como "investigador incansable" y deban reportar su metodología de interacción con la herramienta?</p>
+                    <hr style="margin:1rem 0; border-color:var(--lightest-navy)">
+                     <footer>
+                     <p style="font-size:var(--fz-xs);">Epstein, Z., et al. (2023). Art and the science of generative AI. <em>Science, 380</em>(6650), 1110-1111. <a href="https://www.science.org/doi/10.1126/science.adh4451" target="_blank">[Enlace]</a></p>
+                    </footer>
+                </details>
+            </div>
+            
+             <div class="glass-card">
+                 <details>
+                    <summary>4. Creatividad Aumentada y Metacreatividad</summary>
+                     <p>El término <strong>"Creatividad Aumentada"</strong> se refiere al enriquecimiento de la capacidad creativa humana mediante la colaboración con sistemas de IA. No se trata de que la IA sea creativa por sí misma, sino de que su uso potencia y expande las habilidades humanas. Investigaciones de IBM y el MIT han demostrado que los equipos de diseño que utilizan IA como colaborador generativo producen soluciones más diversas e innovadoras que los equipos que no la utilizan.</p>
+                     <p>Esto nos lleva al concepto de <strong>"Metacreatividad"</strong>: la habilidad de diseñar y guiar procesos creativos. En el contexto de la IA, el creador humano se convierte en un director de orquesta. Su tarea ya no es tocar cada instrumento (generar cada frase o cada pincelada), sino definir la visión, seleccionar los algoritmos adecuados, diseñar los prompts (la partitura) y curar, refinar e integrar los resultados que la orquesta (la IA) produce. Esta es una habilidad de orden superior que requiere tanto comprensión técnica como sensibilidad artística.</p>
+                    <p><strong>Preguntas de Comprensión:</strong><br>1. Define "Creatividad Aumentada".<br>2. ¿Qué es la "Metacreatividad" y qué analogía se puede usar para describirla?<br>3. ¿Qué tipo de habilidad representa la metacreatividad?<br><strong>Pregunta de Aplicación:</strong><br>Describe cómo podrías diseñar una evaluación que no mida la capacidad del estudiante para escribir un ensayo (que puede ser delegado a la IA), sino su "metacreatividad" para producir ese ensayo (ej. pidiéndole que entregue su proceso, sus prompts, y una justificación de por qué eligió ciertas respuestas de la IA sobre otras).</p>
+                    <hr style="margin:1rem 0; border-color:var(--lightest-navy)">
+                    <footer>
+                    <p style="font-size:var(--fz-xs);">Shneiderman, B. (2022). <em>Human-Centered AI.</em> Oxford University Press. <a href="https://global.oup.com/academic/product/human-centered-ai-9780192844822" target="_blank">[Enlace]</a></p>
+                    </footer>
+                </details>
+            </div>
+
+            <!-- More theory cards for topics 5, 6, 7 -->
+
+             <div class="text-center" style="margin-top: 3rem;">
+                <h3>Continúa tu Investigación</h3>
+                <p>Para aquellos que deseen sumergirse aún más profundo, hemos compilado un documento con investigaciones adicionales y hemos preparado un cuaderno de notas interactivo.</p>
+                <a href="https://docs.google.com/document/d/e/2PACX-1vTKCs8TE4JK9z4RJsUSHyglDtFN6EJGQMO-maFNEd3yC6D3MZnHPKZFjSlXOs_rYMabKrhiislgMU1y/pub" target="_blank" class="btn">Investigación de Google Gemini</a>
+                <a href="https://notebooklm.google.com/notebook/c4d90a4e-4c2b-4526-9b60-93548a358137" target="_blank" class="btn">Cuaderno de NotebookLM</a>
+             </div>
+             
+
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="desarrollo-practico">Anterior</button>
+                <button class="btn btn-next" data-next="evaluacion-formativa">Siguiente</button>
+            </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- =========== SECTION 7: EVALUACIÓN FORMATIVA ========== -->
+        <!-- ======================================================= -->
+        <section id="evaluacion-formativa" class="capsule-section">
+            <h2 class="text-green">Aplicando lo Aprendido</h2>
+            <div class="glass-card">
+                 <h3>Reflexión y Autoevaluación</h3>
+                 <p>Antes del examen final, tómate un momento. ¿Cómo resuenan estas ideas contigo? Piensa en un proyecto reciente de tus estudiantes. ¿Cómo podría haber sido diferente —quizás más rico o más complejo— si hubieran utilizado la IA de manera guiada y ética como un socio creativo?</p>
+                 <p>La siguiente actividad no es para una nota, sino para que consolides tus conocimientos de una forma lúdica. ¡Pon a prueba lo que has aprendido hasta ahora!</p>
+            </div>
+            
+            <div class="iframe-container" style="min-height: 635px;">
+                 <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:8px;"><iframe src="https://quizizz.com/embed/quiz/66412e84d1e2e1e07b8b4200" title="Creatividad & IA - Quizizz" style="flex:1;" frameBorder="0" allowfullscreen></iframe></div>
+            </div>
+
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="desarrollo-teorico">Anterior</button>
+                <button class="btn btn-next" data-next="evaluacion">Siguiente</button>
+            </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- ============== SECTION 8: EVALUACIÓN FINAL ============= -->
+        <!-- ======================================================= -->
+        <section id="evaluacion" class="capsule-section">
+            <h2 class="text-green">Evaluación Final</h2>
+            <div id="eval-intro" class="glass-card">
+                 <p>Has llegado al desafío final. ¡Es hora de demostrar lo que has aprendido, colega!</p>
+                 <ul>
+                     <li><strong>6 preguntas</strong> de selección múltiple.</li>
+                     <li>Necesitas un <strong class="text-green">70% (4 de 6)</strong> para aprobar.</li>
+                     <li>Tienes <strong class="text-green">3 intentos</strong> para lograrlo.</li>
+                     <li>Hay un límite de tiempo de <strong class="text-green">30 minutos</strong> por intento.</li>
+                 </ul>
+                 <p id="attempts-left">¡Mucha suerte! Que la curiosidad te acompañe.</p>
+                 <button id="start-eval-btn" class="btn">Comenzar Evaluación</button>
+            </div>
+            
+            <div id="eval-quiz-container" style="display: none; width:100%;">
+                <div style="display: flex; justify-content: space-between; align-items:center; width:100%; max-width:700px; margin-bottom:1rem;">
+                    <h3 id="question-counter"></h3>
+                    <div id="timer" class="text-green" style="font-family:var(--font-mono);">30:00</div>
+                </div>
+                <div class="glass-card" style="width:100%;">
+                     <h3 id="eval-question-text" style="text-align:center;"></h3>
+                     <div id="eval-options-container"></div>
+                </div>
+                <div id="eval-feedback" style="margin-top:1rem; min-height: 24px;"></div>
+                 <div class="btn-nav-group">
+                    <button id="eval-prev-btn" class="btn">Anterior</button>
+                    <button id="eval-next-btn" class="btn">Siguiente</button>
+                 </div>
+                 <button id="eval-submit-btn" class="btn" style="display:none;">Finalizar Intento</button>
+            </div>
+            
+            <div id="eval-results-container" style="display: none;">
+                 <h2 id="eval-result-title"></h2>
+                 <p id="eval-result-score"></p>
+                 <p id="eval-result-message"></p>
+                 <button id="eval-retry-btn" class="btn" style="display:none;">Intentar de Nuevo</button>
+                 <button id="eval-proceed-btn" class="btn btn-next" style="display:none;" data-next="sintesis">Continuar a la Síntesis</button>
+            </div>
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="evaluacion-formativa">Anterior</button>
+             </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ============== SECTION 9: SÍNTESIS =================== -->
+        <!-- ======================================================= -->
+        <section id="sintesis" class="capsule-section">
+            <h2 class="text-green">Síntesis y Próximos Pasos</h2>
+            <div class="glass-card">
+                <h3>Ideas Clave para Recordar</h3>
+                <p>¡Felicidades por llegar hasta aquí! Repasemos las joyas de conocimiento que hemos desenterrado:</p>
+                <ol>
+                    <li><strong>La IA es un Colaborador, no un Sustituto:</strong> La verdadera magia ocurre en la sinergia. El rol del educador y del estudiante evoluciona hacia la formulación de preguntas, el juicio crítico y la visión, usando la IA para potenciar, no para reemplazar, el intelecto humano.</li>
+                    <li><strong>Del Producto al Proceso:</strong> La evaluación debe cambiar. En lugar de enfocarnos únicamente en el ensayo o proyecto final (el "qué"), debemos aprender a valorar y medir el proceso de co-creación con la IA (el "cómo"), incluyendo la habilidad para crear prompts efectivos y curar resultados.</li>
+                    <li><strong>Habilidades del Futuro:</strong> La destreza, el criterio y la visión son las nuevas habilidades cruciales. El trabajo duro de "transpiración" que mencionaba Edison no desaparece; se transforma en practicar estas nuevas competencias para saber guiar a la herramienta y elegir la respuesta "correcta".</li>
+                </ol>
+            </div>
+            
+             <div class="text-center" style="margin: 2rem 0;">
+                <p>Para una vista más visual, explora nuestra infografía resumen.</p>
+                <a href="https://elmejorequipo.github.io/iacreatividad/infografia.html" target="_blank" class="btn">Ver Infografía</a>
+            </div>
+
+            <h3>Podcast: Un Cierre Auditivo</h3>
+             <p>Escucha este breve podcast para una reflexión final sobre el tema.</p>
+             <div class="iframe-container" style="height: auto;">
+                 <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2107792848&color=%2364ffda&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+             </div>
+
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="evaluacion">Anterior</button>
+                <button class="btn btn-next" data-next="cierre">Siguiente</button>
+            </div>
+        </section>
+
+
+        <!-- ======================================================= -->
+        <!-- ============ SECTION 10: CIERRE Y REFLEXIÓN ============ -->
+        <!-- ======================================================= -->
+        <section id="cierre" class="capsule-section">
+             <h2 class="text-green">Cierre y Metacognición</h2>
+             <p>El aprendizaje más duradero es el que se reflexiona. Tómate un momento para responder a estas preguntas. Tus respuestas no serán calificadas, son para ti.</p>
+             
+             <form id="metacognition-form">
+                 <div class="metacognition-box">
+                    <label for="meta-q1">1. Después de esta cápsula, ¿cómo ha cambiado tu percepción sobre el rol de la IA en tu práctica docente? ¿Qué nuevos miedos o esperanzas han surgido?</label>
+                    <textarea id="meta-q1" name="meta-q1" placeholder="Tu reflexión aquí..."></textarea>
+                 </div>
+                  <div class="metacognition-box">
+                    <label for="meta-q2">2. Describe una actividad de aprendizaje concreta que rediseñarías en una de tus asignaturas para incorporar la IA como una herramienta de "creatividad aumentada". ¿Cuál sería el nuevo objetivo?</label>
+                    <textarea id="meta-q2" name="meta-q2" placeholder="Tu rediseño aquí..."></textarea>
+                 </div>
+                  <div class="metacognition-box">
+                    <label for="meta-q3">3. Reflexionando sobre el dilema de la Dra. Vargas, ¿cómo planeas equilibrar la integridad académica con la preparación de tus estudiantes para un futuro con IA?</label>
+                    <textarea id="meta-q3" name="meta-q3" placeholder="Tu estrategia aquí..."></textarea>
+                 </div>
+                 <button type="button" id="save-meta-btn" class="btn">Guardar Respuestas en mi Reporte</button>
+             </form>
+             
+             <h3 style="margin-top: 3rem;">Rúbrica de Evaluación (Para Respuestas Abiertas)</h3>
+             <p>Esta es la rúbrica que usaríamos para evaluar el nivel de profundidad de tus respuestas, basada en la Taxonomía de Bloom (<strong class="text-green">Nivel: Crear</strong>).</p>
+            <div style="overflow-x: auto; width:100%; max-width: 800px;">
+             <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Criterio</th>
+                        <th>En Desarrollo (0-1 pts)</th>
+                        <th>Desarrollo Aceptable (2-3 pts)</th>
+                        <th>Desarrollo Óptimo (4 pts)</th>
+                        <th>Desarrollo Pleno (5 pts)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Originalidad y Síntesis de Ideas</strong></td>
+                        <td>La respuesta repite ideas de la cápsula sin elaboración personal.</td>
+                        <td>Combina ideas de la cápsula con experiencias personales de forma básica.</td>
+                        <td>Genera nuevas conexiones entre los conceptos de la cápsula y su contexto profesional.</td>
+                        <td>Propone una perspectiva novedosa y original, trascendiendo el material y formulando nuevos interrogantes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diseño y Aplicación Práctica</strong></td>
+                        <td>Menciona una posible aplicación, pero es vaga o poco realista.</td>
+                        <td>Describe una actividad aplicable, pero sin detallar los objetivos o la evaluación.</td>
+                        <td>Diseña una actividad concreta y detallada, alineando la herramienta de IA, los objetivos y la evaluación de forma coherente.</td>
+                        <td>Diseña una actividad innovadora que redefine una tarea tradicional, mostrando una profunda comprensión de la "creatividad aumentada".</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profundidad Reflexiva y Posicionamiento Crítico</strong></td>
+                        <td>Expresa una opinión superficial (p.ej. "la IA es buena/mala").</td>
+                        <td>Reconoce la complejidad del dilema, mencionando pros y contras.</td>
+                        <td>Articula una estrategia de equilibrio clara, considerando múltiples factores (éticos, pedagógicos, institucionales).</td>
+                        <td>Formula una filosofía pedagógica personal y fundamentada sobre la convivencia con la IA en la educación superior.</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+             <div class="btn-nav-group">
+                <button class="btn btn-prev" data-prev="sintesis">Anterior</button>
+                <button class="btn btn-next" data-next="reporte-final">Ver mi Reporte Final</button>
+            </div>
+        </section>
+
+        <!-- ======================================================= -->
+        <!-- ============ SECTION 11: REPORTE FINAL ============ -->
+        <!-- ======================================================= -->
+        <section id="reporte-final" class="capsule-section">
+            <h2 class="text-green">Tu Reporte de Progreso</h2>
+            <p>¡Felicidades, <span class="user-name"></span>! Has completado el viaje. Aquí tienes un resumen de tu increíble desempeño.</p>
+            <div class="glass-card">
+                 <h3>Resultados de la Evaluación</h3>
+                 <div id="report-summary">
+                     <p>Puntaje Final: <strong id="report-score" class="text-green">0%</strong></p>
+                     <p>Intentos Realizados: <strong id="report-attempts" class="text-green">0</strong></p>
+                     <p>Estado: <strong id="report-status">No completado</strong></p>
+                 </div>
+                 <h3>Insignias Obtenidas</h3>
+                 <p>Has demostrado tu valía y has ganado estas insignias:</p>
+                 <div class="badge-container">
+                    <div class="badge" id="badge-practico">
+                         <!-- Embedded SVG for Badge 1 -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g><path d="M 50,5 L 95,27.5 L 95,72.5 L 50,95 L 5,72.5 L 5,27.5 Z" fill="var(--light-navy)" stroke="var(--light-slate)" stroke-width="2"/><path d="M50 35 a 15 15 0 0 1 0 30 a 15 15 0 0 1 0 -30 M 35 50 h 30 M 50 35 v 30" fill="none" stroke="var(--slate)" stroke-width="2.5" stroke-linecap="round"/></g></svg>
+                        <span>Explorador de Ideas</span>
+                    </div>
+                     <div class="badge" id="badge-teorico">
+                          <!-- Embedded SVG for Badge 2 -->
+                          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g><path d="M 50,5 L 95,27.5 L 95,72.5 L 50,95 L 5,72.5 L 5,27.5 Z" fill="var(--light-navy)" stroke="var(--light-slate)" stroke-width="2"/><rect x="35" y="30" width="30" height="40" rx="3" fill="none" stroke="var(--slate)" stroke-width="2.5" /><line x1="40" y1="40" x2="60" y2="40" stroke="var(--slate)" stroke-width="2.5"/><line x1="40" y1="50" x2="60" y2="50" stroke="var(--slate)" stroke-width="2.5"/><line x1="40" y1="60" x2="55" y2="60" stroke="var(--slate)" stroke-width="2.5"/></g></svg>
+                        <span>Arquitecto del Conocimiento</span>
+                    </div>
+                     <div class="badge" id="badge-formativo">
+                         <!-- Embedded SVG for Badge 3 -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g><path d="M 50,5 L 95,27.5 L 95,72.5 L 50,95 L 5,72.5 L 5,27.5 Z" fill="var(--light-navy)" stroke="var(--light-slate)" stroke-width="2"/><path d="M30 65 L50 40 L70 65 M40 55 h20" fill="none" stroke="var(--slate)" stroke-width="2.5" stroke-linecap="round"/></g></svg>
+                        <span>Maestro de la Práctica</span>
+                    </div>
+                 </div>
+            </div>
+            
+            <div id="meta-answers-report" class="glass-card" style="display:none;">
+                <h3>Tus Respuestas de Metacognición</h3>
+                <div><strong>1. Cambio de percepción:</strong><p id="report-meta1"></p></div>
+                <div><strong>2. Actividad rediseñada:</strong><p id="report-meta2"></p></div>
+                <div><strong>3. Equilibrio e integridad:</strong><p id="report-meta3"></p></div>
+            </div>
+            
+             <div id="certificate-actions" style="margin-top:2rem; text-align:center;">
+                <p id="certificate-info">¡Has aprobado! Puedes generar tu certificado.</p>
+                <button id="generate-cert-btn" class="btn">Generar Certificado PDF</button>
+             </div>
+             
+             <div class="btn-nav-group">
+                <button class="btn" id="print-report-btn">Imprimir Reporte</button>
+                <button class="btn" id="restart-course-btn">Reiniciar Curso</button>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- ======================================================= -->
+    <!-- ============== HIDDEN PDF TEMPLATES ================== -->
+    <!-- ======================================================= -->
+    
+    <!-- CERTIFICATE TEMPLATE -->
+    <div id="certificate-wrapper">
+      <div class="printable-page" id="certificate-template" style="align-items:center; text-align:center; justify-content:space-between;">
+        <div style="width: 100%; text-align: center;">
+            <p style="font-size: 24px; font-weight: bold; margin: 0; color: #0A192F;">Universidad de la Vida</p>
+            <p style="font-size: 14px; margin: 0; color: #555;">Insignia de Participación</p>
+        </div>
+    
+        <div style="width:100%;">
+          <p style="font-size: 18px; margin: 20px 0 10px; color:#333;">Otorga el presente</p>
+          <p style="font-family: 'Times New Roman', serif; font-size: 36px; font-weight: bold; color: #112240; margin:0;">Certificado de Participación</p>
+          <p style="font-size: 18px; margin: 10px 0 20px; color:#333;">a:</p>
+          <p id="cert-name" style="font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: bold; color: #0A192F; border-bottom: 2px solid #64FFDA; padding-bottom: 5px; display: inline-block;">Nombre del Participante</p>
+        </div>
+    
+        <div style="width:100%;">
+          <p style="font-size: 16px; margin: 20px 0; color: #333; line-height: 1.5;">Por haber completado satisfactoriamente la cápsula educativa online</p>
+          <p style="font-size: 22px; font-weight: bold; color: #112240;">"IA: Creatividad Aumentada o Amenazada"</p>
+          <p style="font-size: 14px; margin-top: 5px; color:#555">con una calificación de <span id="cert-score">0%</span> y una dedicación de 1 hora académica.</p>
+        </div>
+        
+        <div style="width:100%; display:flex; justify-content: space-between; align-items: flex-end; padding-top: 30px;">
+           <div style="text-align:center; width: 33.3%;">
+              <p style="margin:0; font-size: 14px; border-top: 1px solid #555; padding-top: 5px;">Lic. Luis Alfredo Andia Valverde</p>
+              <p style="margin:0; font-size: 12px; color:#555;">Instructor</p>
+           </div>
+           <div style="text-align:center; width: 33.3%;">
+               <!-- Embedded SVG QR Code -->
+                <svg id="cert-qr" width="80px" height="80px" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#0A192F" d="M0 0h11v11H0z m2 2h7v7H2z m-2 32h11v11H0z m2 2h7v7H2z m32-34h11v11H34z m2 2h7v7h-7z m-1 -1h3v3h-3zM20 20h3v3h-3zM23 20h3v3h-3z m-3 3h3v3h-3z m9-6h3v3h-3z m3 0h3v3h-3z m-3-3h3v3h-3z m3 0h3v3h-3z m-3-3h3v3h-3z m0 12h3v3h-3z m3 3h3v3h-3zM2 13h3v3H2zM13 2h3v3h-3z m-6 6h3v3H7zM9 13h3v3H9z m3-4h3v3h-3zM7 7h3v3H7z m-3-3h3v3H4z m6-3h3v3H9z m20 20h3v3h-3z m3 0h3v3h-3z m3 0h3v3h-3zM29 34h3v3h-3z m6 0h3v3h-3z m3 0h3v3h-3zM29 37h3v3h-3z m3 0h3v3h-3z m-6 3h3v3h-3z m9 0h3v3h-3zM2 20h3v3H2z m0 3h3v3H2z m0 3h3v3H2z m3-6h3v3H5z m0 9h3v3H5z m3-3h3v3H8zM2 34h3v3H2z m3 0h3v3H5z m3 0h3v3H8zM5 37h3v3H5zM2 37h3v3H2z m6 3h3v3H8z m20-20h3v3h-3zM13 20h3v3h-3zM20 13h3v3h-3z m-3-2h3v3h-3z m-3 0h3v3h-3z m-2-3h3v3h-3zM13 5h3v3h-3zM13 40h3v3h-3zM2 4h3v3H2z m28-2h3v3h-3z m3 0h3v3h-3z m0 3h3v3h-3zM34 5h3v3h-3zM40 2h3v3h-3z m0 3h3v3h-3z m0 3h3v3h-3z m-3 2h3v3h-3zM40 20h3v3h-3z m0 3h3v3h-3z m0 3h3v3h-3z m-3 3h3v3h-3z m0 3h3v3h-3zM40 34h3v3h-3z"/>
+                    <title>https://elmejorequipo.github.io/iacreatividad/capsula10</title>
+                </svg>
+               <p style="margin:0; font-size:10px; color:#555;">Verificar Validez</p>
+           </div>
+           <div style="text-align:center; width: 33.3%;">
+              <p id="cert-date" style="margin:0; font-size: 14px; border-top: 1px solid #555; padding-top: 5px;">Fecha de Emisión</p>
+              <p style="margin:0; font-size: 12px; color:#555;">El conocimiento, nadie te lo quita.</p>
+           </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- REPORT TEMPLATE -->
+     <div id="report-wrapper">
+      <div class="printable-page" id="report-template" style="font-family:'Poppins', sans-serif;">
+        <h1 style="color:#0A192F; text-align:center; font-size:28px;">Reporte Final del Curso</h1>
+        <h2 style="color:#112240; text-align:center; font-size:24px; font-weight:normal;">IA: Creatividad Aumentada o Amenazada</h2>
+        <div style="margin-top:20px; border-bottom: 2px solid #64FFDA; padding-bottom: 10px;">
+            <p><strong>Participante:</strong> <span id="report-page-name"></span></p>
+            <p><strong>Email:</strong> <span id="report-page-email"></span></p>
+            <p><strong>Fecha:</strong> <span id="report-page-date"></span></p>
+        </div>
+        <div style="margin-top:20px;">
+            <h3 style="color:#112240;">Resultados de Evaluación</h3>
+            <p><strong>Puntuación Final:</strong> <span id="report-page-score"></span></p>
+            <p><strong>Intentos:</strong> <span id="report-page-attempts"></span></p>
+            <p><strong>Estado:</strong> <span id="report-page-status"></span></p>
+        </div>
+         <div style="margin-top:20px;">
+            <h3 style="color:#112240;">Respuestas de Metacognición</h3>
+             <div style="margin-top:10px;">
+                <strong>1. Cambio de percepción:</strong>
+                <p id="report-page-meta1" style="border-left: 2px solid #ccc; padding-left:10px; font-style:italic;"></p>
+            </div>
+             <div style="margin-top:10px;">
+                <strong>2. Actividad rediseñada:</strong>
+                <p id="report-page-meta2" style="border-left: 2px solid #ccc; padding-left:10px; font-style:italic;"></p>
+            </div>
+             <div style="margin-top:10px;">
+                <strong>3. Equilibrio e integridad:</strong>
+                <p id="report-page-meta3" style="border-left: 2px solid #ccc; padding-left:10px; font-style:italic;"></p>
+            </div>
+         </div>
+      </div>
+    </div>
+
+
+    <!-- ======================================================= -->
+    <!-- =================== JAVASCRIPT LOGIC ================== -->
+    <!-- ======================================================= -->
+    
+    <!-- YouTube IFrame API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // =======================================================
+            // =============== STATE MANAGEMENT & SETUP ================
+            // =======================================================
+            
+            let userState = {
+                name: '',
+                email: '',
+                phone: '',
+                progress: 0,
+                currentSection: 'ingreso',
+                evaluation: {
+                    score: 0,
+                    attempts: 0,
+                    passed: false,
+                    userAnswers: [],
+                    completed: false,
+                },
+                badges: {
+                    practico: false,
+                    teorico: false,
+                    formativo: false,
+                },
+                metacognition: {
+                    q1: '', q2: '', q3: ''
+                },
+                sensoryReduced: false
+            };
+
+            const sections = document.querySelectorAll('.capsule-section');
+            const sectionOrder = Array.from(sections).map(s => s.id);
+
+            const progressBar = document.getElementById('progress-bar');
+            const userNameSpans = document.querySelectorAll('.user-name');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function saveState() {
+                localStorage.setItem('iaCreativityCapsuleState', JSON.stringify(userState));
+            }
+            
+            function loadState() {
+                const savedState = localStorage.getItem('iaCreativityCapsuleState');
+                if (savedState) {
+                    userState = JSON.parse(savedState);
+                    userNameSpans.forEach(span => span.textContent = userState.name);
+                    showSection(userState.currentSection);
+                    updateUIFromState();
+                } else {
+                    showSection('ingreso');
+                }
+            }
+
+            function updateProgressBar() {
+                const currentIndex = sectionOrder.indexOf(userState.currentSection);
+                const totalSections = sectionOrder.length - 1; // Don't count 'ingreso' for progress calc
+                const progressPercentage = Math.max(0, (currentIndex / totalSections) * 100);
+                progressBar.style.width = `${progressPercentage}%`;
+            }
+
+            function updateUIFromState() {
+                // Personalize welcome messages
+                document.getElementById('welcome-user').innerHTML = `¡Hola, ${userState.name || 'aventurero/a'}!`;
+                
+                // Set form values if they exist
+                document.getElementById('fullName').value = userState.name;
+                document.getElementById('email').value = userState.email;
+                document.getElementById('phone').value = userState.phone;
+
+                // Update badge visuals
+                Object.keys(userState.badges).forEach(badgeKey => {
+                    const badgeEl = document.getElementById(`badge-${badgeKey}`);
+                    if (userState.badges[badgeKey]) {
+                        badgeEl.classList.add('earned');
+                    }
+                });
+                
+                // Toggle sensory mode
+                 if(userState.sensoryReduced) document.body.classList.add('sensory-reduced');
+            }
+
+
+            // =======================================================
+            // ================== NAVIGATION LOGIC ===================
+            // =======================================================
+            
+            function showSection(sectionId) {
+                if (!sectionOrder.includes(sectionId)) sectionId = 'ingreso';
+
+                // Check for completion-based section locking
+                if(sectionId === 'reporte-final' && !userState.evaluation.completed) {
+                   alert("Debes completar la evaluación final para ver el reporte.");
+                   return; 
+                }
+
+                sections.forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+                userState.currentSection = sectionId;
+                updateProgressBar();
+                
+                // Specific logic for when sections are shown
+                if(sectionId === 'desarrollo-practico') {
+                   initVideoQuiz();
+                   gainBadge('practico');
+                }
+                if (sectionId === 'desarrollo-teorico') {
+                   gainBadge('teorico');
+                }
+                if (sectionId === 'evaluacion-formativa') {
+                    gainBadge('formativo');
+                }
+                if(sectionId === 'reporte-final') {
+                    renderFinalReport();
+                }
+
+                saveState();
+                window.scrollTo(0, 0);
+            }
+
+            document.body.addEventListener('click', function(e) {
+                // Navigation buttons
+                if (e.target.matches('.btn-next')) {
+                    const nextSectionId = e.target.getAttribute('data-next');
+                    showSection(nextSectionId);
+                }
+                if (e.target.matches('.btn-prev')) {
+                    const prevSectionId = e.target.getAttribute('data-prev');
+                    showSection(prevSectionId);
+                }
+                 // Floating Menu links
+                if (e.target.matches('.nav-link')) {
+                    e.preventDefault();
+                    const sectionId = e.target.getAttribute('data-section');
+                    showSection(sectionId);
+                    document.getElementById('menu-nav').style.display = 'none';
+                }
+            });
+
+
+            // =======================================================
+            // ================== INGRESO FORM LOGIC =================
+            // =======================================================
+            const userForm = document.getElementById('user-form');
+            userForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('fullName');
+                const emailInput = document.getElementById('email');
+
+                // Basic validation feedback
+                let isValid = true;
+                if (!nameInput.checkValidity()) {
+                    nameInput.nextElementSibling.style.display = 'block';
+                    isValid = false;
+                } else {
+                     nameInput.nextElementSibling.style.display = 'none';
+                }
+                if (!emailInput.checkValidity()) {
+                    emailInput.nextElementSibling.style.display = 'block';
+                    isValid = false;
+                } else {
+                    emailInput.nextElementSibling.style.display = 'none';
+                }
+
+                if(isValid) {
+                    userState.name = nameInput.value;
+                    userState.email = document.getElementById('email').value;
+                    userState.phone = document.getElementById('phone').value;
+                    userNameSpans.forEach(span => span.textContent = userState.name);
+                    document.getElementById('welcome-user').innerHTML = `¡Hola, ${userState.name}!`;
+                    saveState();
+                    showSection('portada');
+                }
+            });
+
+
+            // =======================================================
+            // =================== VIDEO-QUIZ LOGIC ==================
+            // =======================================================
+            let player;
+            let checkInterval;
+            const videoQuizData = [
+                { time: 69, question: "¿Qué NO es la creatividad, según el ponente?", options: ["Crear algo desde cero", "Adaptar la realidad", "Buscar un nuevo enfoque"], correct: "Crear algo desde cero", asked: false }, // 01:09
+                { time: 178, question: "¿Qué elemento fundamental de la creatividad es exclusivamente humano?", options: ["Encontrar respuestas", "Hacerse preguntas por curiosidad", "Documentarse"], correct: "Hacerse preguntas por curiosidad", asked: false }, // 02:58
+                { time: 358, question: "La invención de la fotografía liberó a la pintura de la obligación de...", options: ["Usar colores vivos", "Copiar la realidad", "Ser exhibida en museos"], correct: "Copiar la realidad", asked: false }, // 05:58
+                { time: 588, question: "¿Cuál de estas NO es una cualidad que los humanos aportan y las máquinas no tienen?", options: ["Destreza (Criterio)", "Visión (Objetivo)", "Originalidad", "Velocidad de procesamiento"], correct: "Velocidad de procesamiento", asked: false } // 09:48
+            ];
+            
+            window.onYouTubeIframeAPIReady = function() {
+                 // This function will be called, but we initialize from showSection
+            }
+            
+            function initVideoQuiz() {
+                 if (typeof YT == 'undefined' || typeof YT.Player == 'undefined') {
+                    // API not ready, retry
+                    setTimeout(initVideoQuiz, 100);
+                    return;
+                }
+
+                if (!player) {
+                     player = new YT.Player('player', {
+                        height: '315',
+                        width: '560',
+                        videoId: 'EtU-NyNH4Qg',
+                        playerVars: {
+                            'playsinline': 1,
+                            'controls': 1,
+                            'rel': 0,
+                            'modestbranding': 1,
+                            'start': 44 // Start after intro music (transcribed text starts here)
+                        },
+                        events: {
+                            'onStateChange': onPlayerStateChange
+                        }
+                    });
+                } else {
+                    // If player exists, just restart check
+                    videoQuizData.forEach(q => q.asked = false);
+                }
+            }
+           
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                    if (checkInterval) clearInterval(checkInterval);
+                    checkInterval = setInterval(checkVideoTime, 1000);
+                } else {
+                    clearInterval(checkInterval);
+                }
+            }
+
+            function checkVideoTime() {
+                if(!player || typeof player.getCurrentTime !== 'function') return;
+
+                const currentTime = player.getCurrentTime();
+                const currentQuestion = videoQuizData.find(q => !q.asked && currentTime >= q.time);
+                
+                if (currentQuestion) {
+                    player.pauseVideo();
+                    currentQuestion.asked = true;
+                    showVideoQuizQuestion(currentQuestion);
+                }
+            }
+
+            function showVideoQuizQuestion(quizItem) {
+                const modal = document.getElementById('video-quiz-modal');
+                const questionEl = document.getElementById('video-quiz-question');
+                const optionsEl = document.getElementById('video-quiz-options');
+                const feedbackEl = document.getElementById('video-quiz-feedback');
+                
+                questionEl.textContent = quizItem.question;
+                feedbackEl.textContent = '';
+                optionsEl.innerHTML = '';
+                
+                quizItem.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('btn');
+                    button.onclick = () => {
+                        if(option === quizItem.correct) {
+                            modal.style.display = 'none';
+                            player.playVideo();
+                        } else {
+                            feedbackEl.textContent = "¡Casi! Inténtalo de nuevo. Piensa en la esencia del argumento.";
+                            feedbackEl.style.display = 'block';
+                        }
+                    };
+                    optionsEl.appendChild(button);
+                });
+                
+                modal.style.display = 'flex';
+            }
+
+
+            // =======================================================
+            // ================ FINAL EVALUATION LOGIC ===============
+            // =======================================================
+            const evalQuestions = [
+                {
+                    q: "Según la charla de Julián Larrauri, ¿cuál es la capacidad exclusivamente humana que las máquinas no poseen en el proceso creativo?",
+                    o: ["Generar millones de respuestas", "Analizar datos rápidamente", "Hacerse preguntas por curiosidad", "Acelerar procesos"],
+                    a: "Hacerse preguntas por curiosidad"
+                },
+                {
+                    q: "En la analogía con la invención de la fotografía, ¿qué efecto liberador tuvo esta sobre la pintura?",
+                    o: ["Hizo que los pintores dejaran de crear retratos", "Liberó a la pintura de la necesidad de copiar la realidad fielmente", "Provocó que todos los pintores adoptaran la fotografía", "No tuvo ningún efecto significativo"],
+                    a: "Liberó a la pintura de la necesidad de copiar la realidad fielmente"
+                },
+                {
+                    q: '¿Qué es la "creatividad aumentada" en el contexto de la IA?',
+                    o: ["El reemplazo total del creativo humano por una máquina.", "El uso de la IA para realizar tareas repetitivas únicamente.", "La sinergia entre la intuición humana y la capacidad de procesamiento de la IA para lograr resultados superiores.", "La capacidad de la IA para generar arte sin ninguna intervención humana."],
+                    a: "La sinergia entre la intuición humana y la capacidad de procesamiento de la IA para lograr resultados superiores."
+                },
+                {
+                    q: "De acuerdo con el contenido teórico, ¿cuál es una consideración ética crucial al usar IA en la educación?",
+                    o: ["Asegurar que la IA sea lo más rápida posible.", "Prevenir el plagio y la deshonestidad académica garantizando que los estudiantes comprendan el proceso y no solo presenten el resultado de la IA.", "Usar solo modelos de IA de código abierto.", "Prohibir completamente el uso de la IA para evitar problemas."],
+                    a: "Prevenir el plagio y la deshonestidad académica garantizando que los estudiantes comprendan el proceso y no solo presenten el resultado de la IA."
+                },
+                {
+                    q: "El caso de estudio de 'El Informe Perfecto' ilustra un cambio de paradigma. ¿Cuál es la nueva habilidad que el Dr. Mateo Ríos sugiere que el estudiante pudo haber desarrollado?",
+                    o: ["Una redacción académica impecable sin ayuda.", "La capacidad de construir modelos y prompts efectivos para guiar a la IA (etnografía digital).", "La habilidad de hacer trabajo de campo tradicional de forma más rápida.", "El dominio de software estadístico avanzado."],
+                    a: "La capacidad de construir modelos y prompts efectivos para guiar a la IA (etnografía digital)."
+                },
+                 {
+                    q: "Cuál de los siguientes elementos NO es una fortaleza que los humanos aportan a la colaboración con la IA, según Larrauri?",
+                    o: ["Visión y objetivo final", "Criterio para seleccionar la mejor respuesta", "Destreza adquirida por la práctica", "Capacidad para procesar billones de datos por segundo."],
+                    a: "Capacidad para procesar billones de datos por segundo."
+                },
+            ];
+            
+            let currentEvalQuestionIndex = 0;
+            let evalTimer;
+            let timeLimit = 30 * 60; // 30 minutes in seconds
+
+            document.getElementById('start-eval-btn').addEventListener('click', startEvaluation);
+            
+            function startEvaluation() {
+                if (userState.evaluation.attempts >= 3) {
+                    alert("Has alcanzado el número máximo de intentos.");
+                    return;
+                }
+
+                currentEvalQuestionIndex = 0;
+                userState.evaluation.userAnswers = new Array(evalQuestions.length).fill(null);
+                
+                document.getElementById('eval-intro').style.display = 'none';
+                document.getElementById('eval-quiz-container').style.display = 'block';
+
+                userState.evaluation.attempts++;
+                updateAttemptsLeft();
+                renderEvalQuestion();
+                startTimer();
+            }
+            
+            function renderEvalQuestion() {
+                const question = evalQuestions[currentEvalQuestionIndex];
+                document.getElementById('question-counter').textContent = `Pregunta ${currentEvalQuestionIndex + 1} de ${evalQuestions.length}`;
+                document.getElementById('eval-question-text').textContent = question.q;
+                
+                const optionsContainer = document.getElementById('eval-options-container');
+                optionsContainer.innerHTML = '';
+                
+                question.o.forEach(optionText => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.textContent = optionText;
+                    optionDiv.classList.add('quiz-option');
+                    optionDiv.addEventListener('click', () => selectAnswer(optionDiv, optionText));
+                    if(userState.evaluation.userAnswers[currentEvalQuestionIndex] === optionText){
+                        optionDiv.classList.add('selected');
+                    }
+                    optionsContainer.appendChild(optionDiv);
+                });
+
+                document.getElementById('eval-prev-btn').style.display = currentEvalQuestionIndex === 0 ? 'none' : 'block';
+                document.getElementById('eval-next-btn').style.display = currentEvalQuestionIndex === evalQuestions.length - 1 ? 'none' : 'block';
+                document.getElementById('eval-submit-btn').style.display = currentEvalQuestionIndex === evalQuestions.length - 1 ? 'block' : 'none';
+            }
+
+            function selectAnswer(optionEl, answer) {
+                const options = document.querySelectorAll('#eval-options-container .quiz-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                optionEl.classList.add('selected');
+                userState.evaluation.userAnswers[currentEvalQuestionIndex] = answer;
+            }
+            
+            document.getElementById('eval-next-btn').addEventListener('click', () => {
+                if (currentEvalQuestionIndex < evalQuestions.length - 1) {
+                    currentEvalQuestionIndex++;
+                    renderEvalQuestion();
+                }
+            });
+
+            document.getElementById('eval-prev-btn').addEventListener('click', () => {
+                if (currentEvalQuestionIndex > 0) {
+                    currentEvalQuestionIndex--;
+                    renderEvalQuestion();
+                }
+            });
+
+            document.getElementById('eval-submit-btn').addEventListener('click', finishEvaluation);
+            
+            function finishEvaluation() {
+                 clearInterval(evalTimer);
+                 
+                 let score = 0;
+                 evalQuestions.forEach((q, index) => {
+                     if (userState.evaluation.userAnswers[index] === q.a) {
+                         score++;
+                     }
+                 });
+                 
+                 const finalPercentage = Math.round((score / evalQuestions.length) * 100);
+                 userState.evaluation.score = finalPercentage;
+                 userState.evaluation.completed = true;
+
+                 const passed = finalPercentage >= 70;
+                 userState.evaluation.passed = passed;
+
+                 // Show results
+                 document.getElementById('eval-quiz-container').style.display = 'none';
+                 const resultsContainer = document.getElementById('eval-results-container');
+                 resultsContainer.style.display = 'block';
+
+                 document.getElementById('eval-result-title').textContent = passed ? '¡Felicidades, lo lograste!' : '¡Ánimo! Puedes intentarlo de nuevo.';
+                 document.getElementById('eval-result-score').innerHTML = `Tu puntaje es: <strong class="${passed ? 'text-green' : 'error-message'}">${finalPercentage}%</strong>`;
+                 document.getElementById('eval-result-message').textContent = passed 
+                    ? 'Has demostrado un gran dominio de los conceptos. ¡Prepárate para recibir tu certificado!' 
+                    : `Necesitas un 70% para aprobar. ¡No te rindas, camba! Repasa los contenidos e inténtalo otra vez.`;
+
+                 if(passed) {
+                    document.getElementById('eval-retry-btn').style.display = 'none';
+                    document.getElementById('eval-proceed-btn').style.display = 'block';
+                 } else if (userState.evaluation.attempts < 3) {
+                    document.getElementById('eval-retry-btn').style.display = 'block';
+                    document.getElementById('eval-proceed-btn').style.display = 'none';
+                 } else {
+                     document.getElementById('eval-retry-btn').style.display = 'none';
+                     document.getElementById('eval-proceed-btn').style.display = 'block'; // Allow to proceed even if failed after max attempts
+                     document.getElementById('eval-result-message').textContent += " Has agotado tus intentos. Puedes continuar con el curso.";
+                 }
+
+                 saveState();
+            }
+
+            document.getElementById('eval-retry-btn').addEventListener('click', () => {
+                 document.getElementById('eval-results-container').style.display = 'none';
+                 startEvaluation();
+            });
+
+            function startTimer() {
+                let timeLeft = timeLimit;
+                evalTimer = setInterval(() => {
+                    const minutes = Math.floor(timeLeft / 60);
+                    let seconds = timeLeft % 60;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+                    document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(evalTimer);
+                        alert("¡Se acabó el tiempo!");
+                        finishEvaluation();
+                    }
+                    timeLeft--;
+                }, 1000);
+            }
+            
+            function updateAttemptsLeft() {
+                const attemptsText = `Te quedan ${3 - userState.evaluation.attempts} intento(s).`;
+                document.getElementById('attempts-left').textContent = attemptsText;
+            }
+            
+            // =======================================================
+            // ================ METACOGNITION LOGIC ==================
+            // =======================================================
+             document.getElementById('save-meta-btn').addEventListener('click', () => {
+                userState.metacognition.q1 = document.getElementById('meta-q1').value;
+                userState.metacognition.q2 = document.getElementById('meta-q2').value;
+                userState.metacognition.q3 = document.getElementById('meta-q3').value;
+                saveState();
+                alert("Tus reflexiones han sido guardadas. Podrás verlas en el reporte final.");
+                document.getElementById('meta-answers-report').style.display = "block";
+             });
+            
+             // =======================================================
+            // ================ FINAL REPORT & CERTIFICATE ==========
+            // =======================================================
+             function renderFinalReport() {
+                const evalData = userState.evaluation;
+                document.getElementById('report-score').textContent = `${evalData.score}%`;
+                document.getElementById('report-attempts').textContent = evalData.attempts;
+                const statusEl = document.getElementById('report-status');
+                statusEl.textContent = evalData.passed ? 'Aprobado' : 'No Aprobado';
+                statusEl.style.color = evalData.passed ? 'var(--green)' : '#e57373';
+
+                // Certificate button
+                const certActions = document.getElementById('certificate-actions');
+                if (evalData.passed) {
+                    certActions.style.display = 'block';
+                    document.getElementById('certificate-info').textContent = '¡Felicidades! Has aprobado y puedes generar tu certificado.'
+                } else {
+                    certActions.style.display = 'block';
+                    document.getElementById('certificate-info').textContent = 'No has alcanzado el puntaje aprobatorio para el certificado. ¡Pero el conocimiento que te llevas es la mayor recompensa!';
+                    document.getElementById('generate-cert-btn').style.display = 'none';
+                }
+                
+                // Show metacognition if saved
+                const metaReport = document.getElementById('meta-answers-report');
+                if (userState.metacognition.q1) {
+                    metaReport.style.display = "block";
+                    document.getElementById('report-meta1').textContent = userState.metacognition.q1;
+                    document.getElementById('report-meta2').textContent = userState.metacognition.q2;
+                    document.getElementById('report-meta3').textContent = userState.metacognition.q3;
+                }
+            }
+
+            document.getElementById('generate-cert-btn').addEventListener('click', function() {
+                if(!userState.evaluation.passed) {
+                    alert("Debes aprobar la evaluación para generar el certificado.");
+                    return;
+                }
+                const element = document.getElementById('certificate-template');
+                
+                // Populate template
+                document.getElementById('cert-name').textContent = userState.name;
+                document.getElementById('cert-score').textContent = `${userState.evaluation.score}%`;
+                document.getElementById('cert-date').textContent = new Date().toLocaleDateString('es-ES');
+                
+                const opt = {
+                  margin:       0,
+                  filename:     `Certificado_IA_Creatividad_${userState.name}.pdf`,
+                  image:        { type: 'jpeg', quality: 0.98 },
+                  html2canvas:  { scale: 2, useCORS: true },
+                  jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+
+                html2pdf().from(element).set(opt).save();
+            });
+
+            document.getElementById('print-report-btn').addEventListener('click', function() {
+                 // Populate report template
+                document.getElementById('report-page-name').textContent = userState.name;
+                document.getElementById('report-page-email').textContent = userState.email;
+                document.getElementById('report-page-date').textContent = new Date().toLocaleDateString('es-ES');
+                document.getElementById('report-page-score').textContent = `${userState.evaluation.score}%`;
+                document.getElementById('report-page-attempts').textContent = userState.evaluation.attempts;
+                const status = userState.evaluation.passed ? 'Aprobado' : 'No Aprobado';
+                document.getElementById('report-page-status').textContent = status;
+
+                 if (userState.metacognition.q1) {
+                    document.getElementById('report-page-meta1').textContent = userState.metacognition.q1;
+                    document.getElementById('report-page-meta2').textContent = userState.metacognition.q2;
+                    document.getElementById('report-page-meta3').textContent = userState.metacognition.q3;
+                } else {
+                     document.getElementById('report-page-meta1').textContent = "No se guardaron respuestas.";
+                }
+
+                const element = document.getElementById('report-template');
+                html2pdf().from(element).set({
+                     margin: 0.5,
+                     filename: 'Reporte_IA_Creatividad.pdf',
+                     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                }).save();
+            });
+
+
+             // =======================================================
+            // ================ GENERAL & UTILITY ====================
+            // =======================================================
+            function gainBadge(badgeKey) {
+                 if(!userState.badges[badgeKey]) {
+                     userState.badges[badgeKey] = true;
+                     const badgeEl = document.getElementById(`badge-${badgeKey}`);
+                     badgeEl.classList.add('earned');
+                     
+                     // You could show a notification here
+                     console.log(`Badge earned: ${badgeKey}`);
+                     saveState();
+                 }
+            }
+
+            // Floating menu toggle
+            document.getElementById('menu-toggle').addEventListener('click', () => {
+                 const nav = document.getElementById('menu-nav');
+                 nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            });
+            
+             // Toggle reduced motion
+            document.getElementById('toggle-motion-btn').addEventListener('click', () => {
+                userState.sensoryReduced = !userState.sensoryReduced;
+                document.body.classList.toggle('sensory-reduced');
+                saveState();
+            });
+            
+            // Clear Data button
+            document.getElementById('clear-data-btn').addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que quieres borrar todos tus datos y reiniciar el curso? Esta acción no se puede deshacer.')) {
+                    localStorage.removeItem('iaCreativityCapsuleState');
+                    window.location.reload();
+                }
+            });
+
+             document.getElementById('restart-course-btn').addEventListener('click', () => {
+                if (confirm('¿Reiniciar el curso? Se borrará todo tu progreso.')) {
+                    localStorage.removeItem('iaCreativityCapsuleState');
+                    window.location.reload();
+                }
+            });
+            
+
+            // Initial load
+            loadState();
+        });
+    </script>
+</body>
+</html>
