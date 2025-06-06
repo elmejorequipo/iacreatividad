@@ -1,0 +1,1973 @@
+import sys
+from io import StringIO
+
+# Capture the output to a string
+old_stdout = sys.stdout
+sys.stdout = mystdout = StringIO()
+
+# The final HTML code is a single large string.
+# We print it. The system will capture this print and display it.
+print(r"""
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA: Creatividad Aumentada o Amenazada</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cápsula educativa completa sobre el impacto de la Inteligencia Artificial en la creatividad. Explora si la IA es una herramienta que aumenta nuestras capacidades o una amenaza para los artistas y creadores.">
+    <meta name="keywords" content="IA, Inteligencia Artificial, Creatividad, Educación, Diseño Instruccional, EdTech, Futuro del Arte, Desarrollo Profesional Docente">
+    <meta name="author" content="Equipo de Desarrollo Educativo">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://elmejorequipo.github.io/iacreatividad/">
+    <meta property="og:title" content="IA: Creatividad Aumentada o Amenazada">
+    <meta property="og:description" content="Una experiencia de aprendizaje interactiva sobre la relación entre la IA y la creatividad humana.">
+    
+    <!-- Favicon SVG -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+
+    <!-- Libraries from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <style>
+        /* CSS Integrado (style.css) */
+        /* --- Fuentes y Configuración Base --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #0f172a; /* Azul noche oscuro */
+            --primary-color: #38bdf8; /* Azul cielo vibrante */
+            --secondary-color: #818cf8; /* Lavanda suave */
+            --text-color: #e2e8f0; /* Gris claro (casi blanco) */
+            --text-muted: #94a3b8; /* Gris medio */
+            --card-bg: rgba(30, 41, 59, 0.6); /* Azul-gris semi-transparente */
+            --border-color: rgba(71, 85, 105, 0.6);
+            --success-color: #34d399; /* Verde esmeralda */
+            --error-color: #f87171; /* Rojo claro */
+            --glass-blur: backdrop-filter: blur(10px);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, var(--secondary-color, #818cf8) 0px, transparent 20%),
+                radial-gradient(circle at 80% 90%, var(--primary-color, #38bdf8) 0px, transparent 25%);
+            background-attachment: fixed;
+        }
+
+        /* --- Diseño General y Contenedores --- */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+        }
+        
+        .educational-capsule {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        section {
+            display: none; /* Ocultas por defecto */
+            animation: fadeIn 0.8s ease-in-out;
+            padding-top: 80px; /* Espacio para el menú flotante y barra de progreso */
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Tipografía y Texto --- */
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        h1 { font-size: 2.8rem; text-transform: uppercase; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.8rem; color: var(--secondary-color); }
+        h4 { font-size: 1.4rem; }
+        
+        p, li {
+            text-align: justify;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            hyphens: auto;
+        }
+        
+        strong, b { color: var(--primary-color); }
+        em, i { color: var(--secondary-color); }
+
+        blockquote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            border-left: 5px solid var(--secondary-color);
+            background-color: rgba(129, 140, 248, 0.1);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* --- Botones y Elementos Interactivos --- */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #0f172a;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            text-align: center;
+        }
+
+        .btn:hover, .btn:focus-visible {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+            outline: 2px solid var(--primary-color);
+            outline-offset: 3px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            box-shadow: none;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+            color: #0f172a;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* --- Formularios --- */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-group input.invalid {
+            border-color: var(--error-color);
+        }
+        .form-feedback {
+            font-size: 0.85rem;
+            color: var(--error-color);
+            margin-top: 0.25rem;
+            display: none;
+        }
+        input.invalid + .form-feedback {
+            display: block;
+        }
+
+        /* --- Navegación del Curso --- */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        /* --- Componentes Específicos --- */
+        /* SVG Animado Portada */
+        #animated-svg-portada {
+            width: 250px;
+            height: 250px;
+            margin: 2rem auto;
+            display: block;
+        }
+        #animated-svg-portada .brain-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 5s ease-in-out infinite alternate;
+        }
+        #animated-svg-portada .gears {
+            animation: rotate 10s linear infinite;
+            transform-origin: center;
+        }
+        #animated-svg-portada .dots {
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            from { r: 3; opacity: 0.5;}
+            to { r: 5; opacity: 1;}
+        }
+
+        /* Video Quiz */
+        #video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video-quiz-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            display: none; /* Cambiar a flex para mostrar */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #video-quiz-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .video-quiz-content {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        .video-quiz-option {
+            display: block;
+            width: 100%;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .video-quiz-option:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Final Test */
+        .quiz-option {
+            display: block;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success-color);
+            background-color: rgba(52, 211, 153, 0.2);
+        }
+        
+        .quiz-option.incorrect {
+            border-color: var(--error-color);
+            background-color: rgba(248, 113, 113, 0.2);
+        }
+        
+        #test-timer {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: none; /* Mostrado por JS */
+            z-index: 50;
+        }
+        
+        #test-result {
+            text-align: center;
+        }
+        #test-result .result-message {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .pass { color: var(--success-color); }
+        .fail { color: var(--error-color); }
+        
+        /* Iframe Responsive */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin: 1rem 0;
+        }
+        .iframe-container-educaplay {
+             position: relative;
+             width: 100%;
+             padding-bottom: 86.79%; /* 795/690 */
+             height: 0;
+             margin: 1rem 0;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        
+        /* Síntesis */
+        .key-ideas {
+            list-style: none;
+            padding-left: 0;
+        }
+        .key-ideas li {
+            background: rgba(129, 140, 248, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .key-ideas li::before {
+            content: "💡";
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Cierre y Rúbrica */
+        .metacognitive-question {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .metacognitive-question label {
+            display: block;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+        }
+        .metacognitive-question textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            padding: 1rem;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        .metacognitive-question textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .rubric-container {
+            margin-top: 2rem;
+        }
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .rubric-table th, .rubric-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            text-align: left;
+            text-align: justify;
+        }
+        .rubric-table th {
+            background-color: var(--card-bg);
+            color: var(--secondary-color);
+        }
+        .rubric-table td:first-child {
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 15%;
+        }
+
+        /* --- Elementos Flotantes --- */
+        #floating-menu {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            border-radius: 50px;
+            padding: 0.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+        }
+        
+        #floating-menu .menu-item {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 30px;
+            text-align: center;
+            background: transparent;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        #floating-menu .menu-item:hover, #floating-menu .menu-item.active-nav {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        #progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: transparent;
+            z-index: 101;
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            transition: width 0.4s ease-out;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        #chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            z-index: 90;
+        }
+        #chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        
+        #settings-button {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 90;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        #settings-button:hover {
+             transform: scale(1.1) rotate(90deg);
+             color: var(--primary-color);
+        }
+
+        /* --- Certificado --- */
+        #certificate-wrapper {
+            visibility: hidden;
+            position: absolute;
+            left: -9999px;
+        }
+        #certificate {
+            width: 1122px; /* A4 landscape */
+            height: 793px;
+            padding: 50px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #1a202c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Times New Roman', serif;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='20' ry='20' stroke='%2338BDF8FF' stroke-width='10' stroke-dasharray='30%2c 10' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 20px;
+        }
+        
+        .cert-header { text-align: center; }
+        .cert-header h1 { font-size: 52px; color: #0f172a; margin-bottom: 10px; }
+        .cert-header h2 { font-size: 24px; color: #2d3748; margin: 0; }
+        
+        .cert-body p { text-align: center; font-size: 20px; margin: 20px 0; color: #4a5568;}
+        #cert-user-name {
+            font-size: 48px;
+            font-family: 'Brush Script MT', cursive;
+            color: #38bdf8;
+            border-bottom: 2px solid #2d3748;
+            padding-bottom: 10px;
+        }
+        .cert-description {
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        .cert-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            margin-top: 50px;
+        }
+        
+        .cert-signature, .cert-qr {
+            text-align: center;
+            width: 40%;
+        }
+
+        .cert-signature p, .cert-qr p {
+             font-size: 16px; margin: 0; padding: 0;
+        }
+
+        .cert-signature .line {
+            border-top: 1px solid #4a5568;
+            margin-top: 5px;
+            padding-top: 5px;
+        }
+        
+        /* Insignias y Gamificación */
+        .badge-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, var(--success-color), #2dd4bf);
+            color: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2000;
+            display: none; /* JS control */
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+        }
+
+        .badge-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(20px);
+        }
+        .badge-icon { width: 60px; height: 60px; margin: 0 auto 0.5rem; }
+
+        .points-display {
+            position: fixed;
+            top: 130px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+
+        /* Reducción de movimiento por accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        
+        /* Diseño Responsivo */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .container { padding: 1.5rem; width: 95%; }
+            #floating-menu {
+                width: 90%;
+                justify-content: space-around;
+            }
+            .navigation-buttons { flex-direction: column; gap: 1rem; }
+            .btn { width: 100%; }
+        }
+
+        /* Estilos para impresión */
+        @media print {
+            body {
+                background: none;
+                color: #000;
+            }
+            section { display: none !important; } /* Ocultar todo */
+            #reporte-final-imprimible {
+                display: block !important; /* Mostrar solo el reporte */
+            }
+            #reporte-final-imprimible * {
+                color: #000 !important;
+                background: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .container, .rubric-table {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    
+    <div id="floating-menu" class="no-print"></div>
+
+    <main class="educational-capsule">
+        
+        <!-- ======================= SECCIÓN 0: FORMULARIO DE INGRESO ======================= -->
+        <section id="ingreso" class="active">
+            <div class="container">
+                <div style="text-align: center;">
+                    <!-- Logo/Icono de bienvenida -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color); margin-bottom: 1rem;"><path d="M12 8V4H8"/><rect x="4" y="12" width="16" height="8" rx="2"/><path d="M12 12v4"/><path d="M8 12v4"/><path d="M16 12v4"/><path d="m20 12-1.25-2.5-1.25 2.5"/><path d="m14 12-1.25-2.5-1.25 2.5"/></svg>
+                    <h2>¡Te damos la bienvenida, futuro explorador creativo!</h2>
+                </div>
+                <p>Estás a punto de iniciar un viaje de descubrimiento sobre el fascinante cruce de caminos entre la <strong>Inteligencia Artificial y la Creatividad Humana</strong>. Para que tu experiencia sea completa y podamos reconocerte como mereces al final, por favor, completa estos datos.</p>
+                <p class="text-muted" style="font-size: 0.9em;"><em>Estos datos son necesarios para generar tu certificado de aprobación personalizado. ¡No te preocupes! Los guardaremos de forma segura solo en tu navegador.</em></p>
+                
+                <form id="user-form">
+                    <div class="form-group">
+                        <label for="fullName">Nombre Completo</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Ej: Ana María Quispe" required>
+                        <div class="form-feedback">Por favor, ingresa tu nombre completo.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="Ej: ana.quispe@email.com" required>
+                        <div class="form-feedback">Por favor, ingresa un correo electrónico válido.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Teléfono (Opcional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Ej: 71234567">
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn">Comenzar Aventura</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 1: PORTADA ======================= -->
+        <section id="portada">
+            <div class="container" style="text-align: center;">
+                <h1 style="font-size: 3.5rem;">IA: Creatividad<br>Aumentada o Amenaza</h1>
+                <p class="text-muted" style="max-width: 600px; margin: 1rem auto;">Una exploración sobre el futuro de la creación en la era de la inteligencia artificial.</p>
+                
+                <!-- SVG Animado -->
+                <svg id="animated-svg-portada" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <g class="gears">
+                     <path fill="none" stroke="#38bdf8" stroke-width="8" d="M100,50 a50,50 0 0,1 0,100 a50,50 0 0,1 0,-100" />
+                     <path class="brain-path" fill="none" stroke="#818cf8" stroke-width="2" d="M100,70 Q80,75 80,90 T100,110 Q120,115 120,130 T100,150" filter="url(#glow)"/>
+                     <path class="brain-path" fill="none" stroke="#818cf8" stroke-width="2" d="M100,70 Q120,75 120,90 T100,110 Q80,115 80,130 T100,150" filter="url(#glow)" style="animation-delay: 1s;"/>
+                  </g>
+                   <circle class="dots" cx="70" cy="70" r="4" fill="#38bdf8" />
+                   <circle class="dots" cx="130" cy="70" r="4" fill="#818cf8" style="animation-delay: 0.5s;" />
+                   <circle class="dots" cx="70" cy="130" r="4" fill="#818cf8" style="animation-delay: 0.8s;" />
+                   <circle class="dots" cx="130" cy="130" r="4" fill="#38bdf8" style="animation-delay: 0.3s;" />
+                </svg>
+
+                <div class="btn-container">
+                    <button class="btn btn-next">Empezar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 2: INTRODUCCIÓN ======================= -->
+        <section id="introduccion">
+            <div class="container">
+                <h2>1. Introducción: Preparando el Terreno</h2>
+                <h3>¡Hola, <span class="username-placeholder">creador</span>! ¡Qué bueno que estás acá!</h3>
+                <p>Vamos a sumergirnos en un debate que está en boca de todos. La inteligencia artificial no es solo cosa de películas de ciencia ficción; está aquí, ahora, transformando la manera en que trabajamos, aprendemos y, sobre todo, creamos. ¿Es un copiloto para nuestra imaginación o un rival que amenaza con dejarnos obsoletos? En esta cápsula, no te daremos respuestas definitivas, pero te daremos las herramientas para que formes tu propia opinión.</p>
+                
+                <div class="metacognitive-question">
+                    <h4 style="color: var(--secondary-color)">Público Objetivo</h4>
+                    <p>Esta experiencia está diseñada especialmente para <strong>profesores, docentes y creativos en el ámbito de la educación superior</strong> que buscan comprender y adaptarse al nuevo paradigma de la IA.</p>
+                </div>
+                
+                <div class="metacognitive-question">
+                    <h4 style="color: var(--secondary-color)">Objetivos de Aprendizaje</h4>
+                    <p>Al finalizar esta cápsula, serás capaz de:</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>✅ <strong>Analizar</strong> críticamente el rol de la Inteligencia Artificial como herramienta para potenciar el proceso creativo en la educación superior.</li>
+                        <li>✅ <strong>Diferenciar</strong> entre las tareas creativas que pueden ser automatizadas por la IA y aquellas que dependen intrínsecamente de la cognición y visión humana.</li>
+                        <li>✅ <strong>Aplicar</strong> estrategias para integrar la IA de manera efectiva en las fases de documentación e iteración de proyectos creativos, manteniendo la originalidad y la visión personal.</li>
+                        <li>✅ <strong>Evaluar</strong> las implicaciones éticas y futuras de la IA generativa en las disciplinas artísticas y creativas, formulando una perspectiva propia y fundamentada.</li>
+                    </ul>
+                </div>
+                
+                <h3>Transcripción de la Charla Inspiradora</h3>
+                <p>Para entrar en materia, te invitamos a leer la transcripción de una charla que captura la esencia de este debate. Pon atención, porque muchas de las ideas aquí planteadas serán la base de nuestro recorrido.</p>
+                <blockquote style="max-height: 200px; overflow-y: auto; font-size: 0.9rem;">
+                    <em>(Transcripción de TurboScribe.ai)</em><br><br>
+                    Todos los años, siempre tengo que dar alguna charla o algún coloquio con motivo de estreno de alguna de mis películas, y siempre son en ambientes, en colegios, en universidades, en escuelas, siempre con un ambiente creativo, con estudiantes, y siempre la pregunta de la inteligencia artificial que nos depara con la inteligencia artificial siempre sale de alguna manera. Hace no mucho, unos meses, en una charla que tuve en Roma, un estudiante me hizo una pregunta que me hizo reflexionar bastante, que era la siguiente, ¿tiene sentido que siga aprendiendo a dibujar con todo lo que hay de la inteligencia artificial? Y lo que me llamó la atención, sobre todo, no era tanto la pregunta, sino el tono con el que me la hizo, que le vi como apesadumbrado, o sea, como con falta de ilusión, dijo un chaval que estaba empezando, que realmente se pregunta en serio si tiene que seguir su vocación o la tiene que dejar de lado, que lo veía como una auténtica amenaza lo que es la inteligencia artificial. Esto me llevó a preguntarme la esencia de lo que es la creatividad, preguntarnos qué es exactamente la creatividad, porque creatividad no es inventar nada desde cero, no es crear, no somos dioses, sino es siempre adaptar la realidad que existe ahí, nosotros la adaptamos a nuestra manera, buscamos un nuevo enfoque y creamos nuevas cosas, a través de cosas que ya existen.<br><br>
+                    Entonces, el proceso creativo, si lo vamos desgranando poco a poco o al revés, o lo vamos simplificando, intentemos simplificarlo al máximo posible para entender cómo las máquinas pueden ayudarnos o no en todo ese proceso, pero simplificándolo a lo bestia, que simplemente serían tres pasos para hacer el proceso creativo. Los tres pasos más sencillos serían, el primero de todos es definir la pregunta, el ser humano es el único ser capaz, el único animal que se hace preguntas, que realmente ve las cosas y cuando algo no lo entiende dice, ¿esto cómo es?, tiene esa curiosidad, tiene esa imaginación que dice, ¿cómo podemos hacer las cosas de manera diferente?, ¿por qué es así y no es así?, los animales no pueden hacer eso y las máquinas tampoco, eso es algo exclusivamente de los humanos, esa curiosidad, esa búsqueda, es a intentar encontrar una cosa diferente. Como diría Einstein, la formulación de un problema es más importante que su solución, que es la clave, lo primero que tenemos que hacer como seres humanos es, oye, hacernos las preguntas correctas, todos nos preguntamos cosas, hay preguntas más profundas, menos profundas, el ser humano tiene ese deseo trascendental de conocer, ¿por qué existen las grandes preguntas?, ¿dónde venimos?, ¿a dónde vamos?, ¿a qué hora comemos?, ese tipo de preguntas, es lo más importante, definir la pregunta.<br><br>
+                    Otro genio, hablando de lo mismo decía, Pablo Picasso, los ordenadores son inútiles, solo pueden darnos respuestas, las respuestas no sirven para nada, viene a decir Picasso, lo importante son las preguntas. Entonces, está claro que la parte fundamental para mí, que es de la creatividad, que es hacernos esas preguntas, las máquinas no pueden hacer nada, pero entonces, ¿en qué nos pueden ayudar las máquinas? Bueno, precisamente en eso, buscando las respuestas, es un sitio donde las máquinas nos pueden ayudar, que esto nos lleva a la segunda parte de nuestro proceso creativo simplificado, que sería documentarse, ese es el segundo paso, yo tengo una pregunta, ahora tengo que encontrar la respuesta. Los humanos, ¿qué hacemos?, nos formamos durante toda nuestra vida, lo que hacemos es conocimientos del color, conocimientos de la narrativa, conocimientos de la perspectiva, conocimientos de los tres actos de Aristóteles, lo que sea, nos vamos formando para ser los mejores dentro de nuestra profesión, y cuando atacamos un tema concreto, nos hacemos esa pregunta, una pregunta concreta, lo que hacemos es investigamos sobre esa pregunta, si tengo una película que habla sobre el miedo, pues tendré que hacerme libros que te hablen sobre la psicología del miedo, o si está ambientada mi película en África, pues tendré que conocer la cultura africana.<br><br>
+                    Nos formamos, nos formamos, nos documentamos, pero los seres humanos tenemos un límite, y hay un punto en el que por tiempo no podemos formarnos más, entonces ahí entra un poco en lo que nos pueden ayudar las máquinas, ¿qué aportan las máquinas en todo esto?, básicamente nos dan dos cosas, uno, nos aceleran el proceso y nos lo abaratan, o sea, tiempo y dinero, eso nos dan respuestas de una manera muy rápida, entonces nosotros ahorramos tiempo y dinero, y la segunda, nos dan multitud de respuestas, nos dan millones, es una metralleta de respuestas, nos puede dar un montón de respuestas, eso ayuda mucho dentro del proceso creativo. Al final de todo esto uno sigue pensando, cuando hablo con colegas de la profesión, pero al final, ¿es amiga o enemiga?, ¿esto está ayudando al proceso creativo o lo está minando?, que es una gran pregunta y es un gran debate, yo creo que tampoco tengo la respuesta, pero sí que está candente todo el tiempo, ¿esto está mejorando el proceso creativo o lo está empeorando?, yo creo que parte de la respuesta está aquí, en 1838, que este es el año en el que se inventó la fotografía, para mucha gente fue, esto es el final de la pintura, realmente ya no tiene sentido pintar, porque ahora cualquier persona con ningún tipo de conocimiento de dibujo, ni de perspectiva, ni de encuadre, puede hacer una fotografía y lo va a hacer igual de bien que yo con todos mis años de dedicación, y realmente la pintura en muchas cosas fue modificada y el uso de la pintura en muchos sitios se perdió, los retratos que la gente se hacía para recordar cómo era su abuelo, pues la fotografía sustituyó todo eso, pero creo que una cosa fundamental que pasó a partir de ese momento fue, que la pintura se liberó completamente de una carga que tenía, que hasta ese momento la obsesión de la pintura era copiar la realidad, era intentar hacerlo lo más parecido a la realidad posible, y de repente, la fotografía cumple su objetivo, y yo como pintor puedo buscar otras cosas, en vez de copiar la realidad, reinterpreto la realidad, entonces empezaron a surgir movimientos tan interesantes como el impresionismo, que liberó las formas, el cubismo, que liberó la perspectiva, el expresionismo, que liberó el color, entonces empezaron a investigar, los pintores ya no tenían la expresión, yo puedo hacer lo que quiera, ya no tengo que copiar la realidad, puedo hacer lo que quiera, y otra cosa muy curiosa que pasó es que la fotografía con los años, la gente se fue especializando en ella, y se convirtió en un arte completamente diferente, tiene cosas en común con la pintura, como puede ser la composición, pero otras cosas que no tienen nada que ver, pues tienen que aprender a manejar un obturador, a saber enfocar, a diferentes cosas que son muy concretas del mundo de la fotografía. Y ahora nos encontramos aquí, 2025, tenemos internet plagado de cosas generadas por la inteligencia artificial, cuentos, fotografías, pinturas, canciones, estamos realmente saturados por un montón de material generado por la inteligencia artificial.<br><br>
+                    ¿Qué va a pasar con todo esto? ¿Cuál es mi apuesta a lo que yo creo que va a pasar? Uno, que se va a normalizar, ahora simplemente sorprende por ver cosas absurdas creadas por la inteligencia artificial y nos llama mucho la atención, llevará un momento en que eso se normalizará y no nos parecerá una cosa así llamativa. También pasará que se empezará a crear una especie de experto en inteligencia artificial, gente que sepa utilizar muy bien esas herramientas y que poco a poco irá desarrollando, y quién sabe que dentro de unos años quizás se le puede considerar un artista porque sabe utilizar las herramientas de una manera concreta. Pero para mí lo más interesante es lo que va a pasar con los artistas tradicionales, con aquellos que dirán, realmente para hacer la fórmula que está haciendo todo el mundo, para coger esos clichés, esas cosas que la gente está consumiendo todos los días, básicamente para hacer los Vengadores 26, pues que lo puede hacer la inteligencia artificial, pero yo como artista voy a buscar qué puedo hacer que una máquina no pueda hacer, qué puedo hacer que haga falta sí o sí al ser humano.<br><br>
+                    Entonces creo que se va a empezar a desarrollar una línea artística súper interesante Para ver más de lo mismo, mucha inteligencia artificial. Si quieres algo auténtico, yo creo que el público cada vez irá pidiendo más, hombre, es que esto ya lo he visto, porque no es más que la fotocopia, pero si quiero ver algo auténtico, pues me podría apoyar más en ese otro tipo de arte, que al principio será más nicho, más curioso, pero creo que el apetito les irá pidiendo pedir más y más eso. Y ahora centrándonos, ¿ese artista tradicional qué puede aportar que no aporta las máquinas? O poniéndonos en positivo, ¿qué es lo que sí que aportamos los humanos? Que al final vamos a intentar buscar un híbrido entre a ver qué nos aporta la máquina y a ver qué aportamos nosotros para intentar potenciar nuestra creatividad.<br><br>
+                    Entonces, lo que no tienen las máquinas es originalidad, eso lo tenemos que poner por nuestro lado. Ellos nos pueden dar muchas respuestas, pero al final lo único que es, es una fotocopia súper sofisticada, te va cogiendo cositas de todos lados, te hace un collage enorme, pero no es original. La máquina lo que hace es el copy-paste, nosotros somos los que tenemos que aportar esa originalidad.<br><br>
+                    Otra cosa que no tiene la máquina es la destreza, que es el haber estado horas y horas practicando con un piano, horas y horas pintando, horas y horas escribiendo, ¿qué es lo que te da? Te da esa destreza que lo que te da es un criterio. Entonces, cuando la máquina te enseña 100 respuestas diferentes, si tú tienes ese criterio podrás saber, de esas 100 respuestas, ¿cuál es la respuesta correcta? Si no, pues elegirás al azar cualquier cosa y no sabrás diferenciar algo bueno de algo malo. Entonces, creo que es una de las claves, todas esas horas de trabajo te dan criterio.<br><br>
+                    Y una tercera cosa que tenemos los humanos, que las máquinas no tienen, es una visión. Al final, el ser humano... o sea, la creatividad no es tener una idea genial, yo tengo esta idea genial, pues ya está, soy súper creativo, sino es una sucesión de buenas ideas, que te llevan a un objetivo, como tú tienes un objetivo final, que esa es tu visión final. Entonces, con las máquinas te dan muchas respuestas, pero si tú tienes claro tu objetivo, si tienes clara tu visión, tú puedes decir, vale, esta respuesta no me vale, esta sí, esta no, y tú vas iterando, que es otra de las claves de la creatividad, el iterar, el ir desechando, cogiendo y vas puliendo un poco lo que tú quieres crear.<br><br>
+                    Y eso te ayuda a llegar, al final, a lo que sería el tercer punto de este proceso creativo, que es encontrar la respuesta correcta. Y esto es, al final, lo que te hace un poco diferenciarte. Cuando te encuentras la respuesta correcta, ¿qué es encontrar la respuesta correcta?, es que otros seres humanos, eso las máquinas no lo saben, que otros seres humanos sepan que has elegido la respuesta correcta.<br><br>
+                    Elegir la respuesta correcta es acercarse a esa verdad filosófica, esa verdad con mayúsculas, que es la que te hace un poco trascender en el tiempo. Cuando tú, entre todas las opciones, dices, pues mi tesis en esta película, en esta obra de artes, yo quiero hablar de este tema y creo que la verdad, la verdad objetiva, esa verdad filosófica, es esta, cuanta más gente piense que tiene razón en esa tesis que has planteado, esa obra gustará a más gente y trascenderá más en el tiempo, que es, al final, lo que están buscando cualquier artista. Entonces, con esto, yo al final me quedo un poco con el estudiante que me decía, oye, ¿merece la pena aprender a dibujar? Pues mira, yo creo que sí, que sí, que sí que merece la pena, pero lo que necesitamos es trabajar duro, como decía Edison, 1% de inspiración, 99% de transpiración, es mucho trabajo duro, mucho formarse, y con eso, uses o no uses las máquinas, que eso yo creo que es una elección personal, cualquiera de las dos opciones, te vas a tener que matar a trabajar y a formarte muy bien.<br><br>
+                    Entonces, quedémonos con esta cita, para la próxima vez que nos enfrentemos a las máquinas, saber lo que tenemos que hacer. Muchas gracias.
+                </blockquote>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 3: ACTIVACIÓN ======================= -->
+        <section id="activacion">
+            <div class="container">
+                <h2>2. Activación: Calentando Motores Creativos</h2>
+                <p>¡Muy bien, <span class="username-placeholder">campeón/a</span>! Antes de meternos de lleno, vamos a despertar esas neuronas y a ver qué tanto sabes (o intuyes) sobre este tema. Te presento un pequeño juego de parejas.</p>
+                <p><strong>Instrucciones:</strong> Haz clic en las tarjetas para voltearlas. Tu misión es encontrar los pares que se correspondan. ¡A ver cuántos aciertas a la primera! ¡Sin miedo a equivocarse, que para eso estamos, para aprender!</p>
+                
+                <div class="iframe-container-educaplay">
+                    <iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="795" height="690" frameborder="0" src="https://es.educaplay.com/juego/24152723-juego_de_parejas_ia_y_creatividad.html" aria-label="Juego interactivo de Educaplay sobre IA y Creatividad"></iframe>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 4: DESARROLLO PRÁCTICO ======================= -->
+        <section id="desarrollo_practico">
+            <div class="container">
+                <h2>3. Desarrollo Práctico: Conectando con la Realidad</h2>
+                <p>La teoría es importante, pero la reflexión personal es clave. Antes de ver el video central de esta cápsula, tomate un momento para pensar en estas preguntas. No hay respuestas correctas o incorrectas, solo tu perspectiva, que es muy valiosa.</p>
+                
+                <blockquote style="border-left-color: var(--primary-color);">
+                    <p>🤔 ¿Alguna vez has usado una herramienta de IA (como ChatGPT, Midjourney, o incluso el autocorrector de tu celular) para una tarea creativa? ¿Cómo te sentiste? ¿Fue una ayuda, un atajo o algo más?</p>
+                    <p>🤔 Piensa en tu campo profesional o área de estudio. ¿Dónde ves que la IA podría ser un "copiloto" increíble? ¿Y dónde sientes que podría ser una amenaza para el trabajo humano?</p>
+                </blockquote>
+
+                <p>¡Perfecto! Con esas ideas frescas en tu mente, ahora estás más que listo/a para ver la charla que inspiró esta cápsula. Es la misma de la transcripción, pero ahora con el componente audiovisual. </p>
+                <p><strong>¡Atención, <span class="username-placeholder">crack</span>!</strong> Durante el video, haremos unas pausas estratégicas en momentos clave. Aparecerá una pregunta que deberás responder correctamente para poder continuar. ¡Es una forma de asegurar que no te pierdas ni un detalle importante! ¡Dale play y disfruta!</p>
+
+                <div id="video-container">
+                    <div id="video-player"></div>
+                </div>
+
+                <div id="video-quiz-modal" role="dialog" aria-modal="true" aria-labelledby="video-quiz-question">
+                    <div class="video-quiz-content">
+                        <h3 id="video-quiz-question"></h3>
+                        <div id="video-quiz-options"></div>
+                        <div id="video-quiz-feedback" style="margin-top: 1rem; font-weight: bold;"></div>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 5: DESARROLLO TEÓRICO Y CONCEPTUAL ======================= -->
+        <section id="desarrollo_teorico">
+             <div class="container">
+                <h2>4. Desarrollo Teórico: Profundizando en los Conceptos</h2>
+                <p>¡Excelente trabajo, <span class="username-placeholder">explorador/a</span>! Has navegado las reflexiones iniciales y el video. Ahora, es momento de estructurar ese conocimiento. Vamos a desglosar los temas clave, con ejemplos y fuentes para que puedas seguir investigando.</p>
+                
+                <div class="metacognitive-question">
+                    <h3>Tema 1: La Anatomía del Proceso Creativo</h3>
+                    <p>Como mencionaba el expositor, la creatividad no es un rayo mágico de inspiración. Es un <strong>proceso</strong>. Si bien hay muchos modelos, podemos simplificarlo en tres grandes etapas que dialogan constantemente con la IA.</p>
+                    <p><strong>1. La Pregunta (El Dominio Humano):</strong> Es el punto de partida. Picasso decía: "Los ordenadores son inútiles, solo pueden darnos respuestas". La habilidad de formular una pregunta significativa, de sentir curiosidad, de plantear un problema de una forma novedosa, es, por ahora, exclusivamente humana. Es la <em>intención</em>, la <em>visión</em>.</p>
+                    
+                    <blockquote><em>Ejemplo Real:</em> El equipo de Pixar no le preguntó a una IA "¿cómo hacemos una película taquillera?". Se preguntaron: "¿Y si los juguetes tuvieran sentimientos?" (Toy Story), "¿Y si los monstruos necesitaran asustar para vivir?" (Monsters, Inc.). Esas preguntas, nacidas de la empatía y la imaginación, son el motor.</blockquote>
+                    
+                    <p><strong>2. La Documentación e Iteración (La Colaboración IA-Humano):</strong> Aquí es donde la IA brilla como copiloto. Una vez que tienes la pregunta, necesitas "combustible": datos, referencias, opciones. La IA puede procesar y presentar millones de posibilidades en segundos, una tarea que a un humano le llevaría vidas.</p>
+                    <ul>
+                        <li><strong>Aceleración:</strong> Un diseñador puede generar 100 variaciones de un logo en minutos.</li>
+                        <li><strong>Ampliación de horizontes:</strong> Un músico puede pedirle a una IA que fusione flamenco con música electrónica de los 80, descubriendo patrones inesperados.</li>
+                    </ul>
+                    <p>El ser humano, con su <strong>criterio</strong> y <strong>destreza</strong>, es el curador. Filtra, combina y guía el caos de opciones que la IA le presenta.</p>
+
+                    <p><strong>3. La Respuesta (La Selección Trascendente):</strong> De todas las opciones, ¿cuál es "la correcta"? La respuesta final no es la más lógica, sino la que mejor resuena con una <em>verdad humana</em>. Es la elección que emociona, que comunica la visión original. Esto requiere una comprensión profunda del contexto cultural y emocional, algo que las máquinas aún no poseen.</p>
+
+                    <hr style="margin: 2rem 0; border-color: var(--border-color);">
+                    <h4>Preguntas de Comprensión:</h4>
+                    <p>1. ¿Por qué se considera que "formular la pregunta" es un dominio principalmente humano?</p>
+                    <p>2. Menciona dos beneficios concretos que aporta la IA en la fase de documentación.</p>
+                    <p>3. ¿Qué factor humano es crucial para elegir la "respuesta correcta" entre muchas opciones generadas por IA?</p>
+                    
+                    <h4>Pregunta de Aplicación:</h4>
+                    <p>Imagina que eres un docente de historia. Quieres crear una actividad sobre la Revolución Francesa. Formula una "pregunta creativa" como punto de partida que no sea "¿Qué pasó en la Revolución Francesa?". Luego, describe cómo usarías una IA para la fase de documentación.</p>
+
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                        <strong>Fuente:</strong> Csikszentmihalyi, M. (1996). <em>Creativity: Flow and the Psychology of Discovery and Invention</em>. Harper Collins.
+                        <a href="https://www.harpercollins.com/products/creativity-mihaly-csikszentmihalyi" target="_blank">[Enlace]</a>
+                    </p>
+                </div>
+                
+                 <div class="metacognitive-question">
+                    <h3>Tema 2: El Espectro de la Colaboración Creativa</h3>
+                    <p>La relación entre un creador y la IA no es un simple interruptor de "on/off". Es un espectro de colaboración, como describe el Dr. Ethan Mollick. Podemos visualizarlo así:</p>
+                    
+                     <div style="width:100%; text-align:center; padding: 1rem; background: rgba(15,23,42,0.8); border-radius: 8px; margin-bottom:1rem;">
+                        <strong>HUMANO</strong> ‹—› <em>(Copiloto)</em> ‹—› <em>(Cyborg)</em> ‹—› <em>(Centauro)</em> ‹—› <strong>IA</strong>
+                    </div>
+
+                    <ul>
+                        <li><strong>Copiloto:</strong> La IA es una asistente. Le pides tareas específicas: "dame ideas para un título", "corrige este párrafo", "genera una imagen de un astronauta en un desierto". El humano tiene el control total.</li>
+                        <li><strong>Cyborg/Centauro:</strong> Aquí la integración es más profunda. El humano y la IA trabajan en un bucle constante. El humano escribe una línea, la IA sugiere la siguiente; el humano dibuja un boceto, la IA lo refina y le da color. Es una co-creación en tiempo real. La diferencia entre <em>Cyborg</em> y <em>Centauro</em> es el grado de fusión. En el modelo centauro (mitad humano, mitad caballo) es difícil saber dónde empieza uno y termina el otro.</li>
+                    </ul>
+
+                    <blockquote><em>Caso Real:</em> La artista Holly Herndon utiliza IA (a la que llama "Spawn") como un miembro más de su banda. La entrenó con su propia voz y la utiliza para generar nuevas armonías y texturas vocales que luego ella integra en sus composiciones. No reemplaza su creatividad, la expande.</blockquote>
+
+                    <p>Comprender este espectro es vital para los educadores. No se trata de prohibir o aceptar la IA, sino de enseñar a los estudiantes a navegar este espectro y a elegir el nivel de colaboración adecuado para cada tarea, desarrollando lo que se conoce como <strong>"IA Literacy"</strong> o alfabetización en IA.</p>
+
+                    <hr style="margin: 2rem 0; border-color: var(--border-color);">
+                    <h4>Preguntas de Comprensión:</h4>
+                    <p>1. Explica la diferencia principal entre usar la IA como "copiloto" y como "centauro".</p>
+                    <p>2. ¿Qué significa el término "IA Literacy" en el contexto educativo?</p>
+                    <p>3. ¿Cómo podría un novelista usar el modelo "cyborg" para escribir un libro?</p>
+                    
+                    <h4>Pregunta de Aplicación:</h4>
+                    <p>Describe una actividad para tu clase donde los estudiantes deban experimentar con al menos dos puntos diferentes del espectro de colaboración IA-humano. ¿Qué les pedirías que hicieran y qué reflexión final esperarías de ellos?</p>
+
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                        <strong>Fuente:</strong> Mollick, E. (2024). <em>Co-Intelligence: Living and Working with AI</em>. Penguin Random House.
+                        <a href="https://www.penguinrandomhouse.com/books/742291/co-intelligence-by-ethan-mollick/" target="_blank">[Enlace]</a>
+                    </p>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ======================= SECCIÓN 6: EVALUACIÓN FORMATIVA ======================= -->
+        <section id="evaluacion_formativa">
+            <div class="container">
+                <h2>5. Evaluación Formativa: Un Juego para Afianzar</h2>
+                 <p>¡Vas por muy buen camino, <span class="username-placeholder">maestro/a</span>! Has absorbido mucha información. Antes de la prueba final, es hora de una autoevaluación sin presiones. Reflexiona:</p>
+                
+                 <blockquote>
+                    <p>💡 De todo lo visto, ¿qué idea te ha parecido más reveladora o te ha hecho "clic" en la cabeza? ¿Por qué?</p>
+                    <p>💡 ¿Cómo planeas aplicar concretamente alguna de estas ideas o herramientas en tu próxima clase o proyecto creativo?</p>
+                </blockquote>
+                 
+                <p>Ahora, ¡a jugar un poco! Te hemos preparado un Quizizz para repasar los conceptos clave de una manera divertida y dinámica. El objetivo aquí no es la nota, sino que tú mismo/a compruebes qué conceptos tienes claros y cuáles podrías repasar. ¡A darle con todo!</p>
+
+                <div class="iframe-container" style="min-height: 635px;">
+                    <div style="width:100%;height:100%;position:absolute;left:0px;top:0px;display:flex;flex-direction:column;gap:8px;">
+                        <iframe src="https://quizizz.com/embed/quiz/664275f68fefc478de0b457e" title="IA y Creatividad - Quizizz" style="flex:1;" frameBorder="0" allowfullscreen></iframe>
+                        <a href="https://quizizz.com/admin?source=embedFrame" target="_blank" style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">Explora más en Quizizz.</a>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">¡A la Prueba Final!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 7: EVALUACIÓN FINAL ======================= -->
+        <section id="evaluacion_final">
+            <div class="container">
+                <h2>6. Evaluación Final: Demuestra lo que Sabes</h2>
+                <div id="test-intro">
+                    <p>¡Llegó el momento de la verdad, <span class="username-placeholder">valiente</span>! Esta es la evaluación final. Pondrá a prueba tu comprensión de toda la cápsula educativa.</p>
+                    <div class="metacognitive-question">
+                        <ul style="list-style-type: '👉 '; padding-left: 2rem; text-align: left;">
+                            <li><strong>Preguntas:</strong> 6 de selección múltiple.</li>
+                            <li><strong>Calificación para aprobar:</strong> 70% (¡necesitas 5 respuestas correctas!).</li>
+                            <li><strong>Intentos:</strong> Tienes un máximo de 3 intentos.</li>
+                            <li><strong>Tiempo Límite:</strong> 30 minutos. ¡El tiempo corre!</li>
+                        </ul>
+                    </div>
+                    <p>Lee con calma cada pregunta, confía en tu criterio y ¡mucho éxito! Estamos seguros de que lo harás genial.</p>
+                    <div class="btn-container">
+                        <button id="start-test-btn" class="btn">Comenzar la Evaluación</button>
+                    </div>
+                </div>
+                
+                <div id="test-container" style="display:none;">
+                     <!-- El timer aparecerá por JS en la esquina -->
+                    <div id="quiz-question-container">
+                        <!-- Las preguntas se cargarán aquí dinámicamente -->
+                    </div>
+                    <div class="btn-container">
+                         <button id="submit-test-btn" class="btn">Finalizar y Calificar</button>
+                    </div>
+                </div>
+
+                <div id="test-result" style="display:none;">
+                    <!-- El resultado se mostrará aquí -->
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button id="next-from-eval-btn" class="btn btn-next" style="display: none;">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 8: SÍNTESIS ======================= -->
+        <section id="sintesis">
+            <div class="container">
+                <h2>7. Síntesis: Las Grandes Ideas</h2>
+                <p>¡Lo lograste, <span class="username-placeholder">fenómeno</span>! Ha sido un viaje intenso. Para ayudarte a consolidar todo, aquí tienes las ideas clave de nuestra exploración:</p>
+
+                <ul class="key-ideas">
+                    <li>La creatividad no es magia, es un proceso. La IA es una herramienta poderosa para la <em>documentación</em> e <em>iteración</em>, pero la <em>pregunta original</em> y la <em>visión final</em> siguen siendo profundamente humanas.</li>
+                    <li>La IA nos libera de la carga de la "copia" y nos empuja hacia la <em>originalidad</em>. Al igual que la fotografía liberó a la pintura, la IA puede liberarnos de tareas repetitivas para enfocarnos en lo que solo un humano puede hacer: tener destreza, criterio y una visión única.</li>
+                    <li>El futuro no es "Humanos vs. IA", sino "Humanos CON IA". El verdadero potencial está en la colaboración, aprendiendo a ser un buen "centauro" o "copiloto" de estas nuevas tecnologías.</li>
+                </ul>
+                
+                <h3>Recursos Adicionales para no parar de aprender</h3>
+
+                <p>¿Quieres una vista panorámica de todo esto? ¡Preparamos una infografía para ti! Es perfecta para guardar o compartir.</p>
+                <div class="btn-container">
+                    <a href="https://elmejorequipo.github.io/iacreatividad/infografia.html" target="_blank" class="btn btn-secondary">Ver Infografía Resumen</a>
+                </div>
+                
+                <p style="margin-top: 2rem;">¿Prefieres escuchar? Te dejamos un podcast que profundiza en el debate de si la IA es amiga o enemiga del creador. ¡Ideal para escuchar mientras tomas un café!</p>
+                <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2107792848&color=%230066cc&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true" aria-label="Podcast de SoundCloud sobre creatividad y IA"></iframe>
+                <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/el-mejor-equipo-282759177" title="El Mejor Equipo" target="_blank" style="color: #cccccc; text-decoration: none;">El Mejor Equipo</a> · <a href="https://soundcloud.com/el-mejor-equipo-282759177/creatividad-humana-y-la-ia-amiga-o-enemiga" title="Creatividad humana y la IA ¿Amiga o enemiga?" target="_blank" style="color: #cccccc; text-decoration: none;">Creatividad humana y la IA ¿Amiga o enemiga?</a></div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button class="btn btn-next">Paso Final</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= SECCIÓN 9: CIERRE Y METACOGNICIÓN ======================= -->
+        <section id="cierre">
+            <div class="container">
+                <h2>8. Cierre: Tu Voz en la Conversación</h2>
+                <p>La conversación no termina aquí, <span class="username-placeholder">pensador/a</span>. Ahora te toca a ti. Estas preguntas finales son para que sintetices tu propia visión. Tómate tu tiempo, tus respuestas son el verdadero fruto de este aprendizaje.</p>
+                
+                <form id="metacognitive-form">
+                    <div class="metacognitive-question">
+                        <label for="reflection1">Después de este recorrido, ¿cómo ha cambiado o se ha reafirmado tu percepción sobre la IA en el ámbito creativo?</label>
+                        <textarea id="reflection1" name="reflection1" placeholder="Antes pensaba que..., pero ahora veo que..."></textarea>
+                    </div>
+                    <div class="metacognitive-question">
+                        <label for="reflection2">Imagina un proyecto creativo que te apasione (escribir un cuento, diseñar una lección, componer una canción). Describe un paso concreto donde ahora te atreverías a usar la IA como tu copiloto o centauro.</label>
+                        <textarea id="reflection2" name="reflection2" placeholder="Para mi proyecto de..., podría usar [herramienta IA] para ayudarme a..."></textarea>
+                    </div>
+                    <div class="metacognitive-question">
+                        <label for="reflection3">¿Cuál crees que es la habilidad humana más importante que debemos cultivar (tanto nosotros como nuestros estudiantes) para prosperar en una era de IA generativa? ¿Por qué esa y no otra?</label>
+                        <textarea id="reflection3" name="reflection3" placeholder="Creo que la habilidad clave es..., porque la IA nunca podrá..."></textarea>
+                    </div>
+                </form>
+
+                <p class="text-muted" style="text-align: center; margin-top: 1.5rem;">Puedes usar la siguiente rúbrica para autoevaluar la calidad de tu reflexión. Está diseñada para ayudarte a alcanzar un nivel de pensamiento creativo y crítico superior (Nivel "Crear" de la Taxonomía de Bloom).</p>
+                
+                <div class="rubric-container">
+                    <h3>Rúbrica de Autoevaluación de la Reflexión</h3>
+                    <div style="overflow-x:auto;">
+                    <table class="rubric-table">
+                        <thead>
+                            <tr>
+                                <th>Criterio</th>
+                                <th>1. En Desarrollo</th>
+                                <th>2. Desarrollo Aceptable</th>
+                                <th>3. Desarrollo Óptimo</th>
+                                <th>4. Desarrollo Pleno (Excepcional)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Originalidad y Visión</strong></td>
+                                <td>La respuesta es genérica, repite ideas de la cápsula sin aportar una perspectiva personal.</td>
+                                <td>La respuesta muestra un intento de personalización, conectando el tema con experiencias propias de forma superficial.</td>
+                                <td>La respuesta articula una visión personal clara y original. Propone ideas nuevas o conexiones no evidentes.</td>
+                                <td>La propuesta es innovadora y disruptiva. Plantea una síntesis única entre conceptos y una aplicación futura.</td>
+                            </tr>
+                             <tr>
+                                <td><strong>Profundidad del Análisis</strong></td>
+                                <td>Identifica elementos básicos sin profundizar en sus implicaciones.</td>
+                                <td>Describe la relación entre IA y su práctica, pero el análisis es limitado, enfocándose en lo obvio.</td>
+                                <td>Analiza con detalle cómo la IA podría transformar o potenciar su proceso, considerando ventajas y desafíos.</td>
+                                <td>Analiza las implicaciones a múltiples niveles (personal, profesional, social, ético) de forma crítica.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Argumentación</strong></td>
+                                <td>Las ideas no tienen estructura lógica clara. Las afirmaciones no están sustentadas.</td>
+                                <td>Las ideas tienen conexión, pero la argumentación es débil o inconsistente en algunas partes.</td>
+                                <td>La argumentación es sólida, coherente y bien estructurada.</td>
+                                <td>La argumentación es impecable, persuasiva y elegante, usando ejemplos potentes.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aplicabilidad Práctica</strong></td>
+                                <td>No propone acciones concretas o son irrealistas.</td>
+                                <td>Propone acciones genéricas, poco detalladas.</td>
+                                <td>Propone un plan de acción concreto y realista para integrar lo aprendido.</td>
+                                <td>Diseña una estrategia o un mini-proyecto detallado, viable y creativo.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary btn-prev">Anterior</button>
+                    <button id="next-to-certificate-or-report" class="btn btn-next">Finalizar y Ver Resultados</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================= SECCIÓN 10: CERTIFICADO/REPORTE ======================= -->
+        <section id="certificado_reporte">
+            <div class="container" id="final-outcome-container">
+                <!-- Contenido generado por JS -->
+            </div>
+             <div class="navigation-buttons">
+                <button class="btn btn-secondary" onclick="app.restartCourse()">Reiniciar Curso</button>
+             </div>
+        </section>
+
+    </main>
+    
+    <!-- Plantilla de Certificado (Oculto) -->
+    <div id="certificate-wrapper">
+        <div id="certificate">
+            <div class="cert-header">
+                <h2>Certificado de Finalización</h2>
+                <h1>Institución Educativa Ficticia</h1>
+            </div>
+            <div class="cert-body">
+                <p>Otorga el presente certificado a:</p>
+                <h1 id="cert-user-name" style="color:#38bdf8;">Nombre del Participante</h1>
+                <p class="cert-description">Por haber completado satisfactoriamente la cápsula educativa</p>
+                <h2 style="font-family: 'Times New Roman'; color:#2d3748; font-style:italic; margin-top:20px;">"IA: Creatividad Aumentada o Amenazada"</h2>
+                <p>Con una duración de <strong>2 horas académicas</strong>.<br>Completado el: <span id="cert-date"></span></p>
+            </div>
+            <div class="cert-footer">
+                <div class="cert-signature">
+                    <p class="line">Instructor Principal</p>
+                    <p>Experto en IA y Educación</p>
+                </div>
+                <div class="cert-qr">
+                    <canvas id="cert-qr-code"></canvas>
+                    <p>Verificar en: github.io/elmejorequipo/verificar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Plantilla de Reporte Final Imprimible (Oculto) -->
+    <div id="reporte-final-imprimible" style="display: none; padding: 2rem;">
+        <h1>Reporte de Aprendizaje</h1>
+        <h2 id="report-username"></h2>
+        <p><strong>Fecha:</strong> <span id="report-date"></span></p>
+        <hr>
+        <h3>Resultados de la Evaluación</h3>
+        <p id="report-score"></p>
+        <p id="report-status"></p>
+        <hr>
+        <h3>Mis Reflexiones Finales</h3>
+        <div id="report-reflections"></div>
+    </div>
+
+
+    <!-- Elementos Flotantes Transversales -->
+    <button id="chatbot-button" class="no-print" aria-label="Abrir chatbot de ayuda" onclick="window.open('https://notebooklm.google.com/notebook/c4d90a4e-4c2b-4526-9b60-93548a358137', '_blank')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
+    <button id="settings-button" class="no-print" title="Borrar datos y reiniciar" aria-label="Borrar datos y reiniciar curso">⚙️</button>
+
+    <!-- Gamificación y Notificaciones -->
+    <div id="badge-notification" class="badge-container" aria-live="polite">
+        <div id="badge-icon-placeholder" class="badge-icon"></div>
+        ¡Insignia Desbloqueada! <br> <strong id="badge-name"></strong>
+    </div>
+    <div id="points-display" class="points-display no-print">Puntos: 0</div>
+    
+    <script>
+    // JS Integrado (script.js)
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const app = {
+            // --- CONFIGURACIÓN ---
+            config: {
+                totalSections: document.querySelectorAll('main > section').length,
+                currentSectionIndex: 0,
+                passingScore: 70,
+                testAttemptsKey: 'test_attempts',
+                testScoreKey: 'test_score',
+                testTimeKey: 'test_timer',
+                testTimerLimit: 30 * 60, // 30 minutos en segundos
+            },
+
+            // --- ESTADO DE LA APP ---
+            state: {
+                userData: {},
+                videoPlayer: null,
+                isVideoApiReady: false,
+                quizTimer: null,
+                testTimerInterval: null,
+                currentTestAttempt: 0,
+                finalScore: -1,
+                points: 0,
+                badges: [],
+                videoQuizState: [
+                    { time: 63, question: 'Según el autor, ¿cuál es el primer paso del proceso creativo, exclusivo de los humanos?', options: ['Documentarse', 'Adaptar la realidad', 'Hacerse preguntas', 'Tener una idea genial'], correct: 2, asked: false }, // 1:03
+                    { time: 155, question: '¿Cuáles son las dos cosas principales que aportan las máquinas en la fase de documentación?', options: ['Originalidad y visión', 'Respuestas rápidas y baratas', 'Destreza y criterio', 'Curiosidad y emoción'], correct: 1, asked: false }, // 2:35
+                    { time: 260, question: '¿Con qué invención histórica se compara la llegada de la IA para liberar a los artistas?', options: ['La imprenta', 'La fotografía', 'El cine', 'Internet'], correct: 1, asked: false }, // 4:20
+                    { time: 388, question: '¿Qué tres cosas se mencionan que los humanos tienen y las máquinas no?', options: ['Inteligencia, velocidad y memoria', 'Inspiración, motivación y colaboración', 'Originalidad, destreza y visión', 'Datos, algoritmos y poder de cómputo'], correct: 2, asked: false }, // 6:28
+                ],
+                finalTestQuestions: [
+                     {
+                        question: "Según el expositor, ¿cuál es el primer y más fundamental paso del proceso creativo, exclusivo de los humanos?",
+                        options: ["Documentarse exhaustivamente.", "Encontrar la respuesta correcta.", "Formular la pregunta correcta.", "Dominar las herramientas tecnológicas."],
+                        answer: 2
+                    },
+                    {
+                        question: "¿Qué dos ventajas principales ofrecen las máquinas, como la IA, en la fase de documentación del proceso creativo?",
+                        options: ["Originalidad y destreza.", "Visión y criterio.", "Aceleración (tiempo) y abaratamiento (dinero).", "Complejidad y profundidad filosófica."],
+                        answer: 2
+                    },
+                    {
+                        question: "El video establece una analogía entre la invención de la IA y otro hito histórico. ¿Cuál fue este hito y qué consecuencia tuvo para el arte?",
+                        options: ["La imprenta, que liberó la escritura de los monjes.", "El cine, que obligó al teatro a reinventarse.", "La fotografía, que liberó a la pintura de la necesidad de copiar la realidad.", "Internet, que saturó el mercado de contenido."],
+                        answer: 2
+                    },
+                    {
+                        question: "¿Cuáles son las tres cualidades que, según la charla, los humanos aportan al proceso creativo y que las máquinas no poseen?",
+                        options: ["Rapidez, eficiencia y gran cantidad de datos.", "Inspiración, transpiración y colaboración.", "Originalidad, destreza y visión.", "Análisis, síntesis y evaluación."],
+                        answer: 2
+                    },
+                    {
+                        question: "En el contexto de la IA, ¿a qué se refiere el expositor con 'encontrar la respuesta correcta' como el paso final del proceso creativo?",
+                        options: ["A encontrar la solución que la IA considera óptima.", "A generar una obra que guste a la mayoría de la gente.", "A elegir una de las miles de opciones que la máquina presenta al azar.", "A elegir la opción que mejor se acerca a una verdad filosófica o tesis personal, que resuene con otros humanos."],
+                        answer: 3
+                    },
+                    {
+                        question: "¿Cuál es el consejo final del autor para un joven artista preocupado por el avance de la IA?",
+                        options: ["Abandonar las artes tradicionales y convertirse en un experto en IA.", "Trabajar duro, formarse constantemente y desarrollar un criterio propio, independientemente de si usa IA o no.", "Usar la IA exclusivamente para tareas repetitivas.", "Centrarse únicamente en crear arte que la IA no pueda replicar."],
+                        answer: 1
+                    }
+                ]
+            },
+            
+            // --- SELECTORES DEL DOM ---
+            dom: {
+                sections: document.querySelectorAll('main > section'),
+                navButtons: document.querySelectorAll('.btn-next, .btn-prev'),
+                floatingMenu: document.getElementById('floating-menu'),
+                progressBar: document.getElementById('progress-bar'),
+                userForm: document.getElementById('user-form'),
+                usernamePlaceholders: document.querySelectorAll('.username-placeholder'),
+                videoQuizModal: document.getElementById('video-quiz-modal'),
+                settingsButton: document.getElementById('settings-button'),
+                pointsDisplay: document.getElementById('points-display'),
+            },
+
+            // --- MÉTODOS DE INICIALIZACIÓN Y NÚCLEO ---
+            init() {
+                console.log('Iniciando la cápsula educativa...');
+                this.loadStateFromLocalStorage();
+                this.setupEventListeners();
+                this.renderFloatingMenu();
+                
+                if (this.state.userData.fullName) {
+                    console.log('Usuario encontrado. Saltando formulario de ingreso.');
+                    this.config.currentSectionIndex = 1; // Ir a la portada
+                    this.updateUsernamePlaceholders();
+                    this.updatePointsDisplay();
+                    this.updateBadgesFromState();
+                }
+
+                this.navigateToSection(this.config.currentSectionIndex, true); // No animar la carga inicial
+                this.loadYouTubeApi();
+            },
+
+            loadStateFromLocalStorage() {
+                const userData = localStorage.getItem('userData');
+                const attempts = localStorage.getItem(this.config.testAttemptsKey);
+                const score = localStorage.getItem(this.config.testScoreKey);
+                const points = localStorage.getItem('userPoints');
+                const badges = localStorage.getItem('userBadges');
+
+                if (userData) this.state.userData = JSON.parse(userData);
+                if (attempts) this.state.currentTestAttempt = parseInt(attempts, 10);
+                if (score) this.state.finalScore = parseFloat(score);
+                if (points) this.state.points = parseInt(points, 10);
+                if (badges) this.state.badges = JSON.parse(badges);
+
+            },
+
+            saveStateToLocalStorage() {
+                localStorage.setItem('userData', JSON.stringify(this.state.userData));
+                localStorage.setItem(this.config.testAttemptsKey, this.state.currentTestAttempt);
+                localStorage.setItem(this.config.testScoreKey, this.state.finalScore);
+                localStorage.setItem('userPoints', this.state.points);
+                localStorage.setItem('userBadges', JSON.stringify(this.state.badges));
+            },
+            
+            setupEventListeners() {
+                // Navegación principal
+                this.dom.navButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('btn-next')) this.navigate(1);
+                        else if (e.target.classList.contains('btn-prev')) this.navigate(-1);
+                    });
+                });
+
+                // Formulario de ingreso
+                this.dom.userForm.addEventListener('submit', this.handleUserFormSubmit.bind(this));
+                
+                // Botón de settings para reiniciar
+                this.dom.settingsButton.addEventListener('click', this.confirmRestart.bind(this));
+
+                // Evaluación Final
+                const startTestBtn = document.getElementById('start-test-btn');
+                if (startTestBtn) startTestBtn.addEventListener('click', this.startTest.bind(this));
+                
+                const submitTestBtn = document.getElementById('submit-test-btn');
+                if (submitTestBtn) submitTestBtn.addEventListener('click', this.submitTest.bind(this));
+
+                const nextFromEvalBtn = document.getElementById('next-from-eval-btn');
+                if (nextFromEvalBtn) nextFromEvalBtn.addEventListener('click', () => this.navigate(1));
+
+                const metacognitionBtn = document.getElementById('next-to-certificate-or-report');
+                if(metacognitionBtn) metacognitionBtn.addEventListener('click', this.showFinalOutcome.bind(this));
+            },
+
+            // --- MÉTODOS DE NAVEGACIÓN ---
+            navigate(direction) {
+                const newIndex = this.config.currentSectionIndex + direction;
+                if (newIndex >= 0 && newIndex < this.config.totalSections) {
+                     // Checkpoint de evaluación
+                    if(this.dom.sections[this.config.currentSectionIndex].id === 'evaluacion_final' && this.state.finalScore < this.config.passingScore) {
+                        alert(`¡Hola ${this.state.userData.firstName}! Debes aprobar la evaluación final para continuar.`);
+                        return;
+                    }
+
+                    //Checkpoint video-quiz
+                    if(this.dom.sections[this.config.currentSectionIndex].id === 'desarrollo_practico') {
+                        const allAsked = this.state.videoQuizState.every(q => q.asked);
+                        if (!allAsked) {
+                            alert(`¡Un momento, ${this.state.userData.firstName}! Debes completar todas las preguntas del video para avanzar. ¡Es importante!`);
+                            return;
+                        } else {
+                           if (!this.state.badges.includes('explorador-cuantico')) {
+                               this.awardBadge('explorador-cuantico', 'Explorador Cuántico', 'Por completar el video-quiz');
+                           }
+                        }
+                    }
+
+                    //Checkpoint y gamificación al pasar secciones
+                    const currentSectionId = this.dom.sections[this.config.currentSectionIndex].id;
+                     if(currentSectionId === 'desarrollo_teorico' && !this.state.badges.includes('arconte-del-conocimiento')){
+                        this.awardBadge('arconte-del-conocimiento', 'Arconte del Conocimiento', 'Por dominar la teoría');
+                    }
+                    if(currentSectionId === 'evaluacion_formativa' && !this.state.badges.includes('estratega-reflexivo')){
+                        this.awardBadge('estratega-reflexivo', 'Estratega Reflexivo', 'Por completar la autoevaluación');
+                    }
+
+                    this.navigateToSection(newIndex);
+                }
+            },
+            
+            navigateToSection(index, isInitial = false) {
+                if (index < 0 || index >= this.config.totalSections) return;
+
+                this.config.currentSectionIndex = index;
+
+                this.dom.sections.forEach((section, i) => {
+                    section.classList.toggle('active', i === index);
+                });
+
+                if (isInitial) {
+                    // Si es la carga inicial, no animar la barra
+                     this.updateProgressBar(true);
+                } else {
+                     this.updateProgressBar();
+                }
+               
+                this.updateActiveMenuItem();
+
+                const currentSectionId = this.dom.sections[index].id;
+                 if (currentSectionId === 'desarrollo_practico' && this.state.isVideoApiReady && !this.state.videoPlayer) {
+                    this.createVideoPlayer();
+                } else if(currentSectionId === 'evaluacion_final'){
+                    this.renderFinalTest();
+                } else {
+                    if (this.state.videoPlayer && typeof this.state.videoPlayer.pauseVideo === 'function') {
+                        this.state.videoPlayer.pauseVideo();
+                    }
+                    if (this.state.quizTimer) {
+                        clearInterval(this.state.quizTimer);
+                        this.state.quizTimer = null;
+                    }
+                }
+                
+                // Mover foco al inicio de la nueva sección para accesibilidad
+                this.dom.sections[index].setAttribute('tabindex', '-1');
+                this.dom.sections[index].focus();
+
+                window.scrollTo(0, 0);
+            },
+            
+            renderFloatingMenu() {
+                const icons = ['📝', '🏠', '✨', '🧠', '📜', '🎯', '🏁', '💡', '🤔', '🏆'];
+                const titles = ['Ingreso', 'Portada', 'Introducción', 'Activación', 'Práctica', 'Teoría', 'Formativa', 'Evaluación', 'Síntesis', 'Cierre', 'Certificado'];
+
+                let menuHTML = '';
+                this.dom.sections.forEach((section, index) => {
+                     menuHTML += `<button class="menu-item" data-index="${index}" title="${titles[index] || ''}">${icons[index] || '●'}</button>`;
+                });
+                this.dom.floatingMenu.innerHTML = menuHTML;
+                
+                this.dom.floatingMenu.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const index = parseInt(e.currentTarget.dataset.index, 10);
+                        
+                        // Permitir salto si el módulo ya ha sido "visitado" (index < currentSectionIndex)
+                        if (index <= this.config.currentSectionIndex) {
+                           this.navigateToSection(index);
+                        } else {
+                           // Chequeos para saltar hacia adelante
+                           if (this.canNavigateTo(index)) {
+                              this.navigateToSection(index);
+                           } else {
+                               alert(`¡Ups, ${this.state.userData.firstName}! Primero completa los pasos anteriores para desbloquear esta sección.`);
+                           }
+                        }
+                    });
+                });
+            },
+            
+            canNavigateTo(targetIndex) {
+                // Verifica si el usuario puede saltar a una sección futura.
+                // Requerimiento: evaluación aprobada para ir más allá.
+                const evalIndex = Array.from(this.dom.sections).findIndex(s => s.id === 'evaluacion_final');
+                if (targetIndex > evalIndex) {
+                    return this.state.finalScore >= this.config.passingScore;
+                }
+                // Por ahora, para el resto, solo se requiere haber pasado las secciones anteriores linealmente.
+                // Como ya tenemos una validación en `navigate`, esta lógica se puede extender si hay más checkpoints.
+                return targetIndex <= this.config.currentSectionIndex + 1;
+            },
+            
+            updateProgressBar(isInitial = false) {
+                const percentage = (this.config.currentSectionIndex / (this.config.totalSections - 1)) * 100;
+                if(isInitial){
+                    this.dom.progressBar.style.transition = 'none'; // Desactivar transición para carga inicial
+                } else {
+                     this.dom.progressBar.style.transition = 'width 0.4s ease-out';
+                }
+                this.dom.progressBar.style.width = `${percentage}%`;
+            },
+            
+            updateActiveMenuItem() {
+                this.dom.floatingMenu.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.toggle('active-nav', parseInt(item.dataset.index, 10) === this.config.currentSectionIndex);
+                });
+            },
+            
+            // --- MANEJO DE FORMULARIOS ---
+            handleUserFormSubmit(e) {
+                e.preventDefault();
+                let isValid = true;
+                const form = e.target;
+                const nameInput = form.querySelector('#fullName');
+                const emailInput = form.querySelector('#email');
+
+                // Validación de Nombre
+                if (nameInput.value.trim() === '') {
+                    nameInput.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    nameInput.classList.remove('invalid');
+                }
+                // Validación de Email
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                    emailInput.classList.add('invalid');
+                    isValid = false;
+                } else {
+                    emailInput.classList.remove('invalid');
+                }
+                
+                if (isValid) {
+                    this.state.userData.fullName = nameInput.value.trim();
+                    this.state.userData.firstName = nameInput.value.trim().split(' ')[0]; // Para personalizar saludos
+                    this.state.userData.email = emailInput.value.trim();
+                    this.state.userData.phone = form.querySelector('#phone').value.trim();
+                    this.updateUsernamePlaceholders();
+                    this.addPoints(10, 'Registro completado');
+                    this.saveStateToLocalStorage();
+                    this.navigate(1); // Navega a la portada
+                }
+            },
+            
+            updateUsernamePlaceholders() {
+                this.dom.usernamePlaceholders.forEach(span => {
+                    span.textContent = this.state.userData.firstName || 'explorador/a';
+                });
+            },
+
+            // --- LÓGICA DE VIDEO Y QUIZ ---
+            loadYouTubeApi() {
+                const tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                window.onYouTubeIframeAPIReady = () => {
+                    this.state.isVideoApiReady = true;
+                     // Si el usuario ya está en la sección de video, crearlo.
+                    if(this.dom.sections[this.config.currentSectionIndex].id === 'desarrollo_practico'){
+                         this.createVideoPlayer();
+                    }
+                };
+            },
+
+            createVideoPlayer() {
+                this.state.videoPlayer = new YT.Player('video-player', {
+                    videoId: 'EtU-NyNH4Qg', // ID del video de YouTube
+                    playerVars: {
+                        'playsinline': 1,
+                        'modestbranding': 1,
+                        'rel': 0,
+                        'controls': 1,
+                        'disablekb': 1, // Desactivar controles de teclado
+                    },
+                    events: {
+                        'onReady': this.onPlayerReady.bind(this),
+                        'onStateChange': this.onPlayerStateChange.bind(this)
+                    }
+                });
+            },
+            
+            onPlayerReady(event) {
+                console.log("Video player está listo.");
+            },
+            
+            onPlayerStateChange(event) {
+                if (event.data === YT.PlayerState.PLAYING) {
+                    if(this.state.quizTimer) clearInterval(this.state.quizTimer); // Limpiar timer anterior
+                    this.state.quizTimer = setInterval(this.checkVideoTime.bind(this), 500);
+                } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                     clearInterval(this.state.quizTimer);
+                     this.state.quizTimer = null;
+                }
+            },
+
+            checkVideoTime() {
+                if (!this.state.videoPlayer) return;
+                const currentTime = this.state.videoPlayer.getCurrentTime();
+                
+                for (let quiz of this.state.videoQuizState) {
+                    if (!quiz.asked && currentTime >= quiz.time) {
+                        this.state.videoPlayer.pauseVideo();
+                        clearInterval(this.state.quizTimer);
+                        this.state.quizTimer = null;
+                        quiz.asked = true; // Marcar como preguntada para no repetirla
+                        this.showVideoQuiz(quiz);
+                        break;
+                    }
+                }
+            },
+
+            showVideoQuiz(quizData) {
+                const questionEl = document.getElementById('video-quiz-question');
+                const optionsEl = document.getElementById('video-quiz-options');
+                const feedbackEl = document.getElementById('video-quiz-feedback');
+                
+                questionEl.textContent = quizData.question;
+                feedbackEl.textContent = '';
+                optionsEl.innerHTML = '';
+                
+                quizData.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('video-quiz-option');
+                    button.dataset.index = index;
+                    button.onclick = () => {
+                        this.checkVideoQuizAnswer(button, index, quizData.correct);
+                    };
+                    optionsEl.appendChild(button);
+                });
+
+                this.dom.videoQuizModal.classList.add('show');
+            },
+
+            checkVideoQuizAnswer(button, selectedIndex, correctIndex) {
+                 const feedbackEl = document.getElementById('video-quiz-feedback');
+                 document.querySelectorAll('.video-quiz-option').forEach(btn => btn.disabled = true); // Deshabilitar botones
+                 
+                 if (selectedIndex === correctIndex) {
+                    button.style.borderColor = 'var(--success-color)';
+                    feedbackEl.textContent = "¡Correcto! ¡Qué capo/a! Puedes continuar.";
+                    feedbackEl.style.color = 'var(--success-color)';
+                    this.addPoints(20, `Respuesta correcta en video-quiz`);
+
+                    setTimeout(() => {
+                        this.dom.videoQuizModal.classList.remove('show');
+                        this.state.videoPlayer.playVideo();
+                    }, 1500);
+
+                 } else {
+                    button.style.borderColor = 'var(--error-color)';
+                    feedbackEl.textContent = "¡Casi! Intenta de nuevo. Rebobina un poquito si necesitas recordar.";
+                    feedbackEl.style.color = 'var(--error-color)';
+                    
+                    // Encontrar y resaltar la respuesta correcta
+                    const correctButton = document.querySelector(`.video-quiz-option[data-index="${correctIndex}"]`);
+                    correctButton.style.borderColor = 'var(--success-color)';
+                    
+                    setTimeout(() => {
+                         // Reinicia el quiz para que el usuario intente de nuevo
+                         this.state.videoQuizState.find(q => q.question === button.parentElement.previousElementSibling.textContent).asked = false;
+                         this.dom.videoQuizModal.classList.remove('show');
+                         document.querySelectorAll('.video-quiz-option').forEach(btn => btn.disabled = false); // Habilitar de nuevo
+                         
+                    }, 3000);
+                 }
+            },
+            
+            // --- LÓGICA DE EVALUACIÓN FINAL ---
+            renderFinalTest() {
+                const testIntro = document.getElementById('test-intro');
+                const testContainer = document.getElementById('test-container');
+                const testResult = document.getElementById('test-result');
+
+                if (this.state.finalScore >= 0) {
+                    testIntro.style.display = 'none';
+                    testContainer.style.display = 'none';
+                    this.displayTestResults(); // Mostrar resultados anteriores si ya terminó
+                } else if(this.state.currentTestAttempt >= 3){
+                     testIntro.innerHTML = `<h2>Límite de intentos alcanzado</h2><p>Has alcanzado el número máximo de 3 intentos para esta evaluación.</p>`;
+                     testIntro.style.display = 'block';
+                     testContainer.style.display = 'none';
+                }
+                else {
+                    testIntro.style.display = 'block';
+                    testContainer.style.display = 'none';
+                    testResult.style.display = 'none';
+                    document.getElementById('start-test-btn').style.display = 'block';
+                    document.getElementById('next-from-eval-btn').style.display = 'none';
+                }
+            },
+
+            startTest() {
+                this.state.currentTestAttempt++;
+                document.getElementById('test-intro').style.display = 'none';
+                document.getElementById('test-container').style.display = 'block';
+
+                const questionContainer = document.getElementById('quiz-question-container');
+                questionContainer.innerHTML = '';
+
+                this.state.finalTestQuestions.forEach((q, index) => {
+                    let optionsHTML = '';
+                    q.options.forEach((opt, optIndex) => {
+                         optionsHTML += `<button class="quiz-option" data-question="${index}" data-option="${optIndex}">${String.fromCharCode(97 + optIndex)}) ${opt}</button>`;
+                    });
+                    
+                    questionContainer.innerHTML += `
+                        <div class="quiz-item" id="question-${index}">
+                            <h4>${index + 1}. ${q.question}</h4>
+                            <div class="quiz-options">${optionsHTML}</div>
+                        </div>
+                    `;
+                });
+
+                document.querySelectorAll('.quiz-option').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const qIndex = e.currentTarget.dataset.question;
+                        // Des-seleccionar otros en el mismo grupo
+                        document.querySelectorAll(`.quiz-option[data-question="${qIndex}"]`).forEach(b => b.classList.remove('selected'));
+                        e.currentTarget.classList.add('selected');
+                    });
+                });
+                
+                this.startTestTimer();
+            },
+            
+            startTestTimer() {
+                const timerEl = document.getElementById('test-timer');
+                timerEl.style.display = 'block';
+                let timeLeft = this.config.testTimerLimit;
+                
+                this.testTimerInterval = setInterval(() => {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerEl.textContent = `Tiempo: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(this.testTimerInterval);
+                        timerEl.textContent = "¡Tiempo agotado!";
+                        this.submitTest();
+                    }
+                }, 1000);
+            },
+
+            submitTest() {
+                clearInterval(this.testTimerInterval);
+                document.getElementById('test-timer').style.display = 'none';
+
+                let score = 0;
+                this.state.finalTestQuestions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`.quiz-option[data-question="${index}"].selected`);
+                    const optionsInQuestion = document.querySelectorAll(`.quiz-option[data-question="${index}"]`);
+                    optionsInQuestion.forEach(opt => opt.disabled = true); // Deshabilitar opciones
+
+                    if (selectedOption) {
+                        const selectedAnswer = parseInt(selectedOption.dataset.option);
+                        if (selectedAnswer === q.answer) {
+                            score++;
+                            selectedOption.classList.add('correct');
+                            this.addPoints(30, 'Respuesta correcta en examen final');
+                        } else {
+                            selectedOption.classList.add('incorrect');
+                            const correctOption = document.querySelector(`.quiz-option[data-question="${index}"][data-option="${q.answer}"]`);
+                            correctOption.classList.add('correct');
+                        }
+                    } else {
+                        // Marcar la respuesta correcta si no se seleccionó ninguna
+                        const correctOption = document.querySelector(`.quiz-option[data-question="${index}"][data-option="${q.answer}"]`);
+                        correctOption.classList.add('correct');
+                    }
+                });
+                
+                const percentage = (score / this.state.finalTestQuestions.length) * 100;
+                this.state.finalScore = percentage;
+                this.saveStateToLocalStorage();
+                
+                setTimeout(() => {
+                    document.getElementById('test-container').style.display = 'none';
+                    this.displayTestResults();
+                }, 3000); // Dar tiempo para ver retroalimentación
+            },
+
+            displayTestResults() {
+                const resultContainer = document.getElementById('test-result');
+                const attemptsLeft = 3 - this.state.currentTestAttempt;
+                let html = `<h2>Resultados de la Evaluación</h2>`;
+                
+                if (this.state.finalScore >= this.config.passingScore) {
+                     html += `<p class="result-message pass">¡Felicidades, ${this.state.userData.firstName}! Aprobaste con un ${this.state.finalScore.toFixed(0)}%.</p>`;
+                     html += `<p>¡Has demostrado un excelente entendimiento del tema! Ya puedes avanzar a la siguiente sección y generar tu certificado.</p>`;
+                     document.getElementById('next-from-eval-btn').style.display = 'block';
+                } else {
+                     html += `<p class="result-message fail">¡Ánimo! Tu puntaje fue ${this.state.finalScore.toFixed(0)}%.</p>`;
+                     html += `<p>No alcanzaste el 70% necesario para aprobar. ¡Pero no te preocupes! El error es parte del aprendizaje.</p>`;
+                     if(attemptsLeft > 0) {
+                        html += `<p>Te quedan <strong>${attemptsLeft}</strong> intentos. ¡Repasa los contenidos y vuelve a intentarlo!</p>`;
+                        html += `<div class="btn-container"><button id="retry-test-btn" class="btn">Volver a Intentar</button></div>`;
+                     } else {
+                        html += `<p>Has agotado tus intentos. Pero puedes seguir explorando los materiales para aprender. Puedes reiniciar todo el curso desde el botón de configuración (⚙️) abajo a la derecha.</p>`;
+                        document.getElementById('next-from-eval-btn').style.display = 'none';
+                     }
+                     
+                }
+                
+                resultContainer.innerHTML = html;
+                resultContainer.style.display = 'block';
+                
+                const retryBtn = document.getElementById('retry-test-btn');
+                if (retryBtn) {
+                    retryBtn.addEventListener('click', () => {
+                        this.state.finalScore = -1; // Resetear puntaje para re-intento
+                        this.saveStateToLocalStorage();
+                        this.renderFinalTest();
+                    });
+                }
+            },
+
+             // --- Gamificación ---
+            addPoints(amount, reason) {
+                this.state.points += amount;
+                this.updatePointsDisplay();
+                console.log(`+${amount} puntos por: ${reason}`);
+                this.saveStateToLocalStorage();
+            },
+            updatePointsDisplay() {
+                this.dom.pointsDisplay.textContent = `Puntos: ${this.state.points}`;
+                this.dom.pointsDisplay.style.transform = 'scale(1.2)';
+                setTimeout(() => this.dom.pointsDisplay.style.transform = 'scale(1)', 200);
+            },
+            
+            updateBadgesFromState() {
+              // Si ya se tienen insignias, no se muestra nada, pero la lógica futura podría añadirlas a un perfil.
+              // Por ahora, solo se usa para no volver a mostrar la notificación.
+              console.log("Insignias ganadas:", this.state.badges);
+            },
+
+            awardBadge(badgeId, badgeName, message) {
+                if (this.state.badges.includes(badgeId)) return;
+                
+                this.state.badges.push(badgeId);
+                this.addPoints(100, `Insignia desbloqueada: ${badgeName}`);
+                
+                const badgeNotification = document.getElementById('badge-notification');
+                const badgeNameEl = document.getElementById('badge-name');
+                const badgeIconPlaceholder = document.getElementById('badge-icon-placeholder');
+                
+                badgeNameEl.textContent = badgeName;
+
+                // Simple SVG placeholder para las insignias
+                const badgeSVGs = {
+                    'explorador-cuantico': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 2L14 26v48l36 24 36-24V26L50 2z" fill="#38bdf8"/><path d="M50 25l-25 15v30l25 15 25-15V40L50 25z" fill="#0f172a"/><circle cx="50" cy="55" r="8" fill="#e2e8f0"/></svg>`,
+                    'arconte-del-conocimiento': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 2L14 26v48l36 24 36-24V26L50 2z" fill="#818cf8"/><path d="M30 70V30h40v40H30zm10-30h20v20H40V40z" fill="#0f172a"/><path d="M25 20h50v10H25zm0 50h50v10H25z" fill="#e2e8f0"/></svg>`,
+                    'estratega-reflexivo': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 2L14 26v48l36 24 36-24V26L50 2z" fill="#34d399"/><path d="M50 50m-25 0a25 25 0 1 0 50 0a25 25 0 1 0-50 0" fill="#0f172a"/><circle cx="50" cy="50" r="10" stroke="#e2e8f0" stroke-width="4" fill="none"/></svg>`
+                }
+
+                badgeIconPlaceholder.innerHTML = badgeSVGs[badgeId] || '';
+                
+                badgeNotification.classList.add('show');
+                
+                setTimeout(() => {
+                    badgeNotification.classList.remove('show');
+                }, 4000);
+            },
+            
+
+            // --- REINICIO Y CIERRE ---
+            confirmRestart() {
+                const confirm = window.confirm('¿Estás seguro, ché? Esto borrará todo tu progreso (nombre, puntajes, etc.) y reiniciará la cápsula desde cero.');
+                if(confirm){
+                    this.restartCourse();
+                }
+            },
+
+            restartCourse() {
+                localStorage.clear();
+                window.location.reload();
+            },
+            
+            showFinalOutcome(){
+                this.navigate(1);
+                
+                const container = document.getElementById('final-outcome-container');
+                this.saveUserReflections(); // Guardar reflexiones al finalizar
+
+                if(this.state.finalScore >= this.config.passingScore) {
+                     container.innerHTML = `
+                        <h2>¡Misión Cumplida, ${this.state.userData.firstName}!</h2>
+                        <p class="pass" style="font-size: 1.2rem;">Has superado la evaluación y completado la cápsula. ¡Estamos muy orgullosos de tu dedicación!</p>
+                        <p>Como reconocimiento a tu esfuerzo, hemos preparado tu certificado digital. Puedes descargarlo o imprimirlo.</p>
+                        <div class="btn-container">
+                             <button id="generate-cert-btn" class="btn">Generar mi Certificado (PDF)</button>
+                             <button id="generate-report-btn" class="btn btn-secondary">Ver mi Reporte Final</button>
+                        </div>
+                     `;
+                    document.getElementById('generate-cert-btn').addEventListener('click', this.generateCertificate.bind(this));
+                    document.getElementById('generate-report-btn').addEventListener('click', this.showPrintableReport.bind(this));
+                } else {
+                     container.innerHTML = `
+                        <h2>¡Un Gran Esfuerzo, ${this.state.userData.firstName}!</h2>
+                        <p class="fail" style="font-size: 1.2rem;">Has completado el recorrido, ¡y eso es un gran logro!</p>
+                        <p>Aunque no se ha alcanzado el puntaje para el certificado esta vez, el verdadero premio es el conocimiento y la reflexión que te llevas. ¡El camino del aprendizaje nunca termina!</p>
+                        <p>Puedes reiniciar el curso en cualquier momento para volver a intentarlo y obtener tu certificado.</p>
+                         <div class="btn-container">
+                             <button id="generate-report-btn" class="btn btn-secondary">Ver mi Reporte Final</button>
+                        </div>
+                     `;
+                      document.getElementById('generate-report-btn').addEventListener('click', this.showPrintableReport.bind(this));
+                }
+            },
+            
+            generateCertificate(){
+                const certName = document.getElementById('cert-user-name');
+                const certDate = document.getElementById('cert-date');
+                const certElement = document.getElementById('certificate');
+                
+                certName.textContent = this.state.userData.fullName;
+                certDate.textContent = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+                
+                new QRious({
+                  element: document.getElementById('cert-qr-code'),
+                  value: 'https://elmejorequipo.github.io/iacreatividad/verificar?id=12345',
+                  size: 120
+                });
+                
+                const opt = {
+                    margin: 0,
+                    filename: `Certificado_IA_Creatividad_${this.state.userData.fullName}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'px', format: 'a4', orientation: 'landscape' }
+                };
+                
+                html2pdf().from(certElement).set(opt).save();
+
+            },
+
+            saveUserReflections() {
+                this.state.userData.reflection1 = document.getElementById('reflection1').value;
+                this.state.userData.reflection2 = document.getElementById('reflection2').value;
+                this.state.userData.reflection3 = document.getElementById('reflection3').value;
+                this.saveStateToLocalStorage();
+            },
+
+            showPrintableReport() {
+                 document.getElementById('report-username').textContent = `Reporte de: ${this.state.userData.fullName}`;
+                 document.getElementById('report-date').textContent = new Date().toLocaleDateString('es-ES');
+                 document.getElementById('report-score').textContent = `Puntaje Final: ${this.state.finalScore >= 0 ? this.state.finalScore.toFixed(0) + '%' : 'No completado'}`;
+                 document.getElementById('report-status').textContent = `Estado: ${this.state.finalScore >= this.config.passingScore ? 'Aprobado' : 'No Aprobado'}`;
+
+                 const reflectionsContainer = document.getElementById('report-reflections');
+                 reflectionsContainer.innerHTML = `
+                    <h4>1. Percepción sobre IA en el ámbito creativo:</h4>
+                    <p>${this.state.userData.reflection1 || '<em>No respondido.</em>'}</p>
+                    <h4>2. Aplicación práctica con IA:</h4>
+                    <p>${this.state.userData.reflection2 || '<em>No respondido.</em>'}</p>
+                    <h4>3. Habilidad humana más importante a cultivar:</h4>
+                    <p>${this.state.userData.reflection3 || '<em>No respondido.</em>'}</p>
+                 `;
+
+                 window.print();
+            }
+
+        };
+
+        app.init();
+    });
+
+    </script>
+</body>
+</html>
+""")
+
+# Restore original stdout and get the captured string
+sys.stdout = old_stdout
+code_output_string = mystdout.getvalue()
+# No further processing needed, as the user wants the raw code.
+# The framework will take care of displaying `code_output_string`
+# within the correct block.
