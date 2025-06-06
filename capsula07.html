@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA: Creatividad Aumentada o Amenazada</title>
+    <meta name="description" content="Una cápsula educativa interactiva sobre el impacto de la Inteligencia Artificial en la creatividad y la educación superior, diseñada para docentes de la U.A.G.R.M.">
+    <meta name="keywords" content="Inteligencia Artificial, Creatividad, Educación, UAGRM, Diseño Instruccional, Cápsula Educativa, Gamificación, Aprendizaje en línea">
+    <meta name="author" content="Equipo de Desarrollo Web Educativo">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <style>
+        /*------------------------------------*\
+          #RESET & BASE
+        \*------------------------------------*/
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #0d9488;
+            --background-color: #111827;
+            --surface-color: #1f2937;
+            --text-color: #e5e7eb;
+            --accent-color: #ec4899;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --glass-bg: rgba(31, 41, 55, 0.7);
+            --font-main: 'Roboto', sans-serif;
+            --font-headings: 'Montserrat', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-headings);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        h1 { font-size: 2.8rem; text-align: center; }
+        h2 { font-size: 2rem; color: var(--secondary-color); border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.5rem; color: #a5b4fc; }
+        h4 { font-size: 1.2rem; }
+
+        p, li {
+            text-align: justify;
+            margin-bottom: 1rem;
+            max-width: 75ch; /* Limiting line length for readability */
+        }
+
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover, a:focus {
+            color: var(--accent-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        section {
+            display: none; /* Hidden by default */
+            min-height: 100vh;
+            padding: 4rem 1rem;
+            border-bottom: 1px solid var(--surface-color);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        section.active {
+            display: block;
+        }
+        
+        section.full-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-family: var(--font-headings);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover, .btn:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+            color: white;
+        }
+        
+        .btn-secondary {
+             background-image: linear-gradient(to right, var(--accent-color), #f97316);
+        }
+        
+        .btn-disabled {
+            background-image: none;
+            background-color: var(--surface-color);
+            color: #6b7280;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .btn-nav {
+             background-image: none;
+             background-color: var(--surface-color);
+        }
+        
+        .btn-nav:hover {
+            background-color: var(--primary-color);
+        }
+
+
+        /*------------------------------------*\
+          #ACCESSIBILITY & ANIMATIONS
+        \*------------------------------------*/
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reduced-motion-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background-color: var(--surface-color);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+        body.reduced-motion *, body.reduced-motion *::before, body.reduced-motion *::after {
+             animation: none !important;
+             transition: none !important;
+        }
+
+        /*------------------------------------*\
+          #LAYOUT & COMPONENTS
+        \*------------------------------------*/
+        .glass-card {
+            background: var(--glass-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin: 1rem 0;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--background-color);
+            border: 1px solid var(--surface-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-group .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            display: none;
+            margin-top: 0.25rem;
+        }
+        .form-group input.invalid {
+            border-color: var(--error-color);
+        }
+        .form-group input.valid {
+            border-color: var(--success-color);
+        }
+        .form-group input.invalid + .error-message {
+            display: block;
+        }
+        
+        .centered-svg-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .storytelling-box {
+            background-color: var(--surface-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            width: 100%;
+        }
+        
+        /* Floating Menu & Progress Bar */
+        #floating-menu {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            z-index: 999;
+            background: var(--glass-bg);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #floating-menu button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        #floating-menu button:hover, #floating-menu button.active-nav {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        #progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--surface-color);
+            z-index: 1000;
+        }
+        
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transition: width 0.5s ease;
+        }
+        
+        .points-display {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #facc15;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background-color: var(--surface-color);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0.5;
+            transition: all 0.4s ease;
+        }
+
+        .badge.unlocked {
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--secondary-color);
+        }
+
+        .badge svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-name {
+            font-weight: bold;
+            font-family: var(--font-headings);
+            font-size: 0.9rem;
+        }
+        
+        /* Quiz Styles */
+        #video-quiz-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .quiz-option {
+            display: block;
+            width: 100%;
+            background-color: var(--surface-color);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-color);
+        }
+
+        .quiz-option.selected {
+            background-color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+        
+        .quiz-option.correct {
+            background-color: var(--success-color);
+            border-color: white;
+        }
+
+        .quiz-option.incorrect {
+            background-color: var(--error-color);
+            border-color: white;
+        }
+        
+        /* Floating Chatbot */
+        #chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 998;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        #chatbot-button:hover {
+            transform: scale(1.1);
+        }
+        
+        #chatbot-button svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+        
+        /* Metacognitive section */
+        .metacognitive-question {
+            margin-bottom: 2rem;
+        }
+        .metacognitive-question textarea {
+            width: 100%;
+            height: 120px;
+            background-color: var(--background-color);
+            border: 1px solid var(--surface-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: var(--font-main);
+            font-size: 1rem;
+        }
+        
+        /* Rubric Table */
+        .rubric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background-color: var(--surface-color);
+        }
+        .rubric-table th, .rubric-table td {
+            border: 1px solid var(--background-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .rubric-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-family: var(--font-headings);
+        }
+        .rubric-table th:first-child {
+            width: 20%;
+        }
+        .rubric-table td {
+            font-size: 0.9rem;
+            vertical-align: top;
+        }
+        .rubric-table strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Certificate */
+        #certificate-wrapper {
+            padding: 2rem;
+        }
+        #certificate {
+            background-color: #fdfbfb;
+            color: #333;
+            border: 10px solid #004d40;
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            position: relative;
+        }
+        #certificate .cert-header {
+            font-size: 2rem;
+            color: #004d40;
+            font-weight: bold;
+        }
+        #certificate .cert-title {
+            font-size: 3rem;
+            margin: 1rem 0;
+            color: #00796b;
+            font-family: var(--font-headings);
+        }
+        #certificate .cert-name {
+            font-size: 2.5rem;
+            font-style: italic;
+            color: #d32f2f;
+            border-bottom: 2px solid #333;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin: 2rem 0;
+        }
+        #certificate .cert-body {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+        .cert-footer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            font-size: 1rem;
+        }
+        .cert-footer-item {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 0.5rem;
+        }
+        
+        /* Final report screen */
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .report-item {
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .report-item .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-family: var(--font-headings);
+        }
+
+        .report-item .label {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            body { font-size: 15px; }
+            .container { width: 95%; }
+            #floating-menu {
+                width: 90%;
+                gap: 0.5rem;
+                justify-content: space-around;
+                padding: 0.5rem;
+            }
+             #floating-menu button {
+                font-size: 0.8rem;
+                padding: 0.3rem;
+            }
+            #chatbot-button {
+                bottom: 80px; /* Make space for nav menu */
+            }
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            .nav-buttons .btn {
+                width: 80%;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            #floating-menu { display: none; } /* Hide floating menu on very small screens, nav buttons are enough */
+             #chatbot-button {
+                bottom: 20px; 
+            }
+        }
+
+        /* Print styles for final report */
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #final-report, #final-report * {
+            visibility: visible;
+          }
+          #final-report {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background-color: white;
+            color: black;
+          }
+           #final-report h2, #final-report .value, #final-report .label {
+             color: black !important;
+           }
+           #final-report .report-item {
+            background-color: #eee;
+            border: 1px solid #ccc;
+           }
+           #final-report-actions {
+            display: none;
+           }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <div class="reduced-motion-toggle" id="reduced-motion-toggle" role="button" aria-pressed="false" tabindex="0">
+        Reducir Movimiento
+    </div>
+
+    <nav id="floating-menu">
+        <!-- Menu buttons will be injected by JS -->
+    </nav>
+    
+    <a id="chatbot-button" href="https://notebooklm.google.com/notebook/c4d90a4e-4c2b-4526-9b60-93548a358137" target="_blank" aria-label="Abrir chatbot de ayuda">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75a3 3 0 0 1-6 0" />
+        </svg>          
+    </a>
+
+    <main>
+        <!-- SECCIÓN 0: FORMULARIO DE INGRESO -->
+        <section id="s0" class="active full-screen">
+            <div class="container" style="max-width: 600px;">
+                <div class="glass-card">
+                    <h1>Bienvenid@ a la Cápsula Educativa</h1>
+                    <p>¡Hola! Qué bueno tenerte por acá. Estás a punto de sumergirte en un tema fascinante: la relación entre la Inteligencia Artificial y la creatividad. Antes de empezar este viaje, necesitamos unos datitos para personalizar tu experiencia y, si te animás a completar todo el recorrido, generar tu certificado de finalización.</p>
+                    <form id="ingreso-form" novalidate>
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo:</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                            <div class="error-message">Por favor, ingresá tu nombre completo.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico:</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message">Necesitamos un correo válido. ¡No te mandaremos spam!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono (Opcional):</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+                        <button type="submit" class="btn">¡A Explorar!</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 1: PORTADA -->
+        <section id="s1" class="full-screen">
+            <div class="container">
+                <div class="centered-svg-container" aria-label="Animación de un cerebro fusionándose con circuitos digitales">
+                    <svg width="300" height="300" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--primary-color); stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:var(--accent-color); stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--secondary-color); stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#a5b4fc; stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#brainGradient)" d="M101.3,47.8c-2.3-3.6-5.8-5.9-9.7-7.2c-7.9-2.5-16.1,1-20.9,7.6c-4.4,6-4,14.3,1.1,19.6 c2.1,2.2,5,3.7,7.8,4.7c-2,3.3-4.5,6.3-7.4,8.8c-6.1,5.2-13.8,7.9-21.7,7.7c-9.1-0.2-17.7-4.4-23.2-11.7 C11.3,69.5,9.6,58.8,12.7,48.7c1.7-5.5,5.1-10.4,9.6-13.8c4.2-3.2,9.3-4.8,14.4-4.8c4.5,0,8.9,1.2,12.8,3.5l0.1,0.1 c-4.6,3.6-7.8,8.8-8.8,14.5c-1,5.7,0.4,11.5,4,16c3.4,4.2,8.4,6.6,13.7,6.8c11.6,0.3,21.9-8,24.6-19.3 c1-4.2-0.2-8.6-3.2-11.8c2.9-0.1,5.7-0.7,8.4-1.7c7-2.6,12.5-8.4,14.2-15.6c0.9-3.9,0.3-8-1.9-11.3C107,3.5,103.7,1,99.9,0 c-1.5-0.4-3.1-0.6-4.6-0.6c-9.8,0-18.7,6-22.3,15.2c-2.6,6.6-1.5,14,3.2,19.6c1.1,1.3,2.4,2.5,3.9,3.5 c-3.5,4.8-8.6,7.6-14.2,7.6c-8,0-15.2-5-18.3-12.7c-1.2-3-1.6-6.2-1.2-9.3c0.4-3,1.5-5.8,3.4-8.2C56,12.1,60.8,9,66.1,7.9 c5.2-1.1,10.6,0.3,14.7,3.8c1.3,1.1,2.4,2.3,3.3,3.7c3.3-3.4,7.4-5.6,11.9-6c8.5-0.7,16.5,4,19.8,11.9 c2.9,7.1,0.9,15.2-4.8,20.1c-2.6,2.2-5.7,3.5-9,3.9c1,5.2,4,9.8,8.5,12.6c9.7,6.1,21.9,4,29-5.1c3.2-4.1,4.9-9.1,4.9-14.3 c0-2.3-0.4-4.7-1.1-6.9l-0.1-0.1c4.5,0.7,8.5,3,11.5,6.5c6,7,7.1,17,2.7,25.3c-4,7.5-11.3,12.7-19.8,13.8 c-8.5,1-16.8-2.6-22-8.8c-2.5-3-4.5-6.5-5.9-10.2c2,0.4,4.1,0.6,6.1,0.6c7.5,0,14.4-3.8,18.4-10.1 C144,79.9,145.9,71.2,143.2,63.2z" transform="translate(10, 20) scale(0.9)">
+                            <animateTransform attributeName="transform" type="scale" from="0.9" to="1" dur="5s" repeatCount="indefinite" additive="sum" accumulate="sum"></animateTransform>
+                        </path>
+                        <g id="circuitry">
+                           <!-- This part will be static, representing the digital side -->
+                        </g>
+                         <style>
+                            .line, .circle {
+                                stroke: url(#circuitGradient);
+                                stroke-width: 1.5;
+                                fill: none;
+                            }
+                            .circle {
+                                fill: var(--secondary-color);
+                                r: 2;
+                                animation: pulse 2s infinite ease-in-out;
+                            }
+                            @keyframes pulse { 0%, 100% { r: 1; opacity: 0.5; } 50% { r: 3; opacity: 1; } }
+                            #c1 { animation-delay: 0s; }
+                            #c2 { animation-delay: 0.2s; }
+                            #c3 { animation-delay: 0.4s; }
+                            #c4 { animation-delay: 0.6s; }
+                            #c5 { animation-delay: 0.8s; }
+                            #c6 { animation-delay: 1s; }
+                            #c7 { animation-delay: 1.2s; }
+                            #c8 { animation-delay: 1.4s; }
+                        </style>
+                        <path class="line" d="M143.2,63.2 C150,80 160,95 180,100" /> <circle id="c1" cx="180" cy="100"/>
+                        <path class="line" d="M143.2,63.2 C155,70 165,60 175,50" /> <circle id="c2" cx="175" cy="50"/>
+                        <path class="line" d="M12.7,48.7 C5,60 10,80 25,95" /> <circle id="c3" cx="25" cy="95"/>
+                        <path class="line" d="M12.7,48.7 C10,40 20,30 35,25" /> <circle id="c4" cx="35" cy="25"/>
+                        <path class="line" d="M99.9,0 C110,-5 125,5 135,15" /> <circle id="c5" cx="135" cy="15"/>
+                        <path class="line" d="M56,12.1 C40,5 30,20 38,35" /> <circle id="c6" cx="38" cy="35"/>
+                        <path class="line" d="M101.3,165 C90,175 110,185 130,180" /> <circle id="c7" cx="130" cy="180"/>
+                         <path class="line" d="M100,100 C80,110 70,130 80,150" /> <circle id="c8" cx="80" cy="150"/>
+                    </svg>
+                </div>
+                <h1>IA: Creatividad Aumentada o Amenaza</h1>
+                <p>Una exploración para docentes sobre el nuevo paradigma educativo.</p>
+                <button onclick="goToSection('s2')" class="btn">Empezar el Viaje</button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: INTRODUCCIÓN -->
+        <section id="s2">
+            <div class="container">
+                <h2><span id="welcome-name"></span>¡Arrancamos! Te cuento de qué va la vaina...</h2>
+                <p>En los pasillos de nuestra U.A.G.R.M. ya se siente el murmullo, ¿no es cierto? La Inteligencia Artificial llegó para quedarse y nos está moviendo el piso a todos. Algunos la ven como la herramienta definitiva que potenciará la creatividad de nuestros pelados, mientras que otros la miran con recelo, como una amenaza a la originalidad y al esfuerzo académico. Esta cápsula está diseñada para que, como docente universitario, te formés tu propia opinión y, más importante aún, encontrés estrategias prácticas para navegar estas aguas turbulentas. No vamos a darte respuestas mágicas, pero sí te daremos el mapa y la brújula.</p>
+
+                <div class="glass-card">
+                    <h3>Objetivos de Aprendizaje</h3>
+                    <p>Al finalizar esta cápsula, serás capaz de:</p>
+                    <ul>
+                        <li><strong>Analizar</strong> el impacto de la IA en los procesos creativos dentro de la educación superior.</li>
+                        <li><strong>Diferenciar</strong> entre la IA como herramienta para aumentar la creatividad y como un potencial riesgo para la integridad académica.</li>
+                        <li><strong>Desarrollar</strong> estrategias pedagógicas para integrar herramientas de IA de manera ética y efectiva en tus materias.</li>
+                        <li><strong>Evaluar</strong> trabajos estudiantiles creados con IA, usando nuevos criterios como la calidad de los *prompts* y la justificación metodológica.</li>
+                    </ul>
+                </div>
+                
+                <h3>El Punto de Partida: Un Dilema muy Cruceño</h3>
+                <p>Para entrar en calor, te presentamos una escena que podría ocurrir (o que quizás ya ocurrió) en cualquier oficina de nuestra universidad. Leé con atención, porque este es el corazón del debate que vamos a explorar.</p>
+
+                <div class="storytelling-box">
+                    <h4>El Informe Perfecto</h4>
+                    <p><strong>Contexto:</strong> La Universidad Autónoma Gabriel René Moreno (U.A.G.R.M.) en Santa Cruz de la Sierra. Dos profesores universitarios debaten sobre un informe estudiantil que aborda un problema local muy conocido: los cortes de agua de la cooperativa SAGUAPAC.</p>
+                    <p><strong>Personajes:</strong><br>
+                    <strong>DRA. ELENA VARGAS (60s):</strong> Prestigiosa catedrática de la Facultad de Sociología, conocida por su enfoque en el trabajo de campo.<br>
+                    <strong>DR. MATEO RÍOS (30s):</strong> Profesor de la Facultad de Comunicación y Medios Digitales, un colega curioso y tecnológico.</p>
+                    <p><em>INT. OFICINA DE LA DRA. VARGAS - TARDE</em></p>
+                    <p>La oficina de Elena está llena de libros y mapas de Santa Cruz. Sostiene un informe con una expresión de desconcierto. Mateo asoma la cabeza.</p>
+                    <p><strong>MATEO:</strong> ¿Doctora, buen día? Vengo en mi peregrinaje habitual por un poco de ese café suyo. Le juro que es lo único verdaderamente análogo y funcional que nos queda en esta ala del campus.</p>
+                    <p><strong>ELENA:</strong> Sírvasle con confianza, Doctor. Pero le advierto que mi paciencia está más intermitente que el servicio de agua en la ciudad.</p>
+                    <p><strong>MATEO:</strong> (Ríe) No me diga más. A estas alturas, creerle a SAGUAPAC es como creerle a mi ex. Dice que cortaremos y al final no corta nada, y me deja con los baldes llenos de agua.</p>
+                    <p><strong>ELENA:</strong> (Media sonrisa) Ojalá mi problema fuera tan sencillo. Esto es peor. Mire. (Señala el informe: "Análisis del Impacto Socioeconómico de los Cortes de SAGUAPAC en la Zona Sur"). Es de Javier. Un estudiante de primer año. Se supone que debía hacer un análisis cualitativo... y el informe es perfecto.</p>
+                    <p><strong>MATEO:</strong> ¿Perfecto es malo ahora? Pensé que eso era lo que buscábamos.</p>
+                    <p><strong>ELENA:</strong> Es que es una perfección imposible. La redacción es impecable. El análisis cruza datos que requerirían semanas de trabajo. Y los testimonios... ¡Son arquetipos, no personas! Esto no es trabajo de campo. Esto es una simulación. Es una IA.</p>
+                    <p><strong>MATEO:</strong> (Serio) El fantasma en la máquina.</p>
+                    <p><strong>ELENA:</strong> ¡Exacto! ¡El estudiante no ha pisado la calle! La sociología se hace con los pies en el barro, Doctor. Mi primer impulso es anular el trabajo.</p>
+                    <p><strong>MATEO:</strong> Entiendo su dilema... pero, ¿me permite ver la consigna que les dio?</p>
+                    <p>Elena le entrega la hoja. Mateo lee.</p>
+                    <p><strong>MATEO:</strong> "Realizar un informe de impacto socioeconómico... incluyendo análisis de datos y testimonios". Doctora... con respeto, la consigna describe perfectamente una tarea en la que una IA es experta.</p>
+                    <p><strong>ELENA:</strong> ¿Me está diciendo que la culpa es mía?</p>
+                    <p><strong>MATEO:</strong> No, la responsabilidad es compartida. El paradigma cambió. Quizás el trabajo ya no era recoger los testimonios, sino construir los modelos para que la IA los generara. Es una especie de... etnografía digital. En vez de anularlo, ¿por qué no lo cita y le pide que defienda su metodología? Que le muestre sus prompts. Quizás nos sorprenda.</p>
+                    <p>Elena mira el informe "perfecto". Ya no parece un fraude, sino un artefacto de un futuro que llegó sin avisar.</p>
+                    <p><strong>ELENA:</strong> Entonces... si la forma de investigar la realidad está cambiando... nosotros tenemos que cambiar la forma en que la enseñamos.</p>
+                    <p><strong>MATEO:</strong> Ese es el meollo del asunto. La pregunta real es... frente a un estudiante que puede simular la realidad con IA, nuestra capacidad como docentes... ¿está aumentada o está amenazada?</p>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s1')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s3')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECCIÓN 3: ACTIVACIÓN -->
+        <section id="s3">
+            <div class="container">
+                <h2>Activando Conocimientos Previos</h2>
+                <p>Antes de meternos de lleno, vamos a calentar motores con un pequeño juego. Es hora de ver qué ideas ya tenés sobre este mundo de la IA y la creatividad. ¡No hay respuestas incorrectas, solo ganas de explorar! Arrastrá cada concepto a su pareja correspondiente.</p>
+                <div class="glass-card">
+                    <h3>Juego de Parejas: IA y Creatividad</h3>
+                    <p><strong>Instrucciones:</strong> Hacé clic en una tarjeta y luego en su pareja para unirlas. ¡Intentá hacerlo en el menor tiempo posible!</p>
+                    <div class="iframe-container" style="aspect-ratio: 795 / 690;">
+                       <iframe allow="fullscreen; autoplay; allow-top-navigation-by-user-activation" allowfullscreen width="100%" height="100%" frameborder="0" src="https://es.educaplay.com/juego/24152723-juego_de_parejas_ia_y_creatividad.html"></iframe>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s2')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s4')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: DESARROLLO PRÁCTICO (VIDEO-QUIZ) -->
+        <section id="s4">
+            <div class="container">
+                <h2>Conectando con la Realidad</h2>
+                <p>El debate entre la Dra. Vargas y el Dr. Mateo nos deja pensando, ¿verdad? ¿Cuántas veces un trabajo "demasiado bueno" nos ha hecho dudar? ¿Hemos pensado en nuestras propias consignas? ¿Están preparadas para este nuevo escenario donde el estudiante tiene un copiloto de IA?</p>
+                
+                <div class="glass-card">
+                    <h4>Preguntas para la Reflexión</h4>
+                     <ul>
+                        <li>¿Te has enfrentado a una situación similar a la de la Dra. Vargas? ¿Cómo reaccionaste?</li>
+                        <li>¿Crees que tus actuales métodos de evaluación pueden diferenciar entre un trabajo original y uno generado en gran parte por IA?</li>
+                        <li>Si el estudiante Javier demostrara que usó la IA de manera inteligente, ¿cambiaría tu percepción sobre el valor de su trabajo?</li>
+                    </ul>
+                </div>
+                
+                <p>Para profundizar en estas ideas, te invito a ver una charla del cineasta y experto en creatividad, Coke Riobóo. Él desglosa el proceso creativo y el rol que la IA puede jugar. ¡Poné mucha atención! Durante el video, haremos unas pausas para plantearte algunas preguntas clave. <strong>No podrás avanzar en el video sin responder correctamente.</strong> ¡Es hora de darle play!</p>
+
+                <div id="video-player-container" class="iframe-container">
+                    <div id="video-player"></div>
+                </div>
+
+                <!-- Insignia por completar la sección -->
+                 <div class="glass-card">
+                    <h3>¡Insignia Desbloqueada!</h3>
+                     <div class="badge-container">
+                        <div id="badge-s4" class="badge">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /><path d="M10 17l-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10 17l6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                             <div class="badge-name">Explorador de la Práctica</div>
+                        </div>
+                    </div>
+                     <p style="text-align:center; margin-top:1rem;">¡Felicidades! Completaste la exploración práctica y demostraste tu atención al detalle.</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s3')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s5')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Quiz Modal -->
+        <div id="video-quiz-modal">
+             <div class="glass-card" style="max-width: 500px;">
+                <h3 id="video-quiz-question"></h3>
+                <div id="video-quiz-options"></div>
+                <p id="video-quiz-feedback" style="display: none; margin-top: 1rem; font-weight: bold;"></p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 5: DESARROLLO TEÓRICO Y CONCEPTUAL -->
+        <section id="s5">
+            <div class="container">
+                <h2>Profundizando: La IA como Copiloto Creativo</h2>
+                <p>Ya vimos el dilema práctico y escuchamos la perspectiva de un creativo. Ahora, organicemos las ideas con un marco más teórico. No se trata de "IA vs. Humanos", sino de cómo podemos crear una simbiosis poderosa. El docente que domina esto, no será reemplazado por una IA, sino que liderará la nueva era de la educación.</p>
+
+                <div class="glass-card">
+                    <h3>Subtema 1: El Espectro de la Colaboración Humano-IA</h3>
+                    <p>La interacción con la IA no es un interruptor de "encendido/apagado". Es un espectro. Entenderlo nos permite diseñar tareas más ricas y complejas.</p>
+                    <ul>
+                        <li><strong>IA como Asistente:</strong> Corregir gramática (Grammarly), transcribir audio, resumir textos largos. Libera tiempo para tareas de mayor nivel cognitivo.</li>
+                        <li><strong>IA como Brainstormer:</strong> Generar listas de ideas, analogías, títulos alternativos. <em>Ejemplo: "Dame 10 metáforas para explicar el concepto de 'deuda externa' a un estudiante de primer año."</em></li>
+                        <li><strong>IA como Creador de Prototipos:</strong> Visualizar una idea rápidamente. <em>Ejemplo: Pedir a Midjourney o DALL-E que cree un "mood board" visual para un proyecto de marketing sobre productos ecológicos cruceños.</em></li>
+                        <li><strong>IA como Colaborador Socrático:</strong> Usar chatbots avanzados para debatir ideas y encontrar puntos débiles en un argumento. <em>Ejemplo: "Estoy argumentando que la principal causa de la congestión en Santa Cruz es la falta de transporte público. Actúa como un experto en urbanismo y refuta mi argumento."</em></li>
+                    </ul>
+                    <h4>Preguntas de Comprensión y Aplicación</h4>
+                    <ol>
+                        <li>¿Qué nivel del espectro de colaboración has utilizado (consciente o inconscientemente) en tu trabajo?</li>
+                        <li>Describe una tarea en tu materia que podría pasar de "IA como Asistente" a "IA como Brainstormer".</li>
+                        <li><strong>(Aplicación)</strong> Diseñá una pequeña actividad para tu curso donde los estudiantes usen la IA como "Colaborador Socrático" para fortalecer un ensayo.</li>
+                    </ol>
+                </div>
+
+                 <div class="glass-card">
+                    <h3>Subtema 2: "Promptcraft" - El Nuevo Arte de Preguntar</h3>
+                    <p>Como dijo el Dr. Mateo, el trabajo ya no es solo encontrar la respuesta, sino saber cómo preguntar. La habilidad de crear <strong>prompts efectivos</strong> (instrucciones para la IA) se está convirtiendo en una competencia clave, a la que llamaremos <em>Promptcraft</em>.</p>
+                    <p>Un buen prompt no es una simple pregunta, es una directriz detallada. Incluye:</p>
+                    <ul>
+                        <li><strong>Rol:</strong> "Actúa como un economista experto en mercados emergentes..."</li>
+                        <li><strong>Contexto:</strong> "...analizando la economía boliviana post-pandemia."</li>
+                        <li><strong>Tarea Específica:</strong> "Escribe un análisis de 500 palabras sobre los tres mayores desafíos."</li>
+                        <li><strong>Formato:</strong> "Estructura el texto con un título, una introducción, tres párrafos de desarrollo (uno por cada desafío) y una conclusión. Usa un tono académico pero accesible."</li>
+                        <li><strong>Restricciones:</strong> "No menciones datos anteriores a 2020. Cita al menos dos fuentes teóricas."</li>
+                    </ul>
+                     <p>Enseñar <em>Promptcraft</em> es enseñar pensamiento crítico, estructuración y precisión. Es una habilidad 100% humana que potencia la herramienta.</p>
+                    <h4>Preguntas de Comprensión y Aplicación</h4>
+                    <ol>
+                        <li>¿Por qué un prompt detallado es superior a una pregunta simple como "háblame de la economía de Bolivia"?</li>
+                        <li>¿Qué elemento de un buen prompt consideras el más importante para obtener resultados de calidad?</li>
+                        <li><strong>(Aplicación)</strong> Escribe un prompt completo que le pedirías a una IA para generar una rúbrica de evaluación para un debate en tu clase.</li>
+                    </ol>
+                </div>
+                
+                 <div class="glass-card">
+                    <h3>Bibliografía y Fuentes</h3>
+                    <p>Para la construcción de esta sección, nos hemos basado en conceptos y discusiones de expertos en el campo.</p>
+                     <ul style="list-style: none; padding-left: 0;">
+                        <li>Mollick, E. (2024). <em>Co-Intelligence: Living and Working with AI</em>. WH Allen. <a href="https://www.penguin.co.uk/books/456182/co-intelligence-by-ethan-mollick/9780753559828" target="_blank">[Enlace]</a></li>
+                        <li>UNESCO. (2023). <em>Guidance for generative AI in education and research</em>. <a href="https://unesdoc.unesco.org/ark:/48223/pf0000386693" target="_blank">[Enlace]</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Insignia por completar la sección -->
+                 <div class="glass-card">
+                    <h3>¡Insignia Desbloqueada!</h3>
+                     <div class="badge-container">
+                        <div id="badge-s5" class="badge">
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.375a6.375 6.375 0 0 0 6.375-6.375a6.375 6.375 0 0 0-12.75 0a6.375 6.375 0 0 0 6.375 6.375Z" /><path  stroke-linecap="round" stroke-linejoin="round" d="M12 18.375a6.375 6.375 0 0 0 6.375-6.375a6.375 6.375 0 0 0-12.75 0a6.375 6.375 0 0 0 6.375 6.375Z" transform="rotate(60 12 12)"/><path  stroke-linecap="round" stroke-linejoin="round" d="M12 18.375a6.375 6.375 0 0 0 6.375-6.375a6.375 6.375 0 0 0-12.75 0a6.375 6.375 0 0 0 6.375 6.375Z" transform="rotate(120 12 12)" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 9.75a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z"/></svg>
+                             <div class="badge-name">Maestro del Concepto</div>
+                        </div>
+                    </div>
+                    <p style="text-align:center; margin-top:1rem;">¡Excelente! Has dominado los conceptos clave para navegar la era de la IA en la educación.</p>
+                </div>
+
+
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s4')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s6')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: EVALUACIÓN FORMATIVA -->
+        <section id="s6">
+            <div class="container">
+                <h2>Evaluación Formativa: ¡A Jugar se Dijo!</h2>
+                <p>¡Bien hecho! Ya tenés un buen pantallazo del tema. Ahora toca una pequeña autoevaluación, para que vos mismo/a te des cuenta de cómo vas. Pensá en lo que aprendiste y cómo se aplica a tu día a día como 'profe'.</p>
+                <ul>
+                    <li>¿Qué idea de las que vimos hasta ahora te 'voló la cabeza' o te hizo decir "ajá, por ahí es la cosa"?</li>
+                    <li>De 1 a 10, ¿qué tan preparado/a te sentís ahora para rediseñar una de tus tareas incorporando IA?</li>
+                    <li>¿Cuál es tu mayor temor y tu mayor esperanza con respecto al uso de la IA por parte de tus estudiantes?</li>
+                </ul>
+                <p>Ahora, para repasar de forma divertida, te dejamos un Quizizz. ¡A ver cómo te va! Es solo para practicar, ¡así que dale sin miedo!</p>
+                
+                <div class="iframe-container" style="min-height: 650px; aspect-ratio: initial;">
+                    <div style="width:100%;height:100%;display:flex;flex-direction:column;gap:8px;"><iframe src="https://quizizz.com/embed/quiz/6645367332d56a3500a12e5c" title="IA y Creatividad - Quizizz" style="flex:1;" frameBorder="0" allowfullscreen></iframe></div>
+                </div>
+
+                <!-- Insignia por completar la sección -->
+                 <div class="glass-card">
+                    <h3>¡Insignia Desbloqueada!</h3>
+                     <div class="badge-container">
+                        <div id="badge-s6" class="badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                             <div class="badge-name">Estratega Formativo</div>
+                        </div>
+                    </div>
+                    <p style="text-align:center; margin-top:1rem;">¡Impecable! Has superado la evaluación formativa y estás listo para el desafío final.</p>
+                </div>
+
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s5')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s7')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECCIÓN 7: EVALUACIÓN -->
+        <section id="s7">
+            <div class="container">
+                <h2>Evaluación Final: La Hora de la Verdad</h2>
+                <p>Llegamos al final del recorrido teórico. Es el momento de demostrar todo lo que aprendiste. ¡Pero tranquilo/a! Es solo para consolidar tus nuevos conocimientos.</p>
+                <div id="test-intro" class="glass-card">
+                    <h3>Instrucciones del Test</h3>
+                    <ul>
+                        <li>Tendrás <strong>6 preguntas</strong> de opción múltiple.</li>
+                        <li>Necesitás un <strong>70% de aciertos</strong> para aprobar (4 de 6 correctas).</li>
+                        <li>Tenés un máximo de <strong>3 intentos</strong>.</li>
+                        <li>El tiempo corre, ¡tenés <strong>30 minutos</strong>!</li>
+                    </ul>
+                    <p>Cuando estés listo/a, hacé clic en "Empezar Test". ¡Mucha suerte, colega!</p>
+                    <button id="start-test-btn" class="btn">Empezar Test</button>
+                    <div id="test-attempts-info" style="margin-top: 1rem; font-style: italic;"></div>
+                </div>
+                
+                <div id="test-container" style="display:none;" class="glass-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                        <h3 id="question-counter"></h3>
+                        <div id="timer" style="font-size: 1.2rem; font-weight:bold; color: var(--accent-color);">30:00</div>
+                    </div>
+                    <p id="test-question" style="font-size: 1.2rem; font-weight:bold;"></p>
+                    <div id="test-options"></div>
+                    <button id="submit-answer-btn" class="btn" style="margin-top: 1rem;">Confirmar Respuesta</button>
+                </div>
+                
+                <div id="test-results" style="display:none;" class="glass-card">
+                    <h3 id="results-title"></h3>
+                    <p id="results-summary"></p>
+                    <p id="results-feedback"></p>
+                    <button id="retry-test-btn" class="btn btn-secondary" style="display:none; margin-right: 1rem;">Intentar de Nuevo</button>
+                    <button id="next-from-test-btn" class="btn" style="display:none;">Continuar</button>
+                </div>
+
+                <div class="nav-buttons" style="visibility: hidden;"> <!-- Placeholder to keep layout consistent -->
+                     <button class="btn btn-nav">Anterior</button>
+                     <button class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 8: SÍNTESIS -->
+        <section id="s8">
+            <div class="container">
+                <h2>Síntesis: Las Claves del Asunto</h2>
+                <p>¡Lo lograste! Fue un recorrido intenso pero valioso. Si tuviéramos que resumir todo en unas cuantas ideas clave, serían estas:</p>
+                
+                <div class="report-grid">
+                    <div class="report-item">
+                        <div class="value">Pregunta > Respuesta</div>
+                        <div class="label">La habilidad humana clave ya no es tener la respuesta, sino formular la pregunta perfecta (Promptcraft).</div>
+                    </div>
+                    <div class="report-item">
+                        <div class="value">Proceso > Producto</div>
+                        <div class="label">La evaluación debe enfocarse en el CÓMO el estudiante usó la IA (metodología, crítica), no solo en el resultado final.</div>
+                    </div>
+                    <div class="report-item">
+                        <div class="value">Adaptarse o Quedarse</div>
+                        <div class="label">La IA no es una moda pasajera. Ignorarla es auto-marginarse; integrarla es liderar el futuro de la educación.</div>
+                    </div>
+                </div>
+
+                <h3>Recursos Adicionales</h3>
+                <p>Para que no se te olvide nada, preparamos una infografía que resume visualmente los puntos más importantes. Y si sos de los que aprende escuchando, te dejamos un podcast con un debate ameno sobre el tema.</p>
+                
+                <div style="text-align: center; margin: 2rem 0;">
+                    <a href="https://elmejorequipo.github.io/iacreatividad/infografia.html" target="_blank" class="btn">Ver Infografía Resumen</a>
+                </div>
+                
+                <div class="glass-card">
+                    <h4>Podcast: Creatividad humana y la IA ¿Amiga o enemiga?</h4>
+                    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2107792848&color=%230066cc&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/el-mejor-equipo-282759177" title="El Mejor Equipo" target="_blank" style="color: #cccccc; text-decoration: none;">El Mejor Equipo</a> · <a href="https://soundcloud.com/el-mejor-equipo-282759177/creatividad-humana-y-la-ia-amiga-o-enemiga" title="Creatividad humana y la IA ¿Amiga o enemiga?" target="_blank" style="color: #cccccc; text-decoration: none;">Creatividad humana y la IA ¿Amiga o enemiga?</a></div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s7')" class="btn btn-nav">Anterior</button>
+                    <button onclick="goToSection('s9')" class="btn">Siguiente</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 9: CIERRE Y PREGUNTAS METACOGNITIVAS -->
+        <section id="s9">
+            <div class="container">
+                <h2>Cierre y Reflexión Final: ¿Y ahora, qué?</h2>
+                <p>La pelota está en tu cancha. Aprender sobre esto es el primer paso, pero el verdadero cambio ocurre cuando lo aplicamos. Para ayudarte a dar ese salto, te dejamos unas preguntas finales. Tomate tu tiempo para responder. Estas reflexiones son para vos, son el borrador de tu nueva estrategia pedagógica.</p>
+
+                <div class="glass-card">
+                    <div class="metacognitive-question">
+                        <h4>1. La Tarea Rediseñada</h4>
+                        <p>Elegí una tarea o evaluación de alguna de tus materias. ¿Cómo la rediseñarías ahora para no solo permitir, sino <strong>exigir</strong> un uso inteligente y ético de la IA por parte de tus estudiantes?</p>
+                        <textarea id="meta-q1" placeholder="Ej: En vez de un ensayo, pediría un 'diálogo socrático' donde el estudiante debata con una IA y luego analice las fortalezas y debilidades de ambos argumentos..."></textarea>
+                    </div>
+                     <div class="metacognitive-question">
+                        <h4>2. Mi Nuevo Rol</h4>
+                        <p>Frente a estudiantes que tienen acceso ilimitado a información y generación de texto, ¿cómo cambia tu rol como docente? ¿Qué vas a hacer <strong>más</strong> y qué vas a hacer <strong>menos</strong> en tu clase?</p>
+                        <textarea id="meta-q2" placeholder="Ej: Haré menos exposiciones de contenido puro y más talleres de 'Promptcraft'. Seré menos un 'proveedor de respuestas' y más un 'curador de preguntas' y 'coach de pensamiento crítico'..."></textarea>
+                    </div>
+                     <div class="metacognitive-question">
+                        <h4>3. Mi Próximo Paso</h4>
+                        <p>¿Cuál es la primera acción, concreta y medible, que vas a tomar en las próximas dos semanas para empezar a integrar lo aprendido?</p>
+                        <textarea id="meta-q3" placeholder="Ej: Voy a experimentar con ChatGPT durante una hora para crear 3 ejemplos de buenos y malos prompts. / Voy a modificar la consigna de mi próximo práctico... / Voy a compartir este recurso con un colega..."></textarea>
+                    </div>
+                    <button class="btn" onclick="saveMetacognitive()">Guardar Respuestas para mi Reporte</button>
+                </div>
+                
+                <h3>Rúbrica de Autoevaluación para tus Respuestas</h3>
+                <p>Cuando planifiques tus nuevas actividades, puedes usar una rúbrica como esta para evaluar el potencial de tus propias ideas. El objetivo es apuntar al nivel de <strong>Desarrollo Pleno</strong>, alineado con el nivel "Crear" de la Taxonomía de Bloom.</p>
+                <div class="rubric-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Criterio</th>
+                        <th>En Desarrollo (1 pto)</th>
+                        <th>Desarrollo Aceptable (2 ptos)</th>
+                        <th>Desarrollo Óptimo (3 ptos)</th>
+                        <th>Desarrollo Pleno (4 ptos)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Profundidad del Análisis</strong></td>
+                        <td>La reflexión es superficial y repite ideas de la cápsula.</td>
+                        <td>La reflexión muestra una comprensión básica del problema.</td>
+                        <td>La reflexión analiza las implicaciones de la IA en su contexto específico.</td>
+                        <td>La reflexión demuestra una comprensión crítica y matizada, anticipando desafíos y oportunidades.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Originalidad y Propuesta</strong></td>
+                        <td>No se propone una estrategia clara o es genérica.</td>
+                        <td>Se propone una estrategia simple, con pocos detalles.</td>
+                        <td>Se propone una estrategia clara, aplicable y bien descrita.</td>
+                        <td>Se propone una estrategia innovadora que transforma una práctica pedagógica existente.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Justificación Pedagógica</strong></td>
+                        <td>No hay una justificación clara de por qué la estrategia es efectiva.</td>
+                        <td>La justificación es débil o se basa en suposiciones.</td>
+                        <td>La justificación se basa en principios pedagógicos sólidos.</td>
+                        <td>La justificación demuestra una alineación profunda entre la tecnología, la pedagogía y los objetivos de aprendizaje.</td>
+                      </tr>
+                       <tr>
+                        <td><strong>Conexión con la Realidad</strong></td>
+                        <td>La propuesta es teórica y desconectada de su práctica docente.</td>
+                        <td>La propuesta tiene una conexión limitada con su materia o estudiantes.</td>
+                        <td>La propuesta es directamente relevante y aplicable a su contexto profesional.</td>
+                        <td>La propuesta no solo es relevante, sino que aborda un problema o necesidad real de sus estudiantes y su disciplina.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="nav-buttons">
+                    <button onclick="goToSection('s8')" class="btn btn-nav">Anterior</button>
+                    <button id="final-step-btn" class="btn">Último Paso</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 10: CERTIFICADO Y REPORTE -->
+        <section id="s10">
+            <div class="container">
+                <div id="certificate-container" style="display:none">
+                    <h2>¡Felicidades, <span id="cert-congrats-name"></span>!</h2>
+                    <p>Has aprobado la evaluación y completado la cápsula educativa. ¡Sos oficialmente un pionero en la pedagogía con IA! Como reconocimiento a tu esfuerzo y curiosidad, hemos generado tu certificado.</p>
+                    
+                    <div id="certificate-wrapper">
+                        <div id="certificate">
+                           <div style="border: 2px solid #00796b; padding: 1rem;">
+                            <div class="cert-header">Certificado de Finalización</div>
+                            <p style="font-size: 1rem; margin-top:1rem;">Otorgado a:</p>
+                            <div class="cert-name" id="cert-user-name"></div>
+                            <div class="cert-body">
+                                Por haber completado satisfactoriamente la cápsula educativa sobre
+                            </div>
+                            <div class="cert-title">IA: Creatividad Aumentada o Amenazada</div>
+                            <div class="cert-body">
+                                Demostrando un compromiso con la innovación pedagógica y la adaptación a las nuevas tecnologías en la educación superior.
+                            </div>
+                             <div class="cert-footer">
+                                <div class="cert-footer-item">
+                                    <strong>Equipo de Desarrollo<br>Web Educativo</strong>
+                                    <p>Instructor</p>
+                                </div>
+                                 <div id="qrcode" style="align-self:center;"></div>
+                                <div class="cert-footer-item">
+                                    <strong>4 Horas Académicas</strong>
+                                    <p>Validez</p>
+                                </div>
+                            </div>
+                           </div>
+                        </div>
+                    </div>
+
+                    <button id="download-cert-btn" class="btn">Descargar Certificado (PDF)</button>
+                </div>
+
+                 <div id="report-container">
+                    <div id="final-report">
+                        <h2>Tu Reporte Final del Curso</h2>
+                        <p>Aquí tenés un resumen de tu increíble desempeño en esta cápsula educativa. ¡Mirá todo lo que lograste!</p>
+                        <div class="report-grid">
+                            <div class="report-item">
+                                <div id="report-score" class="value">--%</div>
+                                <div class="label">Puntaje Final</div>
+                            </div>
+                            <div class="report-item">
+                                <div id="report-time" class="value">--:--</div>
+                                <div class="label">Tiempo en el Test</div>
+                            </div>
+                             <div class="report-item">
+                                <div id="report-attempts" class="value">-</div>
+                                <div class="label">Intentos Usados</div>
+                            </div>
+                             <div class="report-item">
+                                <div id="report-points" class="value">0</div>
+                                <div class="label">Puntos de Gamificación</div>
+                            </div>
+                        </div>
+                         <h3>Tus Respuestas de Metacognición</h3>
+                         <div id="meta-answers-report" class="glass-card">
+                            <!-- JS will populate this -->
+                         </div>
+                    </div>
+
+                     <div id="final-report-actions" style="margin-top: 2rem; text-align:center;">
+                        <button class="btn btn-secondary" onclick="window.print()">Guardar Reporte como PDF</button>
+                        <button class="btn" id="share-btn" style="margin-left: 1rem;">Compartir en Redes</button>
+                    </div>
+                 </div>
+
+                <div style="margin-top:3rem; text-align: center;">
+                    <h3>¿Querés empezar de nuevo o borrar tus datos?</h3>
+                    <p>Podés reiniciar el curso para explorar de nuevo o borrar todos los datos guardados en este navegador.</p>
+                     <button id="restart-course-btn" class="btn btn-nav" style="margin-right: 1rem;">Reiniciar Curso</button>
+                     <button id="clear-data-btn" class="btn btn-secondary">Borrar mis Datos</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+    //------------------------------------//
+    // # GLOBAL STATE & CONFIG
+    //------------------------------------//
+    let player;
+    let user_data = {
+        name: '',
+        email: '',
+        phone: '',
+        test_attempts: 0,
+        test_score: 0,
+        test_time: 0,
+        test_passed: false,
+        metacognitive_answers: {},
+        badges: [],
+        points: 0,
+        current_section_index: 0,
+    };
+
+    const SECTIONS = [
+        { id: 's0', name: 'Ingreso' },
+        { id: 's1', name: 'Portada' },
+        { id: 's2', name: 'Introducción' },
+        { id: 's3', name: 'Activación' },
+        { id: 's4', name: 'Desarrollo Práctico' },
+        { id: 's5', name: 'Desarrollo Teórico' },
+        { id: 's6', name: 'Eval. Formativa' },
+        { id: 's7', name: 'Evaluación Final' },
+        { id: 's8', name: 'Síntesis' },
+        { id: 's9', name: 'Cierre' },
+        { id: 's10', name: 'Reporte' },
+    ];
+    
+    //------------------------------------//
+    // # VIDEO QUIZ CONFIG
+    //------------------------------------//
+    const videoQuizConfig = {
+        videoId: 'EtU-NyNH4Qg',
+        quizzes: [
+            {
+                time: 105, // 1:45
+                triggered: false,
+                question: 'Según el ponente, ¿cuál es el primer y más importante paso del proceso creativo, exclusivo de los seres humanos?',
+                options: ['Documentarse', 'Encontrar la respuesta correcta', 'Definir la pregunta', 'Usar la tecnología'],
+                correct_answer: 'Definir la pregunta'
+            },
+            {
+                time: 180, // 3:00
+                triggered: false,
+                question: '¿Qué dos ventajas principales ofrecen las máquinas en la fase de documentación, según la charla?',
+                options: ['Originalidad y visión', 'Tiempo y dinero', 'Destreza y criterio', 'Emoción y empatía'],
+                correct_answer: 'Tiempo y dinero'
+            },
+            {
+                time: 300, // 5:00
+                triggered: false,
+                question: 'El ponente menciona que la fotografía liberó a la pintura de la carga de...',
+                options: ['usar color', 'tener un marco', 'ser exhibida en museos', 'copiar la realidad'],
+                correct_answer: 'copiar la realidad'
+            },
+            {
+                time: 480, // 8:00
+                triggered: false,
+                question: '¿Qué cualidad se obtiene a través de horas de práctica (destreza) y que permite diferenciar una buena respuesta de una mala?',
+                options: ['La visión', 'La inspiración', 'El criterio', 'La originalidad'],
+                correct_answer: 'El criterio'
+            }
+        ],
+        checkInterval: null
+    };
+
+    //------------------------------------//
+    // # FINAL TEST CONFIG
+    //------------------------------------//
+    const finalTestConfig = {
+        questions: [
+            {
+                question: 'Según el storytelling "El Informe Perfecto", ¿cuál fue la principal preocupación de la Dra. Vargas sobre el trabajo de su estudiante?',
+                options: [
+                    'La falta de citas bibliográficas.',
+                    'La perfección "imposible" y la falta de trabajo de campo, sugiriendo el uso de IA.',
+                    'El tema elegido era irrelevante para la materia.',
+                    'El informe estaba mal redactado.'
+                ],
+                correct_answer: 'La perfección "imposible" y la falta de trabajo de campo, sugiriendo el uso de IA.'
+            },
+            {
+                question: 'En el video, el ponente compara la llegada de la IA con la invención de la fotografía en 1838. ¿Qué efecto principal tuvo la fotografía en la pintura?',
+                options: [
+                    'Hizo que la pintura desapareciera por completo.',
+                    'Liberó a la pintura de la necesidad de copiar la realidad, fomentando nuevos movimientos artísticos.',
+                    'Fusionó la pintura y la fotografía en una sola disciplina.',
+                    'No tuvo ningún impacto significativo.'
+                ],
+                correct_answer: 'Liberó a la pintura de la necesidad de copiar la realidad, fomentando nuevos movimientos artísticos.'
+            },
+             {
+                question: '¿Cuál de las siguientes es una habilidad que el ponente del video argumenta que los humanos poseen y las máquinas no?',
+                options: [
+                    'Capacidad de procesar grandes volúmenes de datos.',
+                    'Originalidad, destreza y una visión.',
+                    'Velocidad para generar respuestas.',
+                    'Habilidad para seguir instrucciones precisas.'
+                ],
+                correct_answer: 'Originalidad, destreza y una visión.'
+            },
+             {
+                question: '¿Cuál es el segundo paso del "proceso creativo simplificado" descrito en el video?',
+                options: ['Encontrar la respuesta correcta', 'Definir la pregunta', 'Documentarse e investigar', 'Publicar el resultado'],
+                correct_answer: 'Documentarse e investigar'
+            },
+            {
+                question: 'Según la propuesta del Dr. Mateo Ríos en el storytelling, ¿qué debería hacer la Dra. Vargas con el estudiante?',
+                options: [
+                    'Anular el trabajo inmediatamente por fraude.',
+                    'Pedirle que rehaga el informe sin usar IA.',
+                    'Citarlo para que defienda su metodología y muestre sus prompts.',
+                    'Darle la máxima calificación por su habilidad tecnológica.'
+                ],
+                correct_answer: 'Citarlo para que defienda su metodología y muestre sus prompts.'
+            },
+            {
+                question: 'El concepto de "etnografía digital" sugerido en la historia implica que el trabajo del estudiante consistió en:',
+                options: [
+                    'Entrevistar personas a través de videollamadas.',
+                    'Analizar datos de redes sociales manualmente.',
+                    'Construir modelos y enseñar a la IA a generar perfiles y testimonios válidos.',
+                    'Copiar y pegar testimonios encontrados en blogs.'
+                ],
+                correct_answer: 'Construir modelos y enseñar a la IA a generar perfiles y testimonios válidos.'
+            }
+        ],
+        current_question_index: 0,
+        score: 0,
+        timer_interval: null,
+        time_left: 1800 // 30 minutes in seconds
+    };
+    
+    //------------------------------------//
+    // # CORE FUNCTIONS
+    //------------------------------------//
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        initNavigation();
+        initForms();
+        initButtons();
+        updateUI();
+
+        // This ensures if the user reloads on a section, they stay there.
+        const currentSection = SECTIONS[user_data.current_section_index] || SECTIONS[0];
+        showSection(currentSection.id);
+    });
+    
+    function loadData() {
+        const saved_data = localStorage.getItem('iaCreatividadUserData');
+        if (saved_data) {
+            user_data = JSON.parse(saved_data);
+            console.log("Datos cargados:", user_data);
+        }
+    }
+
+    function saveData() {
+        localStorage.setItem('iaCreatividadUserData', JSON.stringify(user_data));
+        console.log("Datos guardados:", user_data);
+    }
+
+    function updateUI() {
+        // Update welcome message
+        const welcomeEl = document.getElementById('welcome-name');
+        if (welcomeEl && user_data.name) {
+            welcomeEl.textContent = `${user_data.name}, ¡arrancamos!`;
+        }
+        
+        // Update nav
+        updateProgressBar();
+        updateFloatingMenu();
+        
+        // Update gamification
+        updatePointsDisplay();
+        updateBadges();
+
+        // If user already passed, show certificate part of section 10
+        if (user_data.test_passed) {
+            prepareCertificateAndReport();
+        }
+    }
+    
+    //------------------------------------//
+    // # NAVIGATION
+    //------------------------------------//
+    function initNavigation() {
+        const menu = document.getElementById('floating-menu');
+        menu.innerHTML = '';
+        SECTIONS.forEach((section, index) => {
+             // Don't show the initial form in the menu
+            if(index === 0) return;
+
+            const button = document.createElement('button');
+            button.textContent = section.name;
+            button.onclick = () => goToSection(section.id);
+            button.dataset.sectionId = section.id;
+            menu.appendChild(button);
+        });
+    }
+
+    function showSection(sectionId) {
+        document.querySelectorAll('main section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        const activeSection = document.getElementById(sectionId);
+        if (activeSection) {
+            activeSection.classList.add('active');
+            window.scrollTo(0, 0);
+
+            // Special initializations for sections
+            if (sectionId === 's4' && !player) {
+                onYouTubeIframeAPIReady();
+            }
+
+            // Update user's progress
+            const newIndex = SECTIONS.findIndex(s => s.id === sectionId);
+            if(newIndex > user_data.current_section_index) {
+                user_data.current_section_index = newIndex;
+            }
+             if(newIndex !== 0) { // Dont save intro form as last visited
+                saveData();
+            }
+            updateUI();
+        }
+    }
+
+    function goToSection(sectionId) {
+         const sectionIndex = SECTIONS.findIndex(s => s.id === sectionId);
+         const lastCompletedIndex = SECTIONS.findIndex(s => s.id === (user_data.last_completed || 's0'));
+         
+         // Logic to prevent skipping sections that haven't been completed.
+         // This is a simple progression, can be made more complex.
+         if (sectionIndex > user_data.current_section_index + 1 && !user_data.test_passed) {
+             alert('¡Hey, no tan rápido! Por favor, completá las secciones en orden.');
+             return;
+         }
+        showSection(sectionId);
+    }
+    
+    function updateProgressBar() {
+        const totalSections = SECTIONS.length - 1; // Don't count login form
+        let completedSections = user_data.current_section_index;
+        const progress = (completedSections / totalSections) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+
+    function updateFloatingMenu() {
+        const currentSectionId = document.querySelector('section.active').id;
+        document.querySelectorAll('#floating-menu button').forEach(btn => {
+            if(btn.dataset.sectionId === currentSectionId) {
+                btn.classList.add('active-nav');
+            } else {
+                btn.classList.remove('active-nav');
+            }
+        });
+    }
+
+    //------------------------------------//
+    // # GAMIFICATION
+    //------------------------------------//
+    function addPoints(amount) {
+        user_data.points = (user_data.points || 0) + amount;
+        showMotivationalMessage(amount);
+        updateUI();
+        saveData();
+    }
+    
+    function unlockBadge(badgeId) {
+        if (!user_data.badges) {
+            user_data.badges = [];
+        }
+        if (!user_data.badges.includes(badgeId)) {
+            user_data.badges.push(badgeId);
+            addPoints(100);
+            document.getElementById(badgeId).classList.add('unlocked');
+            saveData();
+        }
+    }
+    
+    function updatePointsDisplay() {
+        const pointsEl = document.querySelector('.points-display');
+        if (pointsEl) {
+            pointsEl.innerHTML = `<svg ...>...</svg> ${user_data.points || 0} Pts`;
+        }
+    }
+    
+    function updateBadges() {
+        if (user_data.badges && user_data.badges.length > 0) {
+            user_data.badges.forEach(badgeId => {
+                const badgeEl = document.getElementById(badgeId);
+                if (badgeEl) badgeEl.classList.add('unlocked');
+            });
+        }
+    }
+    
+    function showMotivationalMessage(points) {
+        // This is a simple placeholder. Could be a more elegant toast notification.
+        alert(`¡Genial! Ganaste ${points} puntos. ¡Seguí así, la estás rompiendo!`);
+    }
+
+    //------------------------------------//
+    // # EVENT HANDLERS & INIT
+    //------------------------------------//
+    function initForms() {
+        const form = document.getElementById('ingreso-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+            const nombre = form.querySelector('#nombre');
+            const email = form.querySelector('#email');
+            
+            // Validate name
+            if (!nombre.value.trim()) {
+                nombre.classList.add('invalid');
+                isValid = false;
+            } else {
+                nombre.classList.remove('invalid');
+                 nombre.classList.add('valid');
+            }
+            
+            // Validate email
+            if (!/^\S+@\S+\.\S+$/.test(email.value)) {
+                 email.classList.add('invalid');
+                 isValid = false;
+            } else {
+                email.classList.remove('invalid');
+                 email.classList.add('valid');
+            }
+            
+            if (isValid) {
+                user_data.name = nombre.value.trim();
+                user_data.email = email.value.trim();
+                user_data.phone = form.querySelector('#telefono').value.trim();
+                saveData();
+                goToSection('s1');
+            }
+        });
+    }
+
+    function initButtons() {
+        document.getElementById('reduced-motion-toggle').addEventListener('click', (e) => {
+            document.body.classList.toggle('reduced-motion');
+            const isPressed = document.body.classList.contains('reduced-motion');
+            e.currentTarget.setAttribute('aria-pressed', isPressed);
+            e.currentTarget.textContent = isPressed ? "Activar Movimiento" : "Reducir Movimiento";
+        });
+        
+        document.getElementById('clear-data-btn').addEventListener('click', () => {
+            if (confirm('¿Estás seguro que querés borrar todos tus datos y progreso? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('iaCreatividadUserData');
+                window.location.reload();
+            }
+        });
+        
+        document.getElementById('restart-course-btn').addEventListener('click', () => {
+            if (confirm('¿Querés reiniciar el curso? Tu progreso en el test y tus respuestas serán borradas, pero tu nombre e email se mantendrán.')) {
+                // Reset progress but keep user info
+                const preserved_name = user_data.name;
+                const preserved_email = user_data.email;
+                const preserved_phone = user_data.phone;
+
+                user_data = {
+                    name: preserved_name,
+                    email: preserved_email,
+                    phone: preserved_phone,
+                    test_attempts: 0,
+                    test_score: 0,
+                    test_time: 0,
+                    test_passed: false,
+                    metacognitive_answers: {},
+                    badges: [],
+                    points: 0,
+                    current_section_index: 0,
+                };
+                saveData();
+                window.location.reload();
+            }
+        });
+
+         document.getElementById('final-step-btn').addEventListener('click', () => {
+             prepareCertificateAndReport();
+             goToSection('s10');
+         });
+
+        document.getElementById('download-cert-btn').addEventListener('click', generateCertificatePDF);
+
+        document.getElementById('share-btn').addEventListener('click', shareOnSocialMedia);
+    }
+    
+    //------------------------------------//
+    // # VIDEO QUIZ LOGIC
+    //------------------------------------//
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('video-player', {
+            height: '100%',
+            width: '100%',
+            videoId: videoQuizConfig.videoId,
+            playerVars: {
+                'playsinline': 1,
+                'modestbranding': 1,
+                'rel': 0,
+            },
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            videoQuizConfig.checkInterval = setInterval(() => {
+                checkVideoTime();
+            }, 1000);
+            document.getElementById('badge-s4').classList.add('unlocked');
+        } else {
+            clearInterval(videoQuizConfig.checkInterval);
+        }
+    }
+    
+    function checkVideoTime() {
+        const currentTime = player.getCurrentTime();
+        videoQuizConfig.quizzes.forEach((quiz, index) => {
+            if (currentTime >= quiz.time && !quiz.triggered) {
+                quiz.triggered = true;
+                player.pauseVideo();
+                clearInterval(videoQuizConfig.checkInterval);
+                showVideoQuiz(index);
+            }
+        });
+
+        // Check for completion
+        if (player.getPlayerState() === YT.PlayerState.ENDED || currentTime >= player.getDuration() - 2) {
+             unlockBadge('badge-s4');
+        }
+    }
+    
+    function showVideoQuiz(quizIndex) {
+        const quiz = videoQuizConfig.quizzes[quizIndex];
+        const modal = document.getElementById('video-quiz-modal');
+        const questionEl = document.getElementById('video-quiz-question');
+        const optionsEl = document.getElementById('video-quiz-options');
+        const feedbackEl = document.getElementById('video-quiz-feedback');
+
+        questionEl.textContent = quiz.question;
+        optionsEl.innerHTML = '';
+        feedbackEl.style.display = 'none';
+
+        quiz.options.forEach(optionText => {
+            const button = document.createElement('button');
+            button.className = 'quiz-option';
+            button.textContent = optionText;
+            button.onclick = () => {
+                // Prevent multiple clicks
+                optionsEl.querySelectorAll('button').forEach(btn => btn.disabled = true);
+                
+                if(optionText === quiz.correct_answer) {
+                    button.classList.add('correct');
+                    feedbackEl.textContent = '¡Correcto! ¡Qué capo! Podés continuar.';
+                    feedbackEl.style.color = 'var(--success-color)';
+                    addPoints(25);
+                    setTimeout(() => {
+                        modal.style.display = 'none';
+                        player.playVideo();
+                    }, 1500);
+                } else {
+                    button.classList.add('incorrect');
+                    feedbackEl.textContent = 'Uh, casi. ¡Intentá de nuevo! Pensá bien, vos podés.';
+                    feedbackEl.style.color = 'var(--error-color)';
+                    // Re-enable buttons after a delay
+                     setTimeout(() => {
+                        optionsEl.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                        button.classList.remove('incorrect');
+                         feedbackEl.style.display = 'none';
+                    }, 2000);
+                }
+                 feedbackEl.style.display = 'block';
+            };
+            optionsEl.appendChild(button);
+        });
+
+        modal.style.display = 'flex';
+    }
+    
+    //------------------------------------//
+    // # FINAL TEST LOGIC
+    //------------------------------------//
+    document.getElementById('start-test-btn').addEventListener('click', startTest);
+    document.getElementById('retry-test-btn').addEventListener('click', startTest);
+
+    function startTest() {
+        if(user_data.test_attempts >= 3) {
+            alert('Has alcanzado el número máximo de intentos.');
+            return;
+        }
+
+        user_data.test_attempts++;
+        saveData();
+
+        finalTestConfig.current_question_index = 0;
+        finalTestConfig.score = 0;
+        finalTestConfig.time_left = 1800;
+        
+        document.getElementById('test-intro').style.display = 'none';
+        document.getElementById('test-results').style.display = 'none';
+        document.getElementById('test-container').style.display = 'block';
+        
+        displayQuestion();
+        startTimer();
+    }
+    
+    function startTimer() {
+        const timerEl = document.getElementById('timer');
+        clearInterval(finalTestConfig.timer_interval);
+        finalTestConfig.timer_interval = setInterval(() => {
+            finalTestConfig.time_left--;
+            const minutes = Math.floor(finalTestConfig.time_left / 60);
+            const seconds = finalTestConfig.time_left % 60;
+            timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            if(finalTestConfig.time_left <= 0) {
+                endTest();
+            }
+        }, 1000);
+    }
+    
+    function displayQuestion() {
+        const qIndex = finalTestConfig.current_question_index;
+        const question = finalTestConfig.questions[qIndex];
+        
+        document.getElementById('question-counter').textContent = `Pregunta ${qIndex + 1} de ${finalTestConfig.questions.length}`;
+        document.getElementById('test-question').textContent = question.question;
+        
+        const optionsContainer = document.getElementById('test-options');
+        optionsContainer.innerHTML = '';
+        
+        question.options.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'quiz-option';
+            button.textContent = option;
+            button.onclick = () => {
+                // Clear previous selection
+                optionsContainer.querySelectorAll('.selected').forEach(sel => sel.classList.remove('selected'));
+                button.classList.add('selected');
+            };
+            optionsContainer.appendChild(button);
+        });
+
+        document.getElementById('submit-answer-btn').style.display = 'inline-block';
+        document.getElementById('submit-answer-btn').onclick = () => submitAnswer();
+        document.getElementById('submit-answer-btn').textContent = "Confirmar Respuesta";
+    }
+
+    function submitAnswer() {
+        const selectedOption = document.querySelector('#test-options .selected');
+        if (!selectedOption) {
+            alert('Por favor, seleccioná una opción.');
+            return;
+        }
+        
+        const answer = selectedOption.textContent;
+        const qIndex = finalTestConfig.current_question_index;
+        const question = finalTestConfig.questions[qIndex];
+
+        document.querySelectorAll('#test-options .quiz-option').forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === question.correct_answer) {
+                btn.classList.add('correct');
+            } else if (btn.classList.contains('selected')) {
+                btn.classList.add('incorrect');
+            }
+        });
+        
+        if (answer === question.correct_answer) {
+            finalTestConfig.score++;
+             addPoints(50);
+        }
+        
+        const submitBtn = document.getElementById('submit-answer-btn');
+        submitBtn.textContent = "Siguiente Pregunta";
+        submitBtn.onclick = () => {
+            finalTestConfig.current_question_index++;
+            if (finalTestConfig.current_question_index < finalTestConfig.questions.length) {
+                displayQuestion();
+                document.querySelectorAll('#test-options .quiz-option').forEach(btn => btn.disabled = false);
+            } else {
+                endTest();
+            }
+        };
+    }
+    
+    function endTest() {
+        clearInterval(finalTestConfig.timer_interval);
+
+        user_data.test_score = Math.round((finalTestConfig.score / finalTestConfig.questions.length) * 100);
+        user_data.test_time = 1800 - finalTestConfig.time_left;
+        
+        document.getElementById('test-container').style.display = 'none';
+        const resultsEl = document.getElementById('test-results');
+        resultsEl.style.display = 'block';
+
+        const title = document.getElementById('results-title');
+        const summary = document.getElementById('results-summary');
+        const feedback = document.getElementById('results-feedback');
+        const retryBtn = document.getElementById('retry-test-btn');
+        const nextBtn = document.getElementById('next-from-test-btn');
+        
+        summary.textContent = `Tu puntaje: ${user_data.test_score}%. (${finalTestConfig.score} de ${finalTestConfig.questions.length} correctas).`;
+        
+        if (user_data.test_score >= 70) {
+            user_data.test_passed = true;
+            title.textContent = "¡Felicidades, Aprobaste!";
+            feedback.textContent = "¡Excelente trabajo! Has demostrado un gran entendimiento del tema. Ya podés continuar y obtener tu certificado.";
+            retryBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+            nextBtn.onclick = () => {
+                unlockBadge('badge-s5'); 
+                unlockBadge('badge-s6');
+                goToSection('s8')
+            };
+        } else {
+            user_data.test_passed = false;
+            title.textContent = "¡Casi! No te desanimes.";
+            feedback.textContent = `Necesitás al menos 70% para aprobar. ¡Vos podés! Te quedan ${3 - user_data.test_attempts} intentos.`;
+            nextBtn.style.display = 'none';
+            if (user_data.test_attempts < 3) {
+                retryBtn.style.display = 'inline-block';
+            } else {
+                retryBtn.style.display = 'none';
+                feedback.textContent += " Has agotado tus intentos. Podés repasar el material y volver a intentarlo más tarde reiniciando el curso.";
+            }
+        }
+        
+        document.getElementById('test-attempts-info').textContent = `Intento ${user_data.test_attempts} de 3.`
+        saveData();
+    }
+    
+    //------------------------------------//
+    // # METACOGNITIVE & REPORTING
+    //------------------------------------//
+    function saveMetacognitive() {
+        user_data.metacognitive_answers = {
+            q1: document.getElementById('meta-q1').value,
+            q2: document.getElementById('meta-q2').value,
+            q3: document.getElementById('meta-q3').value,
+        };
+        saveData();
+        alert('Tus respuestas han sido guardadas. Las verás en tu reporte final.');
+    }
+
+    function prepareCertificateAndReport() {
+        // Certificate
+        const certContainer = document.getElementById('certificate-container');
+        if (user_data.test_passed) {
+            document.getElementById('cert-congrats-name').textContent = user_data.name;
+            document.getElementById('cert-user-name').textContent = user_data.name;
+             generateQRCode();
+            certContainer.style.display = 'block';
+        } else {
+            certContainer.style.display = 'none';
+        }
+        
+        // Report
+        document.getElementById('report-score').textContent = `${user_data.test_score || '--'}%`;
+        const minutes = Math.floor((user_data.test_time || 0) / 60);
+        const seconds = (user_data.test_time || 0) % 60;
+        document.getElementById('report-time').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        document.getElementById('report-attempts').textContent = user_data.test_attempts || '-';
+        document.getElementById('report-points').textContent = user_data.points || 0;
+
+        const metaReportEl = document.getElementById('meta-answers-report');
+        metaReportEl.innerHTML = `
+            <h4>1. La Tarea Rediseñada</h4>
+            <p>${user_data.metacognitive_answers.q1 || '<em>No respondido</em>'}</p>
+            <h4>2. Mi Nuevo Rol</h4>
+            <p>${user_data.metacognitive_answers.q2 || '<em>No respondido</em>'}</p>
+            <h4>3. Mi Próximo Paso</h4>
+            <p>${user_data.metacognitive_answers.q3 || '<em>No respondido</em>'}</p>
+        `;
+    }
+
+    function generateQRCode() {
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = '';
+        const urlToVerify = 'https://github.com/elmejorequipo/iacreatividad';
+        const qrSvg = `<svg viewBox="0 0 256 256" width="80" height="80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"><path fill="#000" d="M128 0h128v128h-128V0Zm32 32v64h64V32h-64ZM0 0h96v96H0V0Zm32 32v32h32V32H32ZM0 128h128v128H0V128Zm32 32v64h64v-64H32Z M224 160v-32h-32v32h32Zm-32 32h32v-32h32v64h-64v-32Z M160 192v32h32v-32h-32Z m-32 64h32v-32h-32v32Z m64-32v32h32v-32h-32Z"/></svg>`;
+        qrContainer.innerHTML = `<a href="${urlToVerify}" target="_blank">${qrSvg}</a>`;
+    }
+
+    function generateCertificatePDF() {
+        const certElement = document.getElementById('certificate-wrapper');
+        const opt = {
+          margin:       0.2,
+          filename:     `Certificado_IA_Creatividad_${user_data.name.replace(' ','_')}.pdf`,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+        html2pdf().from(certElement).set(opt).save();
+    }
+    
+    function shareOnSocialMedia() {
+        const text = encodeURIComponent(`¡He completado la cápsula educativa "IA: Creatividad Aumentada o Amenazada"! Un recurso genial para docentes que buscan innovar. #InteligenciaArtificial #Educacion #Creatividad`);
+        const url = encodeURIComponent(window.location.href);
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+        window.open(twitterUrl, '_blank');
+    }
+
+</script>
+
+</body>
+</html>
