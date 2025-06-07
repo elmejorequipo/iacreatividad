@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA: ¿Creatividad Aumentada o Amenazada?</title>
+    <style>
+        /* --- Estilos Generales y Tipografía --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+        :root {
+            --background-color: #121212;
+            --card-background: #1E1E1E;
+            --text-color: #EAEAEA;
+            --text-muted: #888888;
+            --highlight-augmented: #00A9FF;
+            --highlight-threatened: #FF4D4D;
+            --border-color: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 3rem;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        /* --- Contenedor de Tarjetas --- */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5rem;
+            max-width: 1300px;
+        }
+
+        /* --- Estilos de las Tarjetas --- */
+        .card {
+            background-color: var(--card-background);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: 340px;
+            height: 380px;
+            cursor: pointer;
+            perspective: 1500px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: border-color 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card:hover:before {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card.is-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-face-back {
+            background-color: #252525;
+            transform: rotateY(180deg);
+            padding: 2rem;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card-header.augmented {
+            color: var(--highlight-augmented);
+        }
+
+        .card-header.threatened {
+            color: var(--highlight-threatened);
+        }
+        
+        .card-body {
+            padding: 0 2rem 2rem 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .card-body .highlight {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .card-body .highlight.augmented {
+            color: var(--highlight-augmented);
+        }
+        
+        .card-body .highlight.threatened {
+            color: var(--highlight-threatened);
+        }
+        
+        .card-face-back .back-content p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .card-footer {
+            padding: 1rem 2rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .flip-instruction {
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>IA: ¿Creatividad Aumentada o Amenazada?</h1>
+
+    <div class="card-container">
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header augmented">
+                        <h2>Creatividad Aumentada</h2>
+                    </div>
+                    <div class="card-body">
+                        <span class="highlight augmented">+25%</span>
+                        <p>Puede aumentar la <strong>productividad creativa</strong> humana con IA de texto a imagen.</p>
+                    </div>
+                    <div class="card-footer">
+                        Fuente: Harvard Business Review / MIT
+                    </div>
+                </div>
+                <div class="card-face card-face-back">
+                    <div class="back-content">
+                        <p>La IA acelera procesos y automatiza tareas, permitiendo a los creativos centrarse en la <strong>innovación y estrategia</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
