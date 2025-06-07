@@ -46,7 +46,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 2.5rem;
-            max-width: 1300px;
+            max-width: 1500px; /* Ancho aumentado para 4 columnas */
         }
 
         /* --- Estilos de las Tarjetas --- */
@@ -113,6 +113,9 @@
             padding: 2rem;
             box-sizing: border-box;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .card-header {
@@ -142,6 +145,9 @@
             line-height: 1.6;
             flex-grow: 1;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .card-body .highlight {
@@ -188,21 +194,100 @@
         <div class="card" onclick="this.classList.toggle('is-flipped');">
             <div class="card-inner">
                 <div class="card-face card-face-front">
-                    <div class="card-header augmented">
-                        <h2>Creatividad Aumentada</h2>
-                    </div>
-                    <div class="card-body">
-                        <span class="highlight augmented">+25%</span>
-                        <p>Puede aumentar la <strong>productividad creativa</strong> humana con IA de texto a imagen.</p>
-                    </div>
-                    <div class="card-footer">
-                        Fuente: Harvard Business Review / MIT
-                    </div>
+                    <div class="card-header augmented"><h2>Creatividad Aumentada</h2></div>
+                    <div class="card-body"><span class="highlight augmented">+25%</span><p>Puede aumentar la <strong>productividad creativa</strong> humana con IA de texto a imagen.</p></div>
+                    <div class="card-footer">Fuente: Harvard Business Review / MIT</div>
                 </div>
-                <div class="card-face card-face-back">
-                    <div class="back-content">
-                        <p>La IA acelera procesos y automatiza tareas, permitiendo a los creativos centrarse en la <strong>innovación y estrategia</strong>.</p>
-                    </div>
-                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>La IA acelera procesos y automatiza tareas, permitiendo a los creativos centrarse en la <strong>innovación y estrategia</strong>.</p></div></div>
             </div>
         </div>
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header threatened"><h2>Creatividad Amenazada</h2></div>
+                    <div class="card-body"><span class="highlight threatened">74.3%</span><p>De los creativos cree que la IA <strong>impactará sus roles</strong> laborales en la próxima década.</p></div>
+                    <div class="card-footer">Fuente: Encuesta a profesionales creativos</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>Existe un temor real a la <strong>devaluación del trabajo</strong> humano y al desplazamiento laboral en sectores artísticos y de diseño.</p></div></div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header threatened"><h2>Creatividad Amenazada</h2></div>
+                    <div class="card-body"><span class="highlight threatened">26%</span><p>De las tareas en artes, diseño y medios puede ser <strong>automatizado</strong> por la IA generativa.</p></div>
+                    <div class="card-footer">Fuente: Análisis de Goldman Sachs</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>La capacidad de la IA para automatizar tareas complejas plantea un <strong>desafío directo</strong> a roles antes considerados exclusivamente humanos.</p></div></div>
+            </div>
+        </div>
+        
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header augmented"><h2>Creatividad Aumentada</h2></div>
+                    <div class="card-body"><span class="highlight augmented">+50%</span><p>Es el aumento estimado en el <strong>valor de la obra</strong> creativa al usar IA de texto a imagen.</p></div>
+                    <div class="card-footer">Fuente: MIT</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>La colaboración con IA no solo agiliza el trabajo, sino que puede <strong>enriquecer el resultado</strong> final, generando obras más complejas.</p></div></div>
+            </div>
+        </div>
+        
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header threatened"><h2>Creatividad Amenazada</h2></div>
+                    <div class="card-body"><span class="highlight threatened">-27%</span><p>Es la posible <strong>caída de ingresos</strong> para creadores de música para 2028 debido a la IA.</p></div>
+                    <div class="card-footer">Fuente: Estudio sobre el sector musical</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>La generación masiva de contenido amenaza los modelos de negocio tradicionales y la <strong>compensación justa</strong> para los artistas.</p></div></div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header augmented"><h2>Creatividad Aumentada</h2></div>
+                    <div class="card-body"><span class="highlight augmented">Arte</span><p>La IA está permitiendo la creación de <strong>nuevas formas de arte</strong> y expresiones antes inimaginables.</p></div>
+                    <div class="card-footer">Fuente: Observación de tendencias artísticas</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>Artistas utilizan la IA como un pincel o un instrumento más, expandiendo las <strong>fronteras de la expresión</strong> humana.</p></div></div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header threatened"><h2>Creatividad Amenazada</h2></div>
+                    <div class="card-body"><span class="highlight threatened">97%</span><p>De los creadores musicales exige <strong>transparencia</strong> sobre el uso de sus obras para entrenar modelos de IA.</p></div>
+                    <div class="card-footer">Fuente: Encuesta a creadores musicales</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>La <strong>propiedad intelectual</strong> es uno de los debates más complejos, cuestionando la originalidad en la era de la IA.</p></div></div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('is-flipped');">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-header augmented"><h2>Creatividad Aumentada</h2></div>
+                    <div class="card-body"><span class="highlight augmented">Acceso</span><p>La IA <strong>democratiza la creación</strong>, bajando las barreras técnicas para expresar ideas.</p></div>
+                    <div class="card-footer">Fuente: Tendencias en herramientas de software</div>
+                </div>
+                <div class="card-face card-face-back"><div class="back-content"><p>Más personas pueden participar en actividades creativas, sin necesidad de años de formación en software especializado.</p></div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="flip-instruction">Haz clic en una tarjeta para revelar su otra cara.</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Tarjetas interactivas listas.");
+        });
+    </script>
+
+</body>
+</html>
